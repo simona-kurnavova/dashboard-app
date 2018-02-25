@@ -1,8 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-
 import { HttpClientModule } from '@angular/common/http';
+
+import { AccountService } from './account.service/account.service';
+import { ApplicationService } from './application.service/application.service';
+import { WidgetService } from './widget.service/widget.service';
+import { DashboardService } from './dashboard.service/dashboard.service';
+
 
 
 @NgModule({
@@ -11,9 +16,10 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
+    HttpClientModule, // Http communication module
   ],
-  providers: [],
+  providers: [AccountService, ApplicationService, WidgetService, DashboardService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
