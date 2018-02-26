@@ -15,7 +15,9 @@ export interface WidgetInterface {
 export class WidgetService {
   url = 'http://127.0.0.1:8000/widgets/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.retrieveAll();
+  }
 
   retrieve(id: Number) {
     this.http.get<WidgetInterface>(this.url + id).subscribe(data => {
