@@ -11,7 +11,7 @@ import { WidgetService } from './services/widget.service';
 import { DashboardService } from './services/dashboard.service';
 
 import { HomeComponent } from './components/home.component';
-import { LoginComponent } from './components/login.component';
+import { AuthComponent } from './components/auth.component';
 import { AuthService } from './services/auth.service';
 
 import { MatInputModule } from '@angular/material/input';
@@ -20,13 +20,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import {RouterModule} from '@angular/router';
+import {RegistrationFormComponent} from './components/registration-form.component';
+import { LoginFormComponent } from './components/login-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent,
+    AuthComponent,
+    RegistrationFormComponent,
+    LoginFormComponent
   ],
+
   imports: [
     BrowserModule,
     FormsModule,
@@ -40,7 +45,9 @@ import {RouterModule} from '@angular/router';
     MatCardModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'login', component: LoginComponent }]),
+      { path: 'login', component: AuthComponent },
+      { path: 'register', component: RegistrationFormComponent },
+      ]),
   ],
   providers: [
     AuthService,

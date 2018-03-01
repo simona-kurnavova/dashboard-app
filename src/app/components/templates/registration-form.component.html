@@ -1,0 +1,25 @@
+<mat-grid-list cols="1" rowHeight="500px">
+    <mat-grid-tile>
+      <mat-card class="registration-card">
+        <mat-card-content>
+          <form class="registration-form">
+            <mat-form-field>
+              <input matInput placeholder="Username" name="username"/>
+            </mat-form-field><br>
+
+            <mat-form-field>
+              <input matInput type="password" placeholder="Password" name="password"/>
+            </mat-form-field><br>
+
+            <mat-form-field>
+              <input matInput type="email" placeholder="Email address" name="email-address"/>
+            </mat-form-field><br>
+
+            <button mat-raised-button color="primary" (click)="register()" [disabled]=false>Register</button>
+          </form>
+          <br>
+          or <a routerLink="/login">login</a>
+        </mat-card-content>
+      </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

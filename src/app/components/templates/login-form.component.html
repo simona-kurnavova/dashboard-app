@@ -1,0 +1,15 @@
+<form class="login-form" autocomplete="off">
+  <mat-form-field>
+    <input matInput placeholder="Username" [(ngModel)]="loginData.username" name="username"/>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input  matInput placeholder="Password" type="password" [(ngModel)]="loginData.password" name="password"/>
+  </mat-form-field>
+  <br>
+  <button mat-raised-button color="primary" (click)="login()" [disabled]=false>Login</button>
+</form>
+<br>
+
+or <a routerLink="/register">register</a>
+
