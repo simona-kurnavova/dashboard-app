@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cookie } from 'ng2-cookies';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {AccountInterface} from './account.service';
 
+export interface UserInterface {
+  username: String;
+  password: String;
+  email: String;
+}
 
 @Injectable()
 export class AuthService {
@@ -10,11 +16,11 @@ export class AuthService {
   }
 
   getToken(loginData) {
-    let params = new URLSearchParams();
+    const params = new URLSearchParams();
     params.append('username', loginData.username);
     params.append('password', loginData.password);
     params.append('grant_type', 'password');
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
       'Authorization': 'Basic ' + btoa('u9XjgyEGxDXtTDN80TG5tgk8TnHzGSmp7rqO5Gfs:UwUnaGxgKhEadmTz0j6so0VIzLZQHaAV1MfXBa10H0SSbjirskawdSfh7cGem5tmh06G4yCnUWSLZr8pfhVCxiGj3sPwmPbpyxMUHL6bT1DPT2uErrW5V8dne50tLoD1')
     });
@@ -52,12 +58,7 @@ export class AuthService {
       'Authorization': 'Bearer ' + Cookie.get('access_token')
     });
   }
-
-  isSignedIn() {
-    return Cookie.check('access_token');
-  }
 }
-
 
 
 

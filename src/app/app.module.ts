@@ -22,6 +22,7 @@ import { MatCardModule } from '@angular/material/card';
 import {RouterModule} from '@angular/router';
 import {RegistrationFormComponent} from './components/registration-form.component';
 import { LoginFormComponent } from './components/login-form.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { LoginFormComponent } from './components/login-form.component';
     AccountService,
     ApplicationService,
     WidgetService,
-    DashboardService
+    DashboardService,
+    UserService,
   ],
   bootstrap: [ AppComponent ],
 })

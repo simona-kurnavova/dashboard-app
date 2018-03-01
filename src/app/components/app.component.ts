@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +8,6 @@ import { AuthService } from '../services/auth.service';
 
 export class AppComponent {
   title = 'Dashboard';
-  constructor(private authService: AuthService) {}
-
-  isSignedIn() {
-    return this.authService.isSignedIn();
-  }
+  constructor() {}
 }
+
