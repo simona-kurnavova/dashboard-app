@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {BACKEND} from '../app.module';
-import {AuthService} from './auth.service';
-import {ApplicationInterface} from './application.service';
+import { BACKEND } from '../settings';
+import { AuthService } from './auth.service';
 
 export interface AccountInterface {
   owner: Number;

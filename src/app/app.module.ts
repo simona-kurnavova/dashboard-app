@@ -16,9 +16,6 @@ import {LoginComponent} from './components/login.component';
 import {FooComponent} from './components/foo.component';
 import {AuthService} from './services/auth.service';
 
-// TODO: Move to separate file
-export const BACKEND = 'http://127.0.0.1:8000/';
-
 @NgModule({
   declarations: [
     AppComponent,

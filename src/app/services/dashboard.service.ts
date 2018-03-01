@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {AuthService} from './auth.service';
-import {BACKEND} from '../app.module';
+import { BACKEND } from '../settings';
 
 export interface DashboardInterface {
   owner: Number;
