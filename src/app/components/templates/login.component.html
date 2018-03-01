@@ -1,15 +1,19 @@
-<div class="col-sm-6">
-  <h1>LOGIN FORM</h1>
-  <div class="col-sm-12 form-group">
-    <label>Username</label>
-    <input class="form-control" type="text" [(ngModel)]="loginData.username" />
-  </div>
-  <div class="col-sm-12 form-group">
-    <label>Password</label>
-    <input class="form-control" type="password"  [(ngModel)]="loginData.password"/>
-  </div>
-
-  <div class="col-sm-12">
-    <button class="btn btn-primary pull-right" (click)="login()" type="submit">Login</button>
-  </div>
-</div>
+<mat-grid-list cols="1" rowHeight="200px">
+    <mat-grid-tile>
+      <mat-card class="login-card">
+        <mat-card-content>
+          <form class="login-form" autocomplete="off">
+            <mat-form-field>
+              <input matInput placeholder="Username" [(ngModel)]="loginData.username" name="username"/>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input  matInput placeholder="Password" type="password" [(ngModel)]="loginData.password" name="password"/>
+            </mat-form-field>
+            <br>
+            <button mat-raised-button color="primary" (click)="login()" [disabled]=false>Login</button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -6,7 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) {
+  }
 
   getToken(loginData) {
     let params = new URLSearchParams();
@@ -15,14 +16,16 @@ export class AuthService {
     params.append('grant_type', 'password');
     let headers = new HttpHeaders({
       'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
-      'Authorization': 'Basic ' + btoa('u9XjgyEGxDXtTDN80TG5tgk8TnHzGSmp7rqO5Gfs:UwUnaGxgKhEadmTz0j6so0VIzLZQHaAV1MfXBa10H0SSbjirskawdSfh7cGem5tmh06G4yCnUWSLZr8pfhVCxiGj3sPwmPbpyxMUHL6bT1DPT2uErrW5V8dne50tLoD1')});
+      'Authorization': 'Basic ' + btoa('u9XjgyEGxDXtTDN80TG5tgk8TnHzGSmp7rqO5Gfs:UwUnaGxgKhEadmTz0j6so0VIzLZQHaAV1MfXBa10H0SSbjirskawdSfh7cGem5tmh06G4yCnUWSLZr8pfhVCxiGj3sPwmPbpyxMUHL6bT1DPT2uErrW5V8dne50tLoD1')
+    });
     this.http.post('http://127.0.0.1:8000/o/token/', params.toString(), {headers: headers})
       .subscribe(
         data => this.saveToken(data),
         err => {
           // TODO: Invalid credentials error
           console.log(err);
-        });
+        }
+      );
   }
 
   saveToken(token) {
@@ -44,13 +47,16 @@ export class AuthService {
   }
 
   getHeaders() {
-    this.checkCredentials();
     return new HttpHeaders({
       'Content-type': 'application/json; ' + 'charset=utf-8',
-      'Authorization': 'Bearer ' + Cookie.get('access_token')});
+      'Authorization': 'Bearer ' + Cookie.get('access_token')
+    });
+  }
+
+  isSignedIn() {
+    return Cookie.check('access_token');
   }
 }
-
 
 
 

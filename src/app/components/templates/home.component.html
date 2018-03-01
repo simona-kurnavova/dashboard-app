@@ -1,6 +1,7 @@
-<div class="container" >
-  <div class="content">
-    <a class="btn btn-default pull-right"(click)="logout()" href="#">logout</a>
-  </div>
-  <foo-details></foo-details>
-</div>
+
+<mat-grid-list cols="1" rowHeight="200px">
+  <mat-grid-tile>
+    <button mat-raised-button color="primary" (click)="logout()" href="#">Logout</button>
+  </mat-grid-tile>
+</mat-grid-list>
+

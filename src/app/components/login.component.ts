@@ -9,7 +9,6 @@ import { AuthService } from '../services/auth.service';
 
 export class LoginComponent {
   public loginData = {username: '', password: ''};
-
   constructor(private service: AuthService) {}
 
   login() {
