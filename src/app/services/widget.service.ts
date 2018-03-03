@@ -9,6 +9,8 @@ export interface WidgetInterface {
   account: Number;
   position_x: Number;
   position_y: Number;
+  size_x: Number;
+  size_y: Number;
 }
 
 // TODO: Error handling
@@ -25,7 +27,8 @@ export class WidgetService {
       this.url + id, { headers: this.authService.getHeaders() })
       .subscribe(data => {
         return data;
-      });
+      },
+        err => console.log(err));
   }
 
   retrieveAll() {
@@ -42,7 +45,9 @@ export class WidgetService {
       'app': widget.app,
       'account': widget.account,
       'position_x': widget.position_x,
-      'position_y': widget.position_y
+      'position_y': widget.position_y,
+      'size_x': widget.size_x,
+      'size_y': widget.size_y
     }, {headers: this.authService.getHeaders()})
       .subscribe(data => {
         return data;
@@ -55,7 +60,9 @@ export class WidgetService {
       'app': widget.app,
       'account': widget.account,
       'position_x': widget.position_x,
-      'position_y': widget.position_y
+      'position_y': widget.position_y,
+      'size_x': widget.size_x,
+      'size_y': widget.size_y
     }, {headers: this.authService.getHeaders()})
       .subscribe(data => {
         return data;
