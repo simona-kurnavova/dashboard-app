@@ -29,7 +29,12 @@ export class AuthService {
         data => this.saveToken(data),
         err => {
           // TODO: Invalid credentials error
-          console.log(err);
+          // TODO: No server connection error
+          if (err.error instanceof Error) {
+            throw new Error(err);
+          } else {
+            console.log(err.message);
+          }
         }
       );
   }

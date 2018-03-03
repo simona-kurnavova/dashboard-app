@@ -19,4 +19,3 @@ export class HomeComponent {
     this.authService.logout();
   }
 }
-

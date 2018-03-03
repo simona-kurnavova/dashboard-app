@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import { AppComponent } from './components/app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -23,6 +23,7 @@ import {RouterModule} from '@angular/router';
 import {RegistrationFormComponent} from './components/registration-form.component';
 import { LoginFormComponent } from './components/login-form.component';
 import { UserService } from './services/user.service';
+import {GlobalErrorHandler} from './global.error.handler';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { UserService } from './services/user.service';
     HomeComponent,
     AuthComponent,
     RegistrationFormComponent,
-    LoginFormComponent
+    LoginFormComponent,
   ],
 
   imports: [
@@ -38,25 +39,27 @@ import { UserService } from './services/user.service';
     FormsModule,
     HttpClientModule, // Http communication module
     OAuthModule.forRoot(), // OAuth2 client
-    // Material components
-    MatInputModule,
-    MatButtonModule,
-    BrowserAnimationsModule,
-    MatGridListModule,
-    MatCardModule,
+
+    // Routing
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'login', component: AuthComponent },
       { path: 'register', component: RegistrationFormComponent },
       ]),
+
+    // Material components
+    MatInputModule, MatButtonModule, BrowserAnimationsModule, MatGridListModule, MatCardModule,
+
+    // Bootstrap
+    NgbModule.forRoot(),
   ],
   providers: [
-    AuthService,
-    AccountService,
-    ApplicationService,
-    WidgetService,
-    DashboardService,
-    UserService,
+    AuthService, AccountService, ApplicationService, WidgetService, DashboardService, UserService,
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    },
+    CustomNotificationComponent
   ],
   bootstrap: [ AppComponent ],
 })
