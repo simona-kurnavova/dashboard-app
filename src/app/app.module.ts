@@ -24,6 +24,7 @@ import {RegistrationFormComponent} from './components/registration-form.componen
 import { LoginFormComponent } from './components/login-form.component';
 import { UserService } from './services/user.service';
 import {GlobalErrorHandler} from './global.error.handler';
+import { CustomNotificationComponent } from './components/custom-notification.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -33,6 +34,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     AuthComponent,
     RegistrationFormComponent,
     LoginFormComponent,
+    CustomNotificationComponent,
   ],
 
   imports: [
