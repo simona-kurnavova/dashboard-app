@@ -13,8 +13,6 @@ export interface WidgetInterface {
   size_y: Number;
 }
 
-// TODO: Error handling
-
 @Injectable()
 export class WidgetService {
   url = BACKEND + 'widgets/';
@@ -23,24 +21,16 @@ export class WidgetService {
   }
 
   retrieve(id: Number) {
-    this.http.get<WidgetInterface>(
-      this.url + id, { headers: this.authService.getHeaders() })
-      .subscribe(data => {
-        return data;
-      },
-        err => console.log(err));
+    return this.http.get<WidgetInterface>(
+      this.url + id, {headers: this.authService.getHeaders()});
   }
 
   retrieveAll() {
-    this.http.get(this.url, { headers: this.authService.getHeaders() })
-      .subscribe(
-        data  => {
-          return <WidgetInterface[]>data['results'];
-        });
+    return this.http.get(this.url, {headers: this.authService.getHeaders()});
   }
 
   create(widget: WidgetInterface) {
-    this.http.post<WidgetInterface>(this.url, {
+    return this.http.post<WidgetInterface>(this.url, {
       'dashboard': widget.dashboard,
       'app': widget.app,
       'account': widget.account,
@@ -48,14 +38,11 @@ export class WidgetService {
       'position_y': widget.position_y,
       'size_x': widget.size_x,
       'size_y': widget.size_y
-    }, {headers: this.authService.getHeaders()})
-      .subscribe(data => {
-        return data;
-      });
+    }, {headers: this.authService.getHeaders()});
   }
 
   edit(id: Number, widget: WidgetInterface) {
-    this.http.put<WidgetInterface>(this.url + id + '/', {
+    return this.http.put<WidgetInterface>(this.url + id + '/', {
       'dashboard': widget.dashboard,
       'app': widget.app,
       'account': widget.account,
@@ -63,16 +50,10 @@ export class WidgetService {
       'position_y': widget.position_y,
       'size_x': widget.size_x,
       'size_y': widget.size_y
-    }, {headers: this.authService.getHeaders()})
-      .subscribe(data => {
-        return data;
-      });
+    }, {headers: this.authService.getHeaders()});
   }
 
   delete(id: Number) {
-    this.http.delete(this.url + id + '/', {headers: this.authService.getHeaders()}).subscribe(data => {
-      return data;
-    });
+    return this.http.delete(this.url + id + '/', {headers: this.authService.getHeaders()});
   }
-
 }

@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import {WidgetInterface, WidgetService} from '../services/widget.service';
 
 @Component({
   selector: 'home',
@@ -9,7 +8,6 @@ import {WidgetInterface, WidgetService} from '../services/widget.service';
 })
 
 export class HomeComponent {
-
   constructor(private authService: AuthService) {
   }
 

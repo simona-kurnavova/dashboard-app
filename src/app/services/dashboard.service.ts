@@ -16,40 +16,24 @@ export class DashboardService {
   constructor(private authService: AuthService, private http: HttpClient) {}
 
   retrieve(id: Number) {
-    this.http.get<DashboardInterface>(
-      this.url + id, { headers: this.authService.getHeaders() })
-      .subscribe(data => {
-        return data;
-      });
+    return this.http.get<DashboardInterface>(
+      this.url + id, {headers: this.authService.getHeaders()});
   }
 
   retrieveAll() {
-    this.http.get(this.url, { headers: this.authService.getHeaders() })
-      .subscribe(
-        data  => {
-          return <DashboardInterface[]>data['results'];
-        });
+    return this.http.get(this.url, {headers: this.authService.getHeaders()});
   }
 
   create(dashboard: DashboardInterface) {
-    this.http.post<DashboardInterface>(this.url, {}, {headers: this.authService.getHeaders()})
-      .subscribe(data => {
-        return data;
-      });
+    return this.http.post<DashboardInterface>(this.url, {}, {headers: this.authService.getHeaders()});
   }
 
   edit(id: Number, dashboard: DashboardInterface) {
-    this.http.put<DashboardInterface>(this.url + id + '/', {}, {headers: this.authService.getHeaders()})
-      .subscribe(data => {
-        return data;
-      });
+    return this.http.put<DashboardInterface>(this.url + id + '/', {}, {headers: this.authService.getHeaders()});
   }
 
   delete(id: Number) {
-    this.http.delete(this.url + id + '/', {headers: this.authService.getHeaders()}).subscribe(data => {
-      return data;
-    });
+    return this.http.delete(this.url + id + '/', {headers: this.authService.getHeaders()});
   }
-
 }
 

@@ -11,8 +11,6 @@ export interface AccountInterface {
   info: String;
 }
 
-// TODO: Error handling
-
 @Injectable()
 export class AccountService {
   url = BACKEND + 'accounts/';
@@ -20,43 +18,28 @@ export class AccountService {
   constructor(private authService: AuthService, private http: HttpClient) {}
 
   retrieve(id: Number) {
-    this.http.get<AccountInterface>(
-      this.url + id, { headers: this.authService.getHeaders() })
-      .subscribe(data => {
-        return data;
-      });
+    return this.http.get<AccountInterface>(
+      this.url + id, { headers: this.authService.getHeaders() });
   }
 
   retrieveAll() {
-    this.http.get(this.url, { headers: this.authService.getHeaders() })
-      .subscribe(
-        data  => {
-          return <AccountInterface[]>data['results'];
-        });
+    return this.http.get(this.url, { headers: this.authService.getHeaders() });
   }
 
   create(account: AccountInterface) {
-    this.http.post<AccountInterface>(this.url, {
+    return this.http.post<AccountInterface>(this.url, {
       'type': account.type, 'name': account.name, 'token': account.token, 'info': account.info,
-    }, {headers: this.authService.getHeaders()})
-      .subscribe(data => {
-        return data;
-      });
+    }, {headers: this.authService.getHeaders()});
   }
 
   edit(id: Number, account: AccountInterface) {
-    this.http.put<AccountInterface>(this.url + id + '/', {
+    return this.http.put<AccountInterface>(this.url + id + '/', {
       'type': account.type, 'name': account.name, 'token': account.token, 'info': account.info,
-    }, {headers: this.authService.getHeaders()})
-      .subscribe(data => {
-        return data;
-      });
+    }, {headers: this.authService.getHeaders()});
   }
 
   delete(id: Number) {
-    this.http.delete(this.url + id + '/', {headers: this.authService.getHeaders()}).subscribe(data => {
-      return data;
-    });
+    return this.http.delete(this.url + id + '/', {headers: this.authService.getHeaders()});
   }
 
 }

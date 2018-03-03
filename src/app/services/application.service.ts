@@ -9,7 +9,11 @@ export interface ApplicationInterface {
   required_account: String;
 }
 
-// TODO: Error handling
+/* if (err.error instanceof Error) {
+console.log("Client-side error occured.");
+} else {
+  console.log("Server-side error occured.");
+} */
 
 @Injectable()
 export class ApplicationService {
@@ -18,44 +22,30 @@ export class ApplicationService {
   constructor(private authService: AuthService, private http: HttpClient) {}
 
   retrieve(id: Number) {
-    this.http.get<ApplicationInterface>(
-      this.url + id, { headers: this.authService.getHeaders() })
-      .subscribe(data => {
-      return data;
-    });
+    return this.http.get<ApplicationInterface>(
+      this.url + id,
+      {headers: this.authService.getHeaders()});
   }
 
   retrieveAll() {
-    this.http.get(this.url, { headers: this.authService.getHeaders() })
-      .subscribe(
-      data  => {
-        return <ApplicationInterface[]>data['results'];
-      });
+    return this.http.get(this.url, {headers: this.authService.getHeaders()});
   }
 
   // TODO: handle error: name: ["app with this name already exists."], "POST /apps/ HTTP/1.1" 400 47
   create(app: ApplicationInterface) {
-    this.http.post<ApplicationInterface>(this.url, {
+    return this.http.post<ApplicationInterface>(this.url, {
       'name': app.name, 'description': app.description, 'required_account': app.required_account
-    }, {headers: this.authService.getHeaders()})
-      .subscribe(data => {
-      return data;
-    });
+    }, {headers: this.authService.getHeaders()});
   }
 
   edit(id: Number, account: ApplicationInterface) {
-    this.http.put<ApplicationInterface>(this.url + id + '/', {
+    return this.http.put<ApplicationInterface>(this.url + id + '/', {
       'name': account.name, 'description': account.description, 'required_account': account.required_account,
-    }, {headers: this.authService.getHeaders()})
-      .subscribe(data => {
-      return data;
-    });
+    }, {headers: this.authService.getHeaders()});
   }
 
   delete(id: Number) {
-    this.http.delete(this.url + id + '/', { headers: this.authService.getHeaders() }).subscribe(data => {
-      return data;
-    });
+    return this.http.delete(this.url + id + '/', {headers: this.authService.getHeaders()});
   }
 }
 
