@@ -24,6 +24,7 @@ import {RegistrationFormComponent} from './components/registration-form.componen
 import { LoginFormComponent } from './components/login-form.component';
 import { UserService } from './services/user.service';
 import {GlobalErrorHandler} from './global.error.handler';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
