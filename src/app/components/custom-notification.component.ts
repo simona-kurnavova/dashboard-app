@@ -10,10 +10,19 @@ export class CustomNotificationComponent {
   @Input()
   public alerts: Array<IAlert> = [];
 
-  constructor() {}
+  constructor() {
+    const alert: IAlert = {
+      id: 2,
+      type: 'danger',
+      message: 'Hello from constructor',
+    };
+    this.alerts.push(alert);
+  }
 
   public addAlert(alert: IAlert) {
+    console.log('In the addAlert');
     this.alerts.push(alert);
+    console.log(this.alerts);
   }
 
   public closeAlert(alert: IAlert) {
