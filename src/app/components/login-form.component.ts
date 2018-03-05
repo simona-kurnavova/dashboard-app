@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'login-form',
   templateUrl: './templates/login-form.component.html',
-  styleUrls: ['./styles/login-form.component.css'],
+  styleUrls: ['./styles/form-style.css'],
   providers: [ AuthService ],
 })
 
@@ -13,6 +13,7 @@ export class LoginFormComponent {
   constructor(private service: AuthService) {}
 
   login() {
+    console.log(this.loginData);
     this.service.getToken(this.loginData);
   }
 }

@@ -1,6 +1,12 @@
 @import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
 
 /* White form background due to Material autofill handling */
-input:-webkit-autofill {
+input:-webkit-autofill, textarea:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
+
+/* Remove border after click on the Material buttons */
+button:focus {
+  outline:0;
+}
+

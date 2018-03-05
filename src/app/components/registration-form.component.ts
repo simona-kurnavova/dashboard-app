@@ -5,6 +5,7 @@ import {UserService} from '../services/user.service';
 @Component({
   selector: 'registration-form',
   providers: [ AuthService ],
+  styleUrls: ['./styles/form-style.css'],
   templateUrl: './templates/registration-form.component.html'
 })
 

@@ -20,9 +20,7 @@ export class CustomNotificationComponent {
   }
 
   public addAlert(alert: IAlert) {
-    console.log('In the addAlert');
     this.alerts.push(alert);
-    console.log(this.alerts);
   }
 
   public closeAlert(alert: IAlert) {

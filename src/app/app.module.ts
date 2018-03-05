@@ -1,31 +1,29 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { AppComponent } from './components/app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { RouterModule } from '@angular/router';
 
+import { GlobalErrorHandler } from './global.error.handler';
+
+import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 import { AccountService } from './services/account.service';
 import { ApplicationService } from './services/application.service';
 import { WidgetService } from './services/widget.service';
 import { DashboardService } from './services/dashboard.service';
 
+import { RegistrationFormComponent } from './components/registration-form.component';
+import { LoginFormComponent } from './components/login-form.component';
 import { HomeComponent } from './components/home.component';
 import { AuthComponent } from './components/auth.component';
-import { AuthService } from './services/auth.service';
-
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
-import {RouterModule} from '@angular/router';
-import {RegistrationFormComponent} from './components/registration-form.component';
-import { LoginFormComponent } from './components/login-form.component';
-import { UserService } from './services/user.service';
-import {GlobalErrorHandler} from './global.error.handler';
 import { CustomNotificationComponent } from './components/custom-notification.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {MenuComponent} from './components/menu.component';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -35,6 +33,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     RegistrationFormComponent,
     LoginFormComponent,
     CustomNotificationComponent,
+    MenuComponent,
   ],
 
   imports: [
@@ -45,16 +44,17 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
     // Routing
     RouterModule.forRoot([
-      { path: '', component: HomeComponent },
-      { path: 'login', component: AuthComponent },
+      { path: '', component: AuthComponent },
+      { path: 'home', component: HomeComponent },
+      { path: 'login', component: LoginFormComponent },
       { path: 'register', component: RegistrationFormComponent },
       ]),
 
-    // Material components
-    MatInputModule, MatButtonModule, BrowserAnimationsModule, MatGridListModule, MatCardModule,
-
     // Bootstrap
     NgbModule.forRoot(),
+
+    // AngularBootstrap
+    MDBBootstrapModule,
   ],
   providers: [
     AuthService, AccountService, ApplicationService, WidgetService, DashboardService, UserService,

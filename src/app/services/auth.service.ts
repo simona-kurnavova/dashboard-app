@@ -43,7 +43,7 @@ export class AuthService {
     let expireDate = new Date().getTime() + (1000 * token.expires_in);
     Cookie.set('access_token', token.access_token, expireDate);
     // TODO: Refresh token save and use after expiration
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 
   checkCredentials() {
