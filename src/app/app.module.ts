@@ -34,7 +34,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     LoginFormComponent,
     CustomNotificationComponent,
     MenuComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
 
   imports: [

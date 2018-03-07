@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {renderComponent} from '@angular/core/src/render3';
 
 @Component({
   selector: 'notification',

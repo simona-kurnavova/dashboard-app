@@ -15,9 +15,19 @@
       </div>
     </div>
 
+
     <hr>
     <h4 align="center">dashboard is empty</h4>
     <hr>
+
+
+    <div *ngIf="editMode()" class="row justify-content-end">
+      <div class="btn-group">
+        <button (click)="addWidget()" class="btn btn-blue-grey btn-sm">Add Widget</button>
+        <button (click)="cancelEditMode()" class="btn btn-blue-grey btn-sm">Cancel</button>
+        <button (click)="saveEdit()" class="btn btn-blue-grey btn-sm">Done</button>
+      </div>
+    </div>
 
   </div>
 </div>
