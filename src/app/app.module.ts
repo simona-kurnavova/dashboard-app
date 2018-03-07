@@ -20,6 +20,7 @@ import { HomeComponent } from './components/home.component';
 import { AuthComponent } from './components/auth.component';
 import { CustomNotificationComponent } from './components/custom-notification.component';
 import { MenuComponent } from './components/menu.component';
+import { DashboardComponent } from './components/dashboard.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -33,6 +34,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     LoginFormComponent,
     CustomNotificationComponent,
     MenuComponent,
+    DashboardComponent
   ],
 
   imports: [

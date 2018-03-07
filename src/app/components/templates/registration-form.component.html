@@ -4,26 +4,30 @@
       <div class="card card-body">
 
         <form class="registration-form">
-            <p class="h5 text-center mb-4">Register</p>
+          <p class="h5 text-center mb-4">Register</p>
 
-            <div class="md-form">
-              <input type="text" value="" id="r-username" [(ngModel)]="user.username" class="form-control" name="username" mdbActive>
-              <label for="r-username">Username</label>
-            </div>
+          <div class="md-form">
+            <input type="text" value="" id="r-username" [(ngModel)]="user.username" class="form-control" name="username"
+                   mdbActive>
+            <label for="r-username">Username</label>
+          </div>
 
-            <div class="md-form">
-              <input mdbActive autocomplete="new-password" data-error="wrong password" data-success="valid password" minLength="8" type="password" [(ngModel)]='user.password' class="form-control" id="r-password" name="pass word" mdbInputValidate>
-              <label for="r-password">Type your password</label>
-            </div>
+          <div class="md-form">
+            <input mdbActive autocomplete="new-password" data-error="wrong password" data-success="valid password"
+                   minLength="8" type="password" [(ngModel)]='user.password' class="form-control" id="r-password"
+                   name="pass word" mdbInputValidate>
+            <label for="r-password">Type your password</label>
+          </div>
 
-            <div class="md-form">
-              <input mdbActive value="" data-error="wrong email" data-success="valid email" type="email" [(ngModel)]='user.email' class="form-control" id="r-email" name="email" mdbInputValidate>
-              <label for="r-email">Email</label>
-            </div>
+          <div class="md-form">
+            <input mdbActive value="" data-error="wrong email" data-success="valid email" type="email"
+                   [(ngModel)]='user.email' class="form-control" id="r-email" name="email" mdbInputValidate>
+            <label for="r-email">Email</label>
+          </div>
 
-            <div class="text-center">
-              <button class="btn btn-default waves-light" (click)="register()" mdbRippleRadius>Register</button>
-            </div>
+          <div class="text-center">
+            <button class="btn btn-default waves-light" (click)="register()" mdbRippleRadius>Register</button>
+          </div>
 
         </form>
       </div>
