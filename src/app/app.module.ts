@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { RouterModule } from '@angular/router';
-
 import { GlobalErrorHandler } from './global.error.handler';
 
 import { AuthService } from './services/auth.service';
@@ -20,7 +19,7 @@ import { LoginFormComponent } from './components/login-form.component';
 import { HomeComponent } from './components/home.component';
 import { AuthComponent } from './components/auth.component';
 import { CustomNotificationComponent } from './components/custom-notification.component';
-import {MenuComponent} from './components/menu.component';
+import { MenuComponent } from './components/menu.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -54,7 +53,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     NgbModule.forRoot(),
 
     // AngularBootstrap
-    MDBBootstrapModule,
+    MDBBootstrapModule.forRoot(),
   ],
   providers: [
     AuthService, AccountService, ApplicationService, WidgetService, DashboardService, UserService,

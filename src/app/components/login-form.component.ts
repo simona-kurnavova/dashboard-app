@@ -13,7 +13,6 @@ export class LoginFormComponent {
   constructor(private service: AuthService) {}
 
   login() {
-    console.log(this.loginData);
     this.service.getToken(this.loginData);
   }
 }

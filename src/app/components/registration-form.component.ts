@@ -13,11 +13,7 @@ import {UserService} from '../services/user.service';
 // TODO: validation of required fields
 
 export class RegistrationFormComponent {
-  public user: UserInterface = {
-    username: '',
-    password: '',
-    email: ''
-  };
+  public user: UserInterface = { username: '', password: '', email: '' };
   constructor(private userService: UserService) {}
 
   register() {

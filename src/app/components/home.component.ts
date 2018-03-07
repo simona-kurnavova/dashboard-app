@@ -14,8 +14,4 @@ export class HomeComponent {
   ngOnInit() {
     this.authService.checkCredentials();
   }
-
-  logout() {
-    this.authService.logout();
-  }
 }
