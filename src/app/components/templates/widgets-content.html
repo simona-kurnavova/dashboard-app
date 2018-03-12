@@ -1,7 +1,15 @@
-<div class="container">
+<div *ngIf="isState('list')" class="container">
   <ul>
-    <li *ngFor="let app of appList">
-      <b>{{ app.name }}</b>
+    <li *ngFor="let app of appList; let i = index;">
+      <a (click)="setCurrentApp(i)"><b>{{ app.name }}</b></a>
     </li>
   </ul>
+</div>
+
+<div *ngIf="isState('detail')" class="container">
+  <h3>{{ appList[currentApp].name }}</h3>
+  <p>{{ appList[currentApp].description }}</p>
+
+  <button (click)="setState('list')" type="button" class="btn btn-sm btn-blue-grey">Back</button>
+  <button type="button" (click)="addToDashboard(currentApp)" class="btn btn-sm btn-blue-grey">Add to dashboard</button>
 </div>

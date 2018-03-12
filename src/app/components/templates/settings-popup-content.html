@@ -20,7 +20,7 @@
         <div [ngSwitch]="activeCard">
           <profile-content *ngSwitchCase="'profile'"></profile-content>
           <accounts-content *ngSwitchCase="'accounts'"></accounts-content>
-          <widgets-content *ngSwitchCase="'widgets'"></widgets-content>
+          <widgets-content [state]="list" *ngSwitchCase="'widgets'"></widgets-content>
         </div>
       </div>
 
