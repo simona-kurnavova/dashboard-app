@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { SettingsPopupContent } from './popup.component';
 
 @Component({
   selector: 'dashboard',
@@ -8,7 +10,7 @@ import { Component } from '@angular/core';
 
 export class DashboardComponent {
   public mode: string = 'normal';
-  constructor() {}
+  constructor(private popupService: NgbModal) {}
 
   editMode(): Boolean {
     return this.mode === 'edit';

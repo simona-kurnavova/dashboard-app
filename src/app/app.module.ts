@@ -24,6 +24,7 @@ import { DashboardComponent } from './components/dashboard.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import {AboutPopupContent, SettingsPopupContent} from './components/popup.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     CustomNotificationComponent,
     MenuComponent,
     DashboardComponent,
+    SettingsPopupContent, AboutPopupContent
   ],
 
   imports: [
@@ -66,6 +68,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     CustomNotificationComponent
   ],
   bootstrap: [ AppComponent ],
+  entryComponents: [ SettingsPopupContent, AboutPopupContent ],
 })
 
 export class AppModule {}

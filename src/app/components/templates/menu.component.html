@@ -2,7 +2,7 @@
   <div class="col col-lg-3">
     <div class="btn-group">
 
-      <button type="button" class="btn btn-sm btn-secondary waves-light" mdbRippleRadius>
+      <button type="button" (click)="openSettings()" class="btn btn-sm btn-secondary waves-light" mdbRippleRadius>
         <i class="fa fa-wrench mr-1"></i>Settings
       </button>
 
@@ -15,8 +15,8 @@
           </button>
 
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="/home">Widget</a>
-            <a class="dropdown-item" href="/home">Account</a>
+            <a class="dropdown-item" (click)="openAddWidget()" href="/home">Widget</a>
+            <a class="dropdown-item" (click)="openAddAccount()" href="/home">Account</a>
           </div>
 
         </div>
@@ -39,8 +39,8 @@
         </button>
 
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="/home">Profile</a>
-          <a class="dropdown-item" href="/home">About</a>
+          <a class="dropdown-item" (click)="openProfile()">Profile</a>
+          <a class="dropdown-item" (click)="openAbout()">About</a>
           <a class="dropdown-item" (click)="logout()">Logout</a>
         </div>
 
