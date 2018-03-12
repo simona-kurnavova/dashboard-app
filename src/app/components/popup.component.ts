@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -10,7 +10,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './templates/settings-popup-content.html',
 })
 export class SettingsPopupContent {
-  public activeCard: String = 'none';
+  @Input() activeCard: String = 'none';
   constructor(public activeModal: NgbActiveModal) {}
   isActive(card: String) {
     return this.activeCard === card;

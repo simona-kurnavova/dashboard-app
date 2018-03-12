@@ -1,9 +1,7 @@
 <div *ngIf="isState('list')" class="container">
-  <ul>
-    <li *ngFor="let app of appList; let i = index;">
+    <div *ngFor="let app of appList; let i = index;">
       <a (click)="setCurrentApp(i)"><b>{{ app.name }}</b></a>
-    </li>
-  </ul>
+    </div>
 </div>
 
 <div *ngIf="isState('detail')" class="container">

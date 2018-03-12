@@ -17,11 +17,12 @@ export class MenuComponent {
   }
 
   openSettings() {
-    this.popupService.open(SettingsPopupContent, { size: 'lg' });
+    this.openProfile();
   }
 
   openProfile() {
-    // TODO
+    const popup = this.popupService.open(SettingsPopupContent, { size: 'lg' });
+    popup.componentInstance.activeCard = 'profile';
   }
 
   openAbout() {
@@ -29,10 +30,12 @@ export class MenuComponent {
   }
 
   openAddWidget() {
-    // TODO
+    const popup = this.popupService.open(SettingsPopupContent, { size: 'lg' });
+    popup.componentInstance.activeCard = 'widgets';
   }
 
   openAddAccount() {
-    // TODO
+    const popup = this.popupService.open(SettingsPopupContent, { size: 'lg' });
+    popup.componentInstance.activeCard = 'accounts';
   }
 }
