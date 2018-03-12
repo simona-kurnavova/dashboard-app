@@ -25,6 +25,9 @@ import { DashboardComponent } from './components/dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {AboutPopupContent, SettingsPopupContent} from './components/popup.component';
+import { ProfileContent } from './components/profile-content.component';
+import { WidgetsContent } from './components/widgets-content.component';
+import { AccountsContent } from './components/accounts-content.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,7 @@ import {AboutPopupContent, SettingsPopupContent} from './components/popup.compon
     CustomNotificationComponent,
     MenuComponent,
     DashboardComponent,
-    SettingsPopupContent, AboutPopupContent
+    SettingsPopupContent, AboutPopupContent, ProfileContent, WidgetsContent, AccountsContent
   ],
 
   imports: [
@@ -48,9 +51,14 @@ import {AboutPopupContent, SettingsPopupContent} from './components/popup.compon
     // Routing
     RouterModule.forRoot([
       { path: '', component: AuthComponent },
-      { path: 'home', component: HomeComponent },
+      { path: 'home', component: HomeComponent,
+        children: [
+          { path: '', redirectTo: 'profile', pathMatch: 'full'},
+          { path: 'profile', component: ProfileContent, outlet: 'settings' },
+        ]},
       { path: 'login', component: LoginFormComponent },
       { path: 'register', component: RegistrationFormComponent },
+      { path: 'profile', component: ProfileContent },
       ]),
 
     // Bootstrap

@@ -10,7 +10,14 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './templates/settings-popup-content.html',
 })
 export class SettingsPopupContent {
+  public activeCard: String = 'none';
   constructor(public activeModal: NgbActiveModal) {}
+  isActive(card: String) {
+    return this.activeCard === card;
+  }
+  setActive(card: String) {
+    this.activeCard = card;
+  }
 }
 
 @Component({

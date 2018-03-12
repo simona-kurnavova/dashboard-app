@@ -17,7 +17,7 @@ export class MenuComponent {
   }
 
   openSettings() {
-    this.popupService.open(SettingsPopupContent);
+    this.popupService.open(SettingsPopupContent, { size: 'lg' });
   }
 
   openProfile() {
