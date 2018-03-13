@@ -1,1 +1,18 @@
-accounts content
+<div *ngIf="isState('list')" class="container">
+  <div *ngFor="let account of accountList; let i = index;">
+    <a (click)="setCurrentAccount(i)"><b>{{ account.name }}</b></a>
+  </div>
+</div>
+
+<div *ngIf="isState('detail')" class="container">
+  <h3>{{ accountList[currentAccount].name }}</h3>
+  <p>{{ accountList[currentAccount].info }}</p>
+
+  <button (click)="setState('list')" type="button" class="btn btn-sm btn-blue-grey">Back</button>
+</div>
+
+
+
+
+
+

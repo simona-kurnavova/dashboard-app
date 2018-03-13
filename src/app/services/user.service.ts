@@ -15,6 +15,7 @@ export interface UserInterface {
 export class UserService {
   constructor(private authService: AuthService, private http: HttpClient) {}
 
+  // Registers new user
   create(user: UserInterface) {
     this.http.post<UserInterface>('http://127.0.0.1:8000/users/register?format=api', {
      'username': user.username, 'password': user.password, 'email': user.email,
@@ -23,7 +24,31 @@ export class UserService {
       }, err => console.log(err)
     );
   }
+
+  // Returns username and email of currently logged user
+  retrieve() {
+    return this.http.get<UserInterface>('http://127.0.0.1:8000/users/',
+      {headers: this.authService.getHeaders()});
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
