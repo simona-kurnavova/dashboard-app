@@ -27,6 +27,11 @@
       </div>
       <br>
       or <a routerLink="/register">register</a>
+
+      <div *ngFor="let alert of alerts" style="padding-top: 10px;">
+        <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+      </div>
+
     </div>
   </div>
 </div>

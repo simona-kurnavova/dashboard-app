@@ -18,7 +18,6 @@ import { RegistrationFormComponent } from './components/authentication.component
 import { LoginFormComponent } from './components/authentication.components/login-form.component';
 import { HomeComponent } from './components/main.components/home.component';
 import { AuthComponent } from './components/authentication.components/auth.component';
-import { NotificationComponent } from './components/notification.components/notification.component';
 import { MenuComponent } from './components/main.components/menu.component';
 import { DashboardComponent } from './components/main.components/dashboard.component';
 
@@ -34,7 +33,7 @@ import { AddWidgetContent } from './components/popup.components/add-widget-conte
 @NgModule({
   declarations: [
     AppComponent, HomeComponent, AuthComponent, RegistrationFormComponent,
-    LoginFormComponent, NotificationComponent, MenuComponent, DashboardComponent,
+    LoginFormComponent, MenuComponent, DashboardComponent,
     SettingsContent, AboutContent, ProfileContent, WidgetsContent, AccountsContent, AddWidgetContent
   ],
 
