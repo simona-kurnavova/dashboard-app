@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { SettingsPopupContent } from './popup.component';
 
 @Component({
   selector: 'dashboard',

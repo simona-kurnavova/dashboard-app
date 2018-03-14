@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import {AuthService} from '../services/auth.service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {AboutPopupContent, SettingsPopupContent} from './popup.component';
+import { AuthService } from '../../services/auth.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SettingsContent } from '../popup.components/settings-content.component';
+import { AboutContent } from '../popup.components/about-content.component';
 
 @Component({
   selector: 'menu',
@@ -9,6 +10,7 @@ import {AboutPopupContent, SettingsPopupContent} from './popup.component';
 })
 
 export class MenuComponent {
+  // TODO: get username from UserService
   public username = 'Username';
   constructor(private authService: AuthService, public popupService: NgbModal) {}
 
@@ -21,21 +23,21 @@ export class MenuComponent {
   }
 
   openProfile() {
-    const popup = this.popupService.open(SettingsPopupContent, { size: 'lg', });
+    const popup = this.popupService.open(SettingsContent, { size: 'lg', });
     popup.componentInstance.activeCard = 'profile';
   }
 
   openAbout() {
-    this.popupService.open(AboutPopupContent);
+    this.popupService.open(AboutContent);
   }
 
   openAddWidget() {
-    const popup = this.popupService.open(SettingsPopupContent, { size: 'lg' });
+    const popup = this.popupService.open(SettingsContent, { size: 'lg' });
     popup.componentInstance.activeCard = 'widgets';
   }
 
   openAddAccount() {
-    const popup = this.popupService.open(SettingsPopupContent, { size: 'lg' });
+    const popup = this.popupService.open(SettingsContent, { size: 'lg' });
     popup.componentInstance.activeCard = 'accounts';
   }
 }

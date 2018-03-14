@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { AppComponent } from './components/app.component';
+import { AppComponent } from './components/main.components/app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { OAuthModule } from 'angular-oauth2-oidc';
@@ -14,32 +14,27 @@ import { ApplicationService } from './services/application.service';
 import { WidgetService } from './services/widget.service';
 import { DashboardService } from './services/dashboard.service';
 
-import { RegistrationFormComponent } from './components/registration-form.component';
-import { LoginFormComponent } from './components/login-form.component';
-import { HomeComponent } from './components/home.component';
-import { AuthComponent } from './components/auth.component';
-import { CustomNotificationComponent } from './components/custom-notification.component';
-import { MenuComponent } from './components/menu.component';
-import { DashboardComponent } from './components/dashboard.component';
+import { RegistrationFormComponent } from './components/authentication.components/registration-form.component';
+import { LoginFormComponent } from './components/authentication.components/login-form.component';
+import { HomeComponent } from './components/main.components/home.component';
+import { AuthComponent } from './components/authentication.components/auth.component';
+import { NotificationComponent } from './components/notification.components/notification.component';
+import { MenuComponent } from './components/main.components/menu.component';
+import { DashboardComponent } from './components/main.components/dashboard.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import {AboutPopupContent, SettingsPopupContent} from './components/popup.component';
-import { ProfileContent } from './components/profile-content.component';
-import { WidgetsContent } from './components/widgets-content.component';
-import { AccountsContent } from './components/accounts-content.component';
+import { AboutContent } from './components/popup.components/about-content.component';
+import { SettingsContent } from './components/popup.components/settings-content.component';
+import { ProfileContent } from './components/popup.components/profile-content.component';
+import { WidgetsContent } from './components/popup.components/widgets-content.component';
+import { AccountsContent } from './components/popup.components/accounts-content.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    AuthComponent,
-    RegistrationFormComponent,
-    LoginFormComponent,
-    CustomNotificationComponent,
-    MenuComponent,
-    DashboardComponent,
-    SettingsPopupContent, AboutPopupContent, ProfileContent, WidgetsContent, AccountsContent
+    AppComponent, HomeComponent, AuthComponent, RegistrationFormComponent,
+    LoginFormComponent, NotificationComponent, MenuComponent, DashboardComponent,
+    SettingsContent, AboutContent, ProfileContent, WidgetsContent, AccountsContent
   ],
 
   imports: [
@@ -68,10 +63,9 @@ import { AccountsContent } from './components/accounts-content.component';
       provide: ErrorHandler,
       useClass: GlobalErrorHandler
     },
-    CustomNotificationComponent
   ],
   bootstrap: [ AppComponent ],
-  entryComponents: [ SettingsPopupContent, AboutPopupContent ],
+  entryComponents: [ SettingsContent, AboutContent ],
 })
 
 export class AppModule {}

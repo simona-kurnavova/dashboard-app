@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { AccountInterface, AccountService } from '../services/account.service';
+import { AuthService } from '../../services/auth.service';
+import { AccountInterface, AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'accounts-content',

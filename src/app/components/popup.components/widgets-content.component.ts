@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import {ApplicationInterface, ApplicationService} from '../services/application.service';
+import { Component, Input } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { ApplicationInterface, ApplicationService } from '../../services/application.service';
 
 @Component({
   selector: 'widgets-content',

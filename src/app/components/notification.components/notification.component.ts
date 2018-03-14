@@ -1,13 +1,12 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'notification',
-  templateUrl: './templates/custom-notification.component.html',
+  templateUrl: './templates/notification.component.html',
 })
 
-export class CustomNotificationComponent {
-  @Input()
-  public alerts: Array<IAlert> = [];
+export class NotificationComponent {
+  @Input() public alerts: Array<IAlert> = [];
 
   constructor() {
     const alert: IAlert = {
