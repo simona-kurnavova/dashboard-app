@@ -51,14 +51,9 @@ import { AccountsContent } from './components/accounts-content.component';
     // Routing
     RouterModule.forRoot([
       { path: '', component: AuthComponent },
-      { path: 'home', component: HomeComponent,
-        children: [
-          { path: '', redirectTo: 'profile', pathMatch: 'full'},
-          { path: 'profile', component: ProfileContent, outlet: 'settings' },
-        ]},
+      { path: 'home', component: HomeComponent },
       { path: 'login', component: LoginFormComponent },
       { path: 'register', component: RegistrationFormComponent },
-      { path: 'profile', component: ProfileContent },
       ]),
 
     // Bootstrap

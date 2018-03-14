@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService, UserInterface } from '../services/auth.service';
-import {UserService} from '../services/user.service';
+import { AuthService } from '../services/auth.service';
+import {UserService, UserInterface } from '../services/user.service';
 
 @Component({
   selector: 'registration-form',
@@ -13,7 +13,7 @@ import {UserService} from '../services/user.service';
 // TODO: validation of required fields
 
 export class RegistrationFormComponent {
-  public user: UserInterface = { username: '', password: '', email: '' };
+  public user: UserInterface = { id: null, username: '', password: '', email: '' };
   constructor(private userService: UserService) {}
 
   register() {

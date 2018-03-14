@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 
 export interface UserInterface {
+  id: Number;
   username: String;
   password: String;
   email: String;
@@ -13,6 +14,7 @@ export interface UserInterface {
 
 @Injectable()
 export class UserService {
+  private url = 'http://127.0.0.1:8000/users/';
   constructor(private authService: AuthService, private http: HttpClient) {}
 
   // Registers new user
@@ -27,11 +29,17 @@ export class UserService {
 
   // Returns username and email of currently logged user
   retrieve() {
-    return this.http.get<UserInterface>('http://127.0.0.1:8000/users/',
-      {headers: this.authService.getHeaders()});
+    return this.http.get<UserInterface>(this.url,
+      { headers: this.authService.getHeaders() });
+  }
+
+  // Does not work on server side
+  update(user: UserInterface) {
+    return this.http.patch<UserInterface>(this.url + user.id.toString() + '/', {
+     'id': user.id, 'username': user.username, 'email': user.email,
+    } , { headers: this.authService.getHeaders() });
   }
 }
-
 
 
 

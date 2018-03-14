@@ -21,7 +21,7 @@ export class MenuComponent {
   }
 
   openProfile() {
-    const popup = this.popupService.open(SettingsPopupContent, { size: 'lg' });
+    const popup = this.popupService.open(SettingsPopupContent, { size: 'lg', });
     popup.componentInstance.activeCard = 'profile';
   }
 
