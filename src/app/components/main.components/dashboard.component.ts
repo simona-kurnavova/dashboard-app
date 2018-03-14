@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {AddWidgetContent} from '../popup.components/add-widget-content.component';
 
 @Component({
   selector: 'dashboard',
@@ -16,7 +17,7 @@ export class DashboardComponent {
   }
 
   addWidget() {
-    // TODO
+    this.popupService.open(AddWidgetContent);
   }
 
   cancelEditMode() {

@@ -29,12 +29,13 @@ import { SettingsContent } from './components/popup.components/settings-content.
 import { ProfileContent } from './components/popup.components/profile-content.component';
 import { WidgetsContent } from './components/popup.components/widgets-content.component';
 import { AccountsContent } from './components/popup.components/accounts-content.component';
+import { AddWidgetContent } from './components/popup.components/add-widget-content.component';
 
 @NgModule({
   declarations: [
     AppComponent, HomeComponent, AuthComponent, RegistrationFormComponent,
     LoginFormComponent, NotificationComponent, MenuComponent, DashboardComponent,
-    SettingsContent, AboutContent, ProfileContent, WidgetsContent, AccountsContent
+    SettingsContent, AboutContent, ProfileContent, WidgetsContent, AccountsContent, AddWidgetContent
   ],
 
   imports: [
@@ -65,7 +66,7 @@ import { AccountsContent } from './components/popup.components/accounts-content.
     },
   ],
   bootstrap: [ AppComponent ],
-  entryComponents: [ SettingsContent, AboutContent ],
+  entryComponents: [ SettingsContent, AboutContent, AddWidgetContent ],
 })
 
 export class AppModule {}
