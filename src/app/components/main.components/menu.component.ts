@@ -4,6 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SettingsContent } from '../popup.components/settings-content.component';
 import { AboutContent } from '../popup.components/about-content.component';
 import {AddWidgetContent} from '../popup.components/add-widget-content.component';
+import {UserInterface, UserService} from '../../services/user.service';
+import {connectableObservableDescriptor} from 'rxjs/observable/ConnectableObservable';
 
 @Component({
   selector: 'menu',
@@ -11,9 +13,22 @@ import {AddWidgetContent} from '../popup.components/add-widget-content.component
 })
 
 export class MenuComponent {
-  // TODO: get username from UserService
-  public username = 'Username';
-  constructor(private authService: AuthService, public popupService: NgbModal) {}
+  public username: String;
+
+  constructor(private authService: AuthService, public popupService: NgbModal, private userService: UserService) {}
+
+  ngOnInit() {
+    this.userService.retrieve().subscribe(
+      data => {
+        this.username = (<UserInterface[]>data['results'])[0].username;
+        console.log(data);
+      },
+      err => {
+        console.log(err);
+        this.username = 'User';
+      }
+    );
+  }
 
   logout() {
     this.authService.logout();
