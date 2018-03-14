@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SettingsContent } from '../popup.components/settings-content.component';
 import { AboutContent } from '../popup.components/about-content.component';
+import {AddWidgetContent} from '../popup.components/add-widget-content.component';
 
 @Component({
   selector: 'menu',
@@ -32,8 +33,7 @@ export class MenuComponent {
   }
 
   openAddWidget() {
-    const popup = this.popupService.open(SettingsContent, { size: 'lg' });
-    popup.componentInstance.activeCard = 'widgets';
+    const popup = this.popupService.open(AddWidgetContent);
   }
 
   openAddAccount() {

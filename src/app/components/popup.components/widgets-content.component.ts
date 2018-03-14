@@ -45,8 +45,4 @@ export class WidgetsContent {
     this.setState('detail');
     this.currentApp = index;
   }
-
-  addToDashboard(index: Number) {
-    // TODO
-  }
 }
