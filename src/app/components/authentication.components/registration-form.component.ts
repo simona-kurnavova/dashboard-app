@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { UserService, UserInterface } from '../../services/user.service';
 import {AlertInterface, SERVER_ERROR_ALERT, USER_ALREADY_EXISTS_ALERT, USER_REGISTERED_ALERT} from '../../authentication-alerts';
+import {HttpErrorHandler} from '../../services/http-error-handler.service';
 
 @Component({
   selector: 'registration-form',
@@ -18,11 +19,12 @@ export class RegistrationFormComponent {
   constructor(private userService: UserService) {}
 
   register() {
+    this.alerts = [];
     this.userService.create(this.user).subscribe(data => {
-        console.log(data);
+        this.alerts.push(USER_REGISTERED_ALERT);
       }, err => {
-        // temporary solution
         console.log(err);
+        this.alerts.push(HttpErrorHandler.getAlert(err['status']));
       }
     );
   }

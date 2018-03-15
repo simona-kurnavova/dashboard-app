@@ -17,7 +17,7 @@ export class UserService {
 
   // Registers new user
   create(user: UserInterface) {
-    return this.http.post<UserInterface>(this.url + 'register?format=api', {
+    return this.http.post<UserInterface>(this.url + 'register?format=json', {
      'username': user.username, 'password': user.password, 'email': user.email,
     });
   }
@@ -35,37 +35,3 @@ export class UserService {
     } , { headers: this.authService.getHeaders() });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

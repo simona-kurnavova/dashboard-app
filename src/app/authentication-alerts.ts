@@ -39,3 +39,4 @@ export const USER_ALREADY_EXISTS_ALERT: AlertInterface = {
   type: 'warning',
   message: 'Username already registered'
 };
+
