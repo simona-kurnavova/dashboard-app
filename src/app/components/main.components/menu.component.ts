@@ -5,7 +5,6 @@ import { SettingsContent } from '../popup.components/settings-content.component'
 import { AboutContent } from '../popup.components/about-content.component';
 import {AddWidgetContent} from '../popup.components/add-widget-content.component';
 import {UserInterface, UserService} from '../../services/user.service';
-import {connectableObservableDescriptor} from 'rxjs/observable/ConnectableObservable';
 
 @Component({
   selector: 'menu',
