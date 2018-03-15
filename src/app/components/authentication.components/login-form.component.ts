@@ -17,22 +17,30 @@ export class LoginFormComponent {
   constructor(private authService: AuthService) {}
 
   login() {
+    this.alerts = [];
     if (this.loginData.username === '') {
       this.alerts.push(EMPTY_USERNAME_ALERT);
-      return;
     }
 
     if (this.loginData.password === '') {
       this.alerts.push(EMPTY_PASSWORD_ALERT);
+    }
+
+    if (this.alerts.length > 0) {
+      console.log('returning');
       return;
     }
+
     this.authService.getToken(this.loginData).subscribe(
-      data => this.authService.saveToken(data),
+      data => {
+        this.authService.saveToken(data);
+        console.log(data);
+      },
       err => {
         this.alerts.push(HttpErrorHandler.getAlert(err['status']));
+        console.log(err);
       }
     );
-    this.alerts = [];
   }
 
   public closeAlert(alert: AlertInterface) {
