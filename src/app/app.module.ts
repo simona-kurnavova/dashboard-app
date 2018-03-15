@@ -1,11 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { AppComponent } from './components/main.components/app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { RouterModule } from '@angular/router';
-import { GlobalErrorHandler } from './global.error.handler';
 
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
@@ -59,10 +58,6 @@ import { AddWidgetContent } from './components/popup.components/add-widget-conte
   ],
   providers: [
     AuthService, AccountService, ApplicationService, WidgetService, DashboardService, UserService,
-    {
-      provide: ErrorHandler,
-      useClass: GlobalErrorHandler
-    },
   ],
   bootstrap: [ AppComponent ],
   entryComponents: [ SettingsContent, AboutContent, AddWidgetContent ],

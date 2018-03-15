@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { UserService, UserInterface } from '../../services/user.service';
-import { AlertInterface, USER_ALREADY_EXISTS_ALERT, USER_REGISTERED_ALERT } from '../../authentication-alerts';
+import {AlertInterface, SERVER_ERROR_ALERT, USER_ALREADY_EXISTS_ALERT, USER_REGISTERED_ALERT} from '../../authentication-alerts';
 
 @Component({
   selector: 'registration-form',
@@ -10,8 +10,6 @@ import { AlertInterface, USER_ALREADY_EXISTS_ALERT, USER_REGISTERED_ALERT } from
   templateUrl: './templates/registration-form.component.html'
 })
 
-// TODO: username validation: 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-// TODO: validation of required fields
 
 export class RegistrationFormComponent {
   public user: UserInterface = { id: null, username: '', password: '', email: '' };
@@ -20,7 +18,13 @@ export class RegistrationFormComponent {
   constructor(private userService: UserService) {}
 
   register() {
-    this.userService.create(this.user);
+    this.userService.create(this.user).subscribe(data => {
+        console.log(data);
+      }, err => {
+        // temporary solution
+        console.log(err);
+      }
+    );
   }
 
   public closeAlert(alert: AlertInterface) {

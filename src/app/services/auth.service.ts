@@ -24,19 +24,8 @@ export class AuthService {
       'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
       'Authorization': 'Basic ' + btoa('u9XjgyEGxDXtTDN80TG5tgk8TnHzGSmp7rqO5Gfs:UwUnaGxgKhEadmTz0j6so0VIzLZQHaAV1MfXBa10H0SSbjirskawdSfh7cGem5tmh06G4yCnUWSLZr8pfhVCxiGj3sPwmPbpyxMUHL6bT1DPT2uErrW5V8dne50tLoD1')
     });
-    this.http.post('http://127.0.0.1:8000/o/token/', params.toString(), {headers: headers})
-      .subscribe(
-        data => this.saveToken(data),
-        err => {
-          // TODO: Invalid credentials error
-          // TODO: No server connection error
-          if (err.error instanceof Error) {
-            throw new Error(err);
-          } else {
-            console.log(err.message);
-          }
-        }
-      );
+    return this.http.post('http://127.0.0.1:8000/o/token/', params.toString(),
+      {headers: headers});
   }
 
   saveToken(token) {
