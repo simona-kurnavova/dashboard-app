@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row justify-content-center" style="padding-top: 50px;">
-    <div class="col-sm-10 col-md-4">
+    <div class="col-sm-12 col-md-4">
       <div class="card card-body">
         <form class="registration-form">
           <p class="h5 text-center mb-4">Register</p>
@@ -9,14 +9,16 @@
             <input type="text" value="" id="r-username" [(ngModel)]="user.username" class="form-control" name="username"
                    mdbInputValidate>
             <label for="r-username">Username</label>
-          </div><br>
+          </div>
+          <br>
 
           <div class="md-form">
             <input mdbActive autocomplete="new-password" data-error="wrong password" data-success="valid password"
                    minLength="8" type="password" [(ngModel)]='user.password' class="form-control" id="r-password"
                    name="pass word" mdbInputValidate>
             <label for="r-password">Password</label>
-          </div><br>
+          </div>
+          <br>
 
           <div class="md-form">
             <input mdbActive value="" data-error="wrong email" data-success="valid email" type="email"
@@ -32,12 +34,14 @@
       </div>
       <br>
       or <a routerLink="/login" href="/login">login</a>
+
+      <div *ngFor="let alert of alerts" style="padding-top: 10px;">
+        <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+      </div>
+
     </div>
   </div>
 </div>
-
-
-
 
 
 

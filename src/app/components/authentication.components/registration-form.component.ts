@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import {UserService, UserInterface } from '../../services/user.service';
+import { UserService, UserInterface } from '../../services/user.service';
+import { AlertInterface, USER_ALREADY_EXISTS_ALERT, USER_REGISTERED_ALERT } from '../../authentication-alerts';
 
 @Component({
   selector: 'registration-form',
@@ -14,9 +15,16 @@ import {UserService, UserInterface } from '../../services/user.service';
 
 export class RegistrationFormComponent {
   public user: UserInterface = { id: null, username: '', password: '', email: '' };
+  public alerts: Array<AlertInterface> = [];
+
   constructor(private userService: UserService) {}
 
   register() {
     this.userService.create(this.user);
+  }
+
+  public closeAlert(alert: AlertInterface) {
+    const index: number = this.alerts.indexOf(alert);
+    this.alerts.splice(index, 1);
   }
 }
