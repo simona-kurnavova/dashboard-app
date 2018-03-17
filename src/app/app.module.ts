@@ -29,6 +29,7 @@ import { WidgetsContent } from './components/popup.components/widgets-content.co
 import { AccountsContent } from './components/popup.components/accounts-content.component';
 import { AddWidgetContent } from './components/popup.components/add-widget-content.component';
 import {WidgetComponent} from './components/main.components/widget.component';
+import {WidgetMatrixService} from './services/widget-matrix.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import {WidgetComponent} from './components/main.components/widget.component';
     MDBBootstrapModule.forRoot(),
   ],
   providers: [
-    AuthService, AccountService, ApplicationService, WidgetService, DashboardService, UserService,
+    AuthService, AccountService, ApplicationService, WidgetService, DashboardService, UserService, WidgetMatrixService
   ],
   bootstrap: [ AppComponent ],
   entryComponents: [ SettingsContent, AboutContent, AddWidgetContent ],

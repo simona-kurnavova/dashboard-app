@@ -3,6 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AddWidgetContent} from '../popup.components/add-widget-content.component';
 import {DashboardInterface, DashboardService} from '../../services/dashboard.service';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
+import {WidgetMatrixService} from '../../services/widget-matrix.service';
 
 @Component({
   selector: 'dashboard',
@@ -27,31 +28,13 @@ export class DashboardComponent {
         this.dashboardList = <DashboardInterface[]>dashboards['results'];
         this.widgetService.retrieveAll().subscribe(
           widgets => {
-            this.parseWidgets(<WidgetInterface[]>widgets['results']);
+            this.widgetList = WidgetMatrixService.parseWidgets(<WidgetInterface[]>widgets['results']);
           },
           err => console.log(err)
         );
      },
      err => console.log(err)
    );
-  }
-
-  parseWidgets(widgets: WidgetInterface[]) {
-    this.widgetList = [];
-    let widgetRow = [];
-    let currentRow = 0;
-
-    for (let i = 0; i < widgets.length; i++) {
-      if (widgets[i].position_y === currentRow) {
-        widgetRow.push(widgets[i]);
-      } else {
-        this.widgetList.push(widgetRow);
-        widgetRow = [];
-        currentRow++;
-        widgetRow.push(widgets[i]);
-      }
-    }
-    this.widgetList.push(widgetRow);
   }
 
   isState(state: String) {
