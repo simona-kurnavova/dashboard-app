@@ -4,11 +4,12 @@ import { AuthService } from './auth.service';
 import { BACKEND } from '../settings';
 
 export interface WidgetInterface {
+  id: Number;
   dashboard: Number;
   app: Number;
   account: Number;
-  position_x: Number;
-  position_y: Number;
+  position_x: number;
+  position_y: number;
   size_x: Number;
   size_y: Number;
 }
@@ -29,6 +30,10 @@ export class WidgetService {
     return this.http.get(this.url, {headers: this.authService.getHeaders()});
   }
 
+  retrieveByDashboard(dashboardId: Number) {
+    return this.http.get(this.url + 'get_by_dashboard/' + dashboardId + '/', {headers: this.authService.getHeaders()});
+  }
+
   create(widget: WidgetInterface) {
     return this.http.post<WidgetInterface>(this.url, {
       'dashboard': widget.dashboard,
@@ -43,6 +48,7 @@ export class WidgetService {
 
   edit(id: Number, widget: WidgetInterface) {
     return this.http.put<WidgetInterface>(this.url + id + '/', {
+      'id': widget.id,
       'dashboard': widget.dashboard,
       'app': widget.app,
       'account': widget.account,

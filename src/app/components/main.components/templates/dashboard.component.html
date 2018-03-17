@@ -4,11 +4,11 @@
       Mode: &nbsp; &nbsp;
       <div class="btn-group">
 
-        <label class="btn btn-blue-grey btn-sm waves-light" [(ngModel)]="mode" mdbRadio="normal" mdbRippleRadius>
+        <label class="btn btn-blue-grey btn-sm waves-light" [(ngModel)]="state" mdbRadio="normal" mdbRippleRadius>
           Normal
         </label>
 
-        <label class="btn btn-blue-grey btn-sm waves-light" [(ngModel)]="mode" mdbRadio="edit" mdbRippleRadius>
+        <label class="btn btn-blue-grey btn-sm waves-light" [(ngModel)]="state" mdbRadio="edit" mdbRippleRadius>
           Edit
         </label>
 
@@ -16,15 +16,55 @@
     </div>
 
     <hr>
-    <h4 align="center">dashboard is empty</h4>
+
+    <div *ngFor="let row of widgetList; let i = index;">
+      <div class="row justify-content-{{ widgetJustify }}">
+        <div class="col-{{widgetList[i][j].size_x}}" *ngFor="let col of widgetList[i]; let j = index;"
+             style="padding-bottom: 10px;">
+          <div class="card card-body" style=" height: 200px">
+            {{ widgetList[i][j].id }}
+          </div>
+        </div>
+      </div>
+    </div>
+
     <hr>
 
-    <div *ngIf="editMode()" class="row justify-content-end">
-      <div class="btn-group">
-        <button (click)="addWidget()" class="btn btn-blue-grey btn-sm">Add Widget</button>
-        <button (click)="cancelEditMode()" class="btn btn-blue-grey btn-sm">Cancel</button>
-        <button (click)="saveEdit()" class="btn btn-blue-grey btn-sm">Done</button>
+    <div *ngIf="isState('edit')" class="row">
+
+      <div class="col">
+        Justify widgets:
+        <fieldset class="form-group">
+          <div class="form-check">
+            <input class="form-check-input" [(ngModel)]="widgetJustify" type="radio" name="gridRadios" id="gridRadios1"
+                   value="center" checked>
+            <label class="form-check-label" for="gridRadios1">
+              Center
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" [(ngModel)]="widgetJustify" type="radio" name="gridRadios" id="gridRadios2" value="">
+            <label class="form-check-label" for="gridRadios2">
+              Left
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" [(ngModel)]="widgetJustify" type="radio" name="gridRadios" id="gridRadios3" value="end">
+            <label class="form-check-label" for="gridRadios3">
+              Right
+            </label>
+          </div>
+        </fieldset>
       </div>
+
+      <div class="col" align="right">
+        <div class="btn-group">
+          <button (click)="addWidget()" class="btn btn-blue-grey btn-sm">Add Widget</button>
+          <button (click)="setState('normal')" class="btn btn-blue-grey btn-sm">Cancel</button>
+          <button (click)="saveEdit()" class="btn btn-blue-grey btn-sm">Done</button>
+        </div>
+      </div>
+
     </div>
 
   </div>

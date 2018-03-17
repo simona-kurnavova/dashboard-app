@@ -4,6 +4,7 @@ import {AuthService} from './auth.service';
 import { BACKEND } from '../settings';
 
 export interface DashboardInterface {
+  id: Number;
   owner: Number;
 }
 
