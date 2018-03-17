@@ -1,54 +1,69 @@
-<div class="row">
-  <div class="col col-lg-4">
-    <div class="btn-group">
+<div class="container" *ngIf="!hideMenu">
+  <div class="row">
+    <div class="col col-lg-4">
+      <div class="btn-group">
 
-      <button type="button" (click)="openSettings()" class="btn btn-secondary waves-light" mdbRippleRadius>
-        <i class="fa fa-wrench mr-1"></i> Settings
-      </button>
+        <button type="button" (click)="openSettings()" class="btn btn-secondary waves-light" mdbRippleRadius>
+          <i class="fa fa-wrench mr-1"></i> Settings
+        </button>
 
+        <div class="btn-group">
+          <div class="dropdown" dropdown>
+
+            <button dropdownToggle type="button" class="btn btn-secondary dropdown-toggle waves-light"
+                    mdbRippleRadius>
+              Add
+            </button>
+
+            <div class="dropdown-menu">
+              <a class="dropdown-item" (click)="openAddWidget()">Widget</a>
+              <a class="dropdown-item" (click)="openAddAccount()">Account</a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col col-lg-4">
+      <h3 class="h3-responsive" align="center">DASHBOARD</h3>
+    </div>
+
+    <div class="col col-lg-4" align="right">
       <div class="btn-group">
         <div class="dropdown" dropdown>
 
           <button dropdownToggle type="button" class="btn btn-secondary dropdown-toggle waves-light"
                   mdbRippleRadius>
-            Add
+            {{ username }}
           </button>
 
           <div class="dropdown-menu">
-            <a class="dropdown-item" (click)="openAddWidget()">Widget</a>
-            <a class="dropdown-item" (click)="openAddAccount()">Account</a>
+            <a class="dropdown-item" (click)="openProfile()">Profile</a>
+            <a class="dropdown-item" (click)="openAbout()">About</a>
+            <a class="dropdown-item" (click)="logout()">Logout</a>
           </div>
+          &nbsp;
+          <a (click)="hideMenu=true">
+            <i style="color: lightgrey" class="fa fa-angle-double-up fa-2x" aria-hidden="true"></i>
+          </a>
 
         </div>
       </div>
-
     </div>
   </div>
-
-  <div class="col col-lg-5">
-    <h3 class="h3-responsive" align="center">DASHBOARD</h3>
-  </div>
-
-  <div class="col col-lg-3" align="right">
-    <div class="btn-group">
-      <div class="dropdown" dropdown>
-
-        <button dropdownToggle type="button" class="btn btn-secondary dropdown-toggle waves-light"
-                mdbRippleRadius>
-          {{ username }}
-        </button>
-
-        <div class="dropdown-menu">
-          <a class="dropdown-item" (click)="openProfile()">Profile</a>
-          <a class="dropdown-item" (click)="openAbout()">About</a>
-          <a class="dropdown-item" (click)="logout()">Logout</a>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
 </div>
 
+<div class="container" *ngIf="hideMenu">
+  <div class="row">
+    <div class="col" align="right">
 
+      <a (click)="hideMenu=false">
+        <i style="color: lightgrey" class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i>
+      </a>
+
+    </div>
+  </div>
+</div>
 

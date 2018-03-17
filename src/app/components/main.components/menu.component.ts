@@ -13,6 +13,7 @@ import {UserInterface, UserService} from '../../services/user.service';
 
 export class MenuComponent {
   public username: String;
+  public hideMenu: false;
 
   constructor(private authService: AuthService, public popupService: NgbModal, private userService: UserService) {}
 
