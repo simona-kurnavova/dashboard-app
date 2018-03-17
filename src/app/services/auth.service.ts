@@ -41,6 +41,12 @@ export class AuthService {
     }
   }
 
+  isLoggedIn() {
+    if (Cookie.check('access_token')) {
+      this.router.navigate(['/home']);
+    }
+  }
+
   logout() {
     Cookie.delete('access_token');
     this.router.navigate(['/login']);

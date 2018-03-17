@@ -19,7 +19,9 @@ export class DashboardComponent {
 
   constructor(private popupService: NgbModal,
               private dashboardService: DashboardService,
-              private widgetService: WidgetService) {}
+              private widgetService: WidgetService) {
+    this.ngOnInit();
+  }
 
   ngOnInit() {
     // TODO: error handling

@@ -4,6 +4,7 @@ import { ApplicationInterface, ApplicationService } from '../../services/applica
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
 import {WidgetMatrixService} from '../../services/widget-matrix.service';
 import {AccountService} from '../../services/account.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'add-widget-content',
@@ -16,7 +17,8 @@ export class AddWidgetContent {
   constructor(public activeModal: NgbActiveModal,
               private appService: ApplicationService,
               private widgetService: WidgetService,
-              private accountService: AccountService) {}
+              private accountService: AccountService,
+              private router: Router) {}
 
   ngOnInit() {
     this.appService.retrieveAll().subscribe(
@@ -46,5 +48,7 @@ export class AddWidgetContent {
         },
       err => console.log(err)
     );
+    this.router.navigate(['/']);
+    this.activeModal.dismiss();
   }
 }

@@ -7,4 +7,8 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './templates/auth.component.html'
 })
 
-export class AuthComponent {}
+export class AuthComponent {
+  constructor(private authService: AuthService) {
+    authService.isLoggedIn();
+  }
+}
