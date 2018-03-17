@@ -28,11 +28,12 @@ import { ProfileContent } from './components/popup.components/profile-content.co
 import { WidgetsContent } from './components/popup.components/widgets-content.component';
 import { AccountsContent } from './components/popup.components/accounts-content.component';
 import { AddWidgetContent } from './components/popup.components/add-widget-content.component';
+import {WidgetComponent} from './components/main.components/widget.component';
 
 @NgModule({
   declarations: [
     AppComponent, HomeComponent, AuthComponent, RegistrationFormComponent,
-    LoginFormComponent, MenuComponent, DashboardComponent,
+    LoginFormComponent, MenuComponent, DashboardComponent, WidgetComponent,
     SettingsContent, AboutContent, ProfileContent, WidgetsContent, AccountsContent, AddWidgetContent
   ],
 

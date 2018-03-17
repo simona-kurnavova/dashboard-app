@@ -3,15 +3,12 @@
     <div class="row justify-content-end">
       Mode: &nbsp; &nbsp;
       <div class="btn-group">
-
         <label class="btn btn-blue-grey btn-sm waves-light" [(ngModel)]="state" mdbRadio="normal" mdbRippleRadius>
           Normal
         </label>
-
         <label class="btn btn-blue-grey btn-sm waves-light" [(ngModel)]="state" mdbRadio="edit" mdbRippleRadius>
           Edit
         </label>
-
       </div>
     </div>
 
@@ -21,9 +18,7 @@
       <div class="row justify-content-{{ widgetJustify }}">
         <div class="col-{{widgetList[i][j].size_x}}" *ngFor="let col of widgetList[i]; let j = index;"
              style="padding-bottom: 10px;">
-          <div class="card card-body" style=" height: 200px">
-            {{ widgetList[i][j].id }}
-          </div>
+          <widget [state]="state" [widget]="widgetList[i][j]"></widget>
         </div>
       </div>
     </div>
@@ -31,7 +26,6 @@
     <hr>
 
     <div *ngIf="isState('edit')" class="row">
-
       <div class="col">
         Justify widgets:
         <fieldset class="form-group">
@@ -43,13 +37,15 @@
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" [(ngModel)]="widgetJustify" type="radio" name="gridRadios" id="gridRadios2" value="">
+            <input class="form-check-input" [(ngModel)]="widgetJustify" type="radio" name="gridRadios" id="gridRadios2"
+                   value="">
             <label class="form-check-label" for="gridRadios2">
               Left
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" [(ngModel)]="widgetJustify" type="radio" name="gridRadios" id="gridRadios3" value="end">
+            <input class="form-check-input" [(ngModel)]="widgetJustify" type="radio" name="gridRadios" id="gridRadios3"
+                   value="end">
             <label class="form-check-label" for="gridRadios3">
               Right
             </label>
@@ -64,7 +60,6 @@
           <button (click)="saveEdit()" class="btn btn-blue-grey btn-sm">Done</button>
         </div>
       </div>
-
     </div>
 
   </div>
