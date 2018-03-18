@@ -16,6 +16,7 @@ export class DashboardComponent {
   public widgetJustify = 'center';
   public dashboardList: DashboardInterface[];
   public widgetList: WidgetInterface[][];
+  public widgetListEdit: WidgetInterface[][];
 
   constructor(private popupService: NgbModal,
               private dashboardService: DashboardService,
@@ -31,6 +32,7 @@ export class DashboardComponent {
         this.widgetService.retrieveAll().subscribe(
           widgets => {
             this.widgetList = WidgetMatrixService.parseWidgets(<WidgetInterface[]>widgets['results']);
+            this.widgetListEdit = WidgetMatrixService.parseWidgetsEdit(this.widgetList, this.dashboardList[0].id);
           },
           err => console.log(err)
         );

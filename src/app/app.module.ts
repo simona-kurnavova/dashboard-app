@@ -30,6 +30,7 @@ import { AccountsContent } from './components/popup.components/accounts-content.
 import { AddWidgetContent } from './components/popup.components/add-widget-content.component';
 import {WidgetComponent} from './components/main.components/widget.component';
 import {WidgetMatrixService} from './services/widget-matrix.service';
+import {DndModule} from 'ng2-dnd';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {WidgetMatrixService} from './services/widget-matrix.service';
     FormsModule,
     HttpClientModule, // Http communication module
     OAuthModule.forRoot(), // OAuth2 client
+    DndModule.forRoot(),
 
     // Routing
     RouterModule.forRoot([

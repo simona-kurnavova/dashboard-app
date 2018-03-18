@@ -7,7 +7,7 @@ export interface WidgetInterface {
   id: Number;
   dashboard: Number;
   app: Number;
-  account: Number;
+  account?: Number;
   position_x: number;
   position_y: number;
   size_x: Number;

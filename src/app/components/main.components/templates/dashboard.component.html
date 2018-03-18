@@ -1,5 +1,4 @@
 <div class="card card-body">
-  <div class="container">
     <div class="row justify-content-end">
       Mode: &nbsp; &nbsp;
       <div class="btn-group">
@@ -14,14 +13,29 @@
 
     <hr>
 
-    <div *ngFor="let row of widgetList; let i = index;">
-      <div class="row justify-content-{{ widgetJustify }}">
-        <div class="col-{{widgetList[i][j].size_x}}" *ngFor="let col of widgetList[i]; let j = index;"
-             style="padding-bottom: 10px;">
-          <widget [state]="state" [widget]="widgetList[i][j]"></widget>
+    <div class="container" *ngIf="isState('normal')">
+      <div *ngFor="let row of widgetList; let i = index;">
+        <div class="row justify-content-{{ widgetJustify }}">
+          <div class="col-{{widgetList[i][j].size_x}} widget-column" *ngFor="let col of widgetList[i]; let j = index;">
+            <div class="card">
+              <widget [state]="state" [widget]="widgetList[i][j]"></widget>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+  <div class="container" *ngIf="isState('edit')">
+    <div *ngFor="let row of widgetListEdit; let i = index;">
+      <div class="row justify-content-{{ widgetJustify }}" dnd-sortable-container [sortableData]="widgetListEdit[i]">
+        <div class="col-{{widgetListEdit[i][j].size_x}} widget-column" *ngFor="let col of widgetListEdit[i]; let j = index;">
+          <div class="card" dnd-sortable [sortableIndex]="j">
+            <widget [state]="state" [widget]="widgetListEdit[i][j]"></widget>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <hr>
 
@@ -63,11 +77,11 @@
     </div>
 
   </div>
-</div>
 
 <style>
-  /* widget class for the cards with apps */
-  .widget {
-    margin: 2px;
+
+  .widget-column {
+    padding-bottom: 10px;
   }
+
 </style>

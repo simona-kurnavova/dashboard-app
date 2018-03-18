@@ -19,11 +19,11 @@
                 </div>
                 <div class="col" align="right">
                   <a ngbTooltip="{{app.description}}">
-                    <i style="color: darkgrey; padding-right: 5px;" class="fa fa-eye widget-control-icon"
+                    <i class="fa fa-eye add-widget-icon add-widget-eye-icon"
                        aria-hidden="true"></i>
                   </a>
                   <a (click)="addWidget(i)">
-                    <i style="color: darkgrey;" class="fa fa-plus" aria-hidden="true"></i>
+                    <i class="fa fa-plus add-widget-icon" aria-hidden="true"></i>
                   </a>
                 </div>
               </div>
@@ -39,3 +39,13 @@
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
 </div>
+
+<style>
+  .add-widget-icon {
+    color: darkgrey;
+  }
+
+  .add-widget-eye-icon {
+    padding-right: 5px;
+  }
+</style>

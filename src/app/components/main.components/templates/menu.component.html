@@ -48,7 +48,7 @@
         </div>
         &nbsp; &nbsp;
         <a (click)="hideMenu=true">
-          <i style="color: lightgrey" class="fa fa-angle-double-up fa-2x" aria-hidden="true"></i>
+          <i class="fa fa-angle-double-up fa-2x menu-hide-icon" aria-hidden="true"></i>
         </a>
       </div>
     </div>
@@ -60,10 +60,18 @@
     <div class="col" align="right">
 
       <a (click)="hideMenu=false">
-        <i style="color: lightgrey" class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i>
+        <i class="fa fa-angle-double-down fa-2x menu-hide-icon" aria-hidden="true"></i>
       </a>
 
     </div>
   </div>
 </div>
+
+<style>
+
+  .menu-hide-icon {
+  color: lightgrey;
+  }
+
+</style>
 

@@ -11,15 +11,20 @@ export class WidgetMatrixService {
 
     for (let i = 0; i < widgets.length; i++) {
       if (widgets[i].position_y === currentRow) {
-        widgetRow.push(widgets[i]);
+        widgetRow.splice(widgets[i].position_x, 0, widgets[i]);
       } else {
         widgetList.push(widgetRow);
         widgetRow = [];
         currentRow++;
-        widgetRow.push(widgets[i]);
+        widgetRow.splice(widgets[i].position_x, 0, widgets[i]);
       }
     }
     widgetList.push(widgetRow);
+    return widgetList;
+  }
+
+  static parseWidgetsEdit(widgetList: WidgetInterface[][], dashboard: Number) {
+    // TODO
     return widgetList;
   }
 
