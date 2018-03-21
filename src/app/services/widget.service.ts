@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { BACKEND } from '../settings';
 
 export interface WidgetInterface {
-  id: Number;
+  id?: Number;
   dashboard: Number;
   app: Number;
   account?: Number;
@@ -23,15 +23,11 @@ export class WidgetService {
 
   retrieve(id: Number) {
     return this.http.get<WidgetInterface>(
-      this.url + id, {headers: this.authService.getHeaders()});
+      this.url + id.toString() + '/', {headers: this.authService.getHeaders()});
   }
 
   retrieveAll() {
     return this.http.get(this.url, {headers: this.authService.getHeaders()});
-  }
-
-  retrieveByDashboard(dashboardId: Number) {
-    return this.http.get(this.url + 'get_by_dashboard/' + dashboardId + '/', {headers: this.authService.getHeaders()});
   }
 
   create(widget: WidgetInterface) {
@@ -60,6 +56,12 @@ export class WidgetService {
   }
 
   delete(id: Number) {
-    return this.http.delete(this.url + id + '/', {headers: this.authService.getHeaders()});
+    return this.http.delete(this.url + id.toString() + '/',
+      {headers: this.authService.getHeaders()});
   }
 }
+
+
+
+
+

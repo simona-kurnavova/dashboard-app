@@ -1,19 +1,35 @@
-<div class="card card-body {{ setOverlay() }}">
-  <div class="mask" *ngIf="isState('edit')">
-    <div class="container">
-      <div class="row justify-content-end">
-        <div class="col" align="right">
-          <a href="#"><i class="fa fa-pencil fa-lg widget-control-icon" aria-hidden="true"></i></a>
-          <a href="#"><i class="fa fa-remove fa-lg widget-control-icon" aria-hidden="true"></i></a>
+  <div class="card card-body {{ setOverlay() }}">
+    <div class="mask" *ngIf="isState('edit')">
+      <div class="container">
+        <div class="row justify-content-end">
+          <div class="col" align="right">
+            <div class="btn-group">
+
+              <div class="btn-group" dropdown>
+                <a dropdownToggle>
+                  <i class="fa fa-pencil fa-lg widget-control-icon" aria-hidden="true"></i>
+                </a>
+
+                <div class="dropdown-menu dropdown-primary">
+                  <a (click)="changeSize(3,4)" class="dropdown-item">3x4</a>
+                  <a (click)="changeSize(4,4)" class="dropdown-item">4x4</a>
+                  <a (click)="changeSize(5,4)" class="dropdown-item">5x4</a>
+                  <a (click)="changeSize(6,4)" class="dropdown-item">6x4</a>
+                </div>
+              </div>
+
+              <a (click)="deleteWidget()"><i class="fa fa-remove fa-lg widget-control-icon" aria-hidden="true"></i></a>
+
+            </div>
+          </div>
+          <hr>
         </div>
-        <hr>
       </div>
     </div>
-  </div>
 
   {{ widget.id }}
 
-</div>
+  </div>
 
 <style>
   .card {

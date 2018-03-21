@@ -34,7 +34,7 @@ export class WidgetMatrixService {
 
   static createWidget(app: Number, account: Number, dashboard: Number, widgets) {
     const widget: WidgetInterface = {
-      id: null, app: app, account: account, dashboard: dashboard,
+      app: app, account: account, dashboard: dashboard,
       position_x: 0, position_y: this.getFreeRow(widgets),
       size_x: 4, size_y: 4
     };

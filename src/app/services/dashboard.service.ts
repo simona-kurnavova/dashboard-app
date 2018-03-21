@@ -37,4 +37,3 @@ export class DashboardService {
     return this.http.delete(this.url + id + '/', {headers: this.authService.getHeaders()});
   }
 }
-
