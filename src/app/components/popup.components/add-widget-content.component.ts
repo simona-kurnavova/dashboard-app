@@ -48,7 +48,7 @@ export class AddWidgetContent {
         },
       err => console.log(err)
     );
-    this.router.navigate(['/']);
     this.activeModal.dismiss();
+    this.router.navigate(['/home']);
   }
 }

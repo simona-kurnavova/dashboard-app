@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AddWidgetContent} from '../popup.components/add-widget-content.component';
 import {DashboardInterface, DashboardService} from '../../services/dashboard.service';
@@ -25,20 +25,24 @@ export class DashboardComponent {
   }
 
   ngOnInit() {
+    this.loadWidgets();
+  }
+
+  loadWidgets() {
     // TODO: error handling
-   this.dashboardService.retrieveAll().subscribe(
-     dashboards => {
+    this.dashboardService.retrieveAll().subscribe(
+      dashboards => {
         this.dashboardList = <DashboardInterface[]>dashboards['results'];
         this.widgetService.retrieveAll().subscribe(
           widgets => {
             this.widgetList = WidgetMatrixService.parseWidgets(<WidgetInterface[]>widgets['results']);
-            this.widgetListEdit = WidgetMatrixService.parseWidgetsEdit(this.widgetList, this.dashboardList[0].id);
+            this.widgetListEdit  = JSON.parse(JSON.stringify(this.widgetList));
           },
           err => console.log(err)
         );
-     },
-     err => console.log(err)
-   );
+      },
+      err => console.log(err)
+    );
   }
 
   isState(state: String) {
@@ -53,8 +57,25 @@ export class DashboardComponent {
     this.popupService.open(AddWidgetContent);
   }
 
+  cancelEdit() {
+    this.widgetListEdit  = JSON.parse(JSON.stringify(this.widgetList));
+    this.setState('normal');
+  }
+
   saveEdit() {
-    // TODO: save changes
+    // TODO: nicer approach
+    for (let row = 0; row < this.widgetListEdit.length; row ++) {
+      for (let col = 0; col < this.widgetListEdit[row].length; col ++) {
+        console.log(this.widgetListEdit[row][col]);
+        this.widgetListEdit[row][col].position_x = col;
+        this.widgetListEdit[row][col].position_y = row;
+        this.widgetService.edit(this.widgetListEdit[row][col].id, this.widgetListEdit[row][col]).subscribe(
+          data => console.log(data),
+          err => console.log(err)
+        );
+      }
+    }
+    this.widgetList = JSON.parse(JSON.stringify(this.widgetListEdit));
     this.setState('normal');
   }
 }

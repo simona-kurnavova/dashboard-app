@@ -43,10 +43,7 @@ export class WidgetService {
   }
 
   edit(id: Number, widget: WidgetInterface) {
-    return this.http.put<WidgetInterface>(this.url + id + '/', {
-      'id': widget.id,
-      'dashboard': widget.dashboard,
-      'app': widget.app,
+    return this.http.patch<WidgetInterface>(this.url + id.toString() + '/', {
       'account': widget.account,
       'position_x': widget.position_x,
       'position_y': widget.position_y,

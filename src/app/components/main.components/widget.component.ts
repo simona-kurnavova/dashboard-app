@@ -33,7 +33,6 @@ export class WidgetComponent {
       data => console.log(data),
       err => console.log(err)
     );
-    this.router.navigate(['/']);
   }
 
   changeSize(x: Number, y: Number) {
