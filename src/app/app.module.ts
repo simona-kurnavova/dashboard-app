@@ -31,12 +31,15 @@ import { AddWidgetContent } from './components/popup.components/add-widget-conte
 import {WidgetComponent} from './components/main.components/widget.component';
 import {WidgetMatrixService} from './services/widget-matrix.service';
 import {DndModule} from 'ng2-dnd';
+import {ApplicationComponent, DummyApplicationComponent} from './components/main.components/application.component';
 
 @NgModule({
   declarations: [
     AppComponent, HomeComponent, AuthComponent, RegistrationFormComponent,
     LoginFormComponent, MenuComponent, DashboardComponent, WidgetComponent,
-    SettingsContent, AboutContent, ProfileContent, WidgetsContent, AccountsContent, AddWidgetContent
+    SettingsContent, AboutContent, ProfileContent, WidgetsContent, AccountsContent, AddWidgetContent,
+    ApplicationComponent,
+    DummyApplicationComponent
   ],
 
   imports: [
@@ -64,7 +67,8 @@ import {DndModule} from 'ng2-dnd';
     AuthService, AccountService, ApplicationService, WidgetService, DashboardService, UserService, WidgetMatrixService
   ],
   bootstrap: [ AppComponent ],
-  entryComponents: [ SettingsContent, AboutContent, AddWidgetContent ],
+  entryComponents: [ SettingsContent, AboutContent, AddWidgetContent,
+    DummyApplicationComponent ],
 })
 
 export class AppModule {}
