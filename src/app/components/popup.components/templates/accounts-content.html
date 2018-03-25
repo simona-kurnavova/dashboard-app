@@ -1,17 +1,32 @@
-<div *ngIf="isState('list')" class="container">
+<div *ngIf="isState('list')" class="container" align="center">
+  <h3>Your accounts:</h3>
   <div *ngFor="let account of accountList; let i = index;">
     <a (click)="setCurrentAccount(i)"><b>{{ account.name }}</b></a>
   </div>
 </div>
 
 <div *ngIf="isState('detail')" class="container">
-  <h3>{{ accountList[currentAccount].name }}</h3>
-  <p>{{ accountList[currentAccount].info }}</p>
 
-  <button (click)="setState('list')" type="button" class="btn btn-sm btn-blue-grey">Back</button>
+  <h3 align="center">{{ accountList[currentAccount].name }}</h3>
+  <p align="center"><b>Type:</b> {{ accountList[currentAccount].type }}</p>
+  <p align="center" *ngIf="accountList[currentAccount].info; else noInfo"> {{ accountList[currentAccount].info }}</p>
+  <ng-template #noInfo>
+    <p align="center">
+      <i>No info provided</i>
+    </p>
+  </ng-template>
+
+  <hr>
+
+  <a (click)="setState('list')"><i class="fa fa-arrow-left return-icon" aria-hidden="true"></i> return</a>
 </div>
 
+<style>
+  .return-icon {
+    color: grey;
+  }
 
+</style>
 
 
 

@@ -11,9 +11,18 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-end">
-    <button class="btn btn-sm btn-blue-grey" (click)="setState('normal')">Back</button>
-    <button class="btn btn-sm btn-blue-grey" (click)="saveUser()">Save</button>
+  <hr>
+  <div class="row">
+
+
+    <div class="col">
+      <a (click)="setState('normal')"><i class="fa fa-arrow-left return-icon" aria-hidden="true"></i> return</a>
+    </div>
+
+    <div class="col" align="right">
+      <button class="btn btn-sm btn-blue-grey" (click)="saveUser()">Save</button>
+    </div>
+
   </div>
 </div>
 
@@ -25,8 +34,13 @@
     Email: {{user.email}} <br>
   </div>
   <hr>
-  <div class="row justify-content-end">
-    <button class="btn btn-sm btn-blue-grey" (click)="setState('edit')">Edit</button>
+  <div class="row justify-content-center">
+    <a (click)="setState('edit')"><i class="fa fa-pencil fa-lg return-icon" aria-hidden="true"></i></a>
   </div>
 </div>
 
+<style>
+  .return-icon {
+    color: grey;
+  }
+</style>

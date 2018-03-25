@@ -41,10 +41,10 @@ export class ProfileContent {
 
   saveUser() {
     this.setState('normal');
-    /*this.userService.update(this.user).subscribe(
+    this.userService.update(this.user).subscribe(
       data => console.log(data),
       err => console.log(err)
-    );*/
+    );
     // TODO: notification of success/error
     // TODO: user update
   }
