@@ -1,7 +1,7 @@
 <div class="card card-body">
   <div class="container">
     <div class="row">
-      <div class="col">
+      <div class="col-lg-6 col-12" style="padding-bottom: 10px">
         Mode: &nbsp; &nbsp;
         <div class="btn-group">
           <label class="btn btn-blue-grey btn-sm waves-light" [(ngModel)]="state" mdbRadio="normal" mdbRippleRadius>
@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <div class="col" align="right">
+      <div class="col-lg-6 col-12" align="right">
 
         <div *ngIf="isState('edit')" class="row">
           <div class="col" align="right">
@@ -35,7 +35,7 @@
     <div class="container" *ngIf="isState('normal')">
       <div *ngFor="let row of widgetList; let i = index;">
         <div class="row justify-content-{{ widgetJustify }}">
-          <div class="col-{{widgetList[i][j].size_x}} widget-column" *ngFor="let col of widgetList[i]; let j = index;">
+          <div class="col-lg-{{widgetList[i][j].size_x}} widget-column" *ngFor="let col of widgetList[i]; let j = index;">
               <widget [state]="state" [widget]="widgetList[i][j]"></widget>
           </div>
         </div>
@@ -45,7 +45,7 @@
   <div class="container" *ngIf="isState('edit')">
     <div *ngFor="let row of widgetListEdit; let i = index;">
       <div class="row justify-content-{{ widgetJustify }}" dnd-sortable-container [sortableData]="widgetListEdit[i]">
-        <div class="col-{{widgetListEdit[i][j].size_x}} widget-column" *ngFor="let col of widgetListEdit[i]; let j = index;">
+        <div class="col-lg-{{widgetListEdit[i][j].size_x}} widget-column" *ngFor="let col of widgetListEdit[i]; let j = index;">
           <div class="card" dnd-sortable [sortableIndex]="j">
             <widget [state]="state" [widget]="widgetListEdit[i][j]"></widget>
           </div>
@@ -54,7 +54,8 @@
     </div>
   </div>
 </div>
-    <hr>
+
+<hr>
 
 <div class="container" *ngIf="isState('edit')">
   <div class="row">
