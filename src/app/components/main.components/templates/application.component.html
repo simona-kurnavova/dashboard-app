@@ -1,7 +1,23 @@
 <div>
+  <div class="container" *ngIf="isState('normal')">
+    <div class="row">
+      <div class="col" align="right">
+        <a (click)="openInPopUp()"><i class="fa fa-arrows open-icon" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+
   <div #container></div>
 </div>
 
 <div *ngIf="isState('noAccount')">
   <button (click)="addAccount()" type="button" class="btn btn-sm">Add account</button>
 </div>
+
+<style>
+  .open-icon {
+    color: grey;
+  }
+</style>
+
+

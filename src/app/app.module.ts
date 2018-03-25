@@ -32,13 +32,14 @@ import {ApplicationComponent} from './components/main.components/application.com
 import {ErrorApplicationComponent} from './applications/error-application/error-application.component';
 import {CalendarApplicationComponent} from './applications/calendar-application/calendar-application.component';
 import {CalendarAddAccountComponent} from './applications/calendar-application/calendar-add-account.component';
+import {CalendarPopupComponent} from './applications/calendar-application/calendar-popup.component';
 
 @NgModule({
   declarations: [
     AppComponent, HomeComponent, AuthComponent, RegistrationFormComponent, LoginFormComponent, MenuComponent,
     DashboardComponent, WidgetComponent, SettingsContent, AboutContent, ProfileContent, WidgetsContent,
     AccountsContent, AddWidgetContent, ApplicationComponent, CalendarApplicationComponent, ErrorApplicationComponent,
-    CalendarAddAccountComponent
+    CalendarAddAccountComponent, CalendarPopupComponent
   ],
 
   imports: [
@@ -58,7 +59,7 @@ import {CalendarAddAccountComponent} from './applications/calendar-application/c
   ],
   bootstrap: [ AppComponent ],
   entryComponents: [ SettingsContent, AboutContent, AddWidgetContent, ErrorApplicationComponent,
-    CalendarApplicationComponent, CalendarAddAccountComponent,
+    CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent
   ],
 })
 export class AppModule {}

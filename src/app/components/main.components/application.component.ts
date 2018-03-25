@@ -2,16 +2,8 @@ import {Component, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnI
 import {WidgetInterface} from '../../services/widget.service';
 import {ApplicationInterface, ApplicationService} from '../../services/application.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {CalendarApplicationComponent} from '../../applications/calendar-application/calendar-application.component';
 
 export const MAPPINGS = {};
-
-@Component({
-  selector: 'dummy-app',
-  template: `<div>Dummy app</div>`
-})
-export class DummyApplicationComponent {}
-MAPPINGS['dummy'] = DummyApplicationComponent;
 
 @Component({
   selector: 'application',
@@ -24,7 +16,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   applicationState: String;
 
   application: ApplicationInterface;
-  type = 'calendar-application'; // TODO: application.name
+  type = 'calendar'; // TODO: application.name
   private componentRef: ComponentRef<{}>;
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
@@ -39,17 +31,16 @@ export class ApplicationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadApplication();
-    this.setState();
+    this.initState();
 
     if (this.type) {
-      let componentType = ApplicationComponent.getComponentType(this.type);
+      let componentType = ApplicationComponent.getComponentType(this.type + '-application');
       if (!componentType) {
         componentType = ApplicationComponent.getComponentType('error-application');
       }
       const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
       this.componentRef = this.container.createComponent(factory);
     }
-    this.setState();
   }
 
   ngOnDestroy() {
@@ -69,27 +60,34 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     );
   }
 
-  /* possible states: normal, edit, noAccount */
-  setState() {
+  initState() {
     if (this.widget.account) {
-      this.applicationState = this.dashboardState;
+      this.setState(this.dashboardState);
     } else {
       if (this.application.required_account) {
-        this.applicationState = 'noAccount';
+        this.setState('noAccount');
       } else {
-        this.applicationState = this.dashboardState;
+        this.setState(this.dashboardState);
       }
     }
-    this.applicationState = 'noAccount'; // TODO: delete
+    this.setState('noAccount'); // TODO: delete
   }
 
+  setState(state: String) {
+    this.applicationState = state;
+  }
   isState(state: String) {
     return state === this.applicationState;
   }
 
   addAccount() {
-    const popupContent = ApplicationComponent.getComponentType('calendar-add-account');
-    const popup = this.popupService.open(popupContent, { size: 'lg', });
+    const popupContent = ApplicationComponent.getComponentType(this.type + '-add-account');
+    const popup = this.popupService.open(popupContent, {size: 'lg'});
+  }
+
+  openInPopUp() {
+    const popupContent = ApplicationComponent.getComponentType(this.type + '-popup');
+    const popup = this.popupService.open(popupContent, {size: 'lg'});
   }
 }
 
