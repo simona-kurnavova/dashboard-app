@@ -1,3 +1,7 @@
 <div>
   <div #container></div>
 </div>
+
+<div *ngIf="isState('noAccount')">
+  <button (click)="addAccount()" type="button" class="btn btn-sm">Add account</button>
+</div>

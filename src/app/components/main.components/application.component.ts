@@ -1,7 +1,8 @@
 import {Component, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {WidgetInterface} from '../../services/widget.service';
 import {ApplicationInterface, ApplicationService} from '../../services/application.service';
-import {ErrorApplicationComponent} from '../../applications/error-application/error-application.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {CalendarApplicationComponent} from '../../applications/calendar-application/calendar-application.component';
 
 export const MAPPINGS = {};
 
@@ -23,23 +24,28 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   applicationState: String;
 
   application: ApplicationInterface;
-  type = 'error-application'; // TODO: application.name
+  type = 'calendar-application'; // TODO: application.name
   private componentRef: ComponentRef<{}>;
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
 
   static getComponentType(typeName: string) {
-    const type = MAPPINGS[typeName];
-    return type;
+    return MAPPINGS[typeName];
   }
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
-              private appService: ApplicationService) {}
+              private appService: ApplicationService,
+              public popupService: NgbModal) {}
 
   ngOnInit() {
     this.loadApplication();
+    this.setState();
+
     if (this.type) {
-      const componentType = ApplicationComponent.getComponentType(this.type);
+      let componentType = ApplicationComponent.getComponentType(this.type);
+      if (!componentType) {
+        componentType = ApplicationComponent.getComponentType('error-application');
+      }
       const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
       this.componentRef = this.container.createComponent(factory);
     }
@@ -74,6 +80,16 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         this.applicationState = this.dashboardState;
       }
     }
+    this.applicationState = 'noAccount'; // TODO: delete
+  }
+
+  isState(state: String) {
+    return state === this.applicationState;
+  }
+
+  addAccount() {
+    const popupContent = ApplicationComponent.getComponentType('calendar-add-account');
+    const popup = this.popupService.open(popupContent, { size: 'lg', });
   }
 }
 

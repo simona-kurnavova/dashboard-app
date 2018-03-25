@@ -33,14 +33,16 @@ import {WidgetMatrixService} from './services/widget-matrix.service';
 import {DndModule} from 'ng2-dnd';
 import {ApplicationComponent, DummyApplicationComponent} from './components/main.components/application.component';
 import {ErrorApplicationComponent} from './applications/error-application/error-application.component';
+import {CalendarApplicationComponent} from './applications/calendar-application/calendar-application.component';
+import {CalendarAddAccountComponent} from './applications/calendar-application/calendar-add-account.component';
 
 @NgModule({
   declarations: [
     AppComponent, HomeComponent, AuthComponent, RegistrationFormComponent,
     LoginFormComponent, MenuComponent, DashboardComponent, WidgetComponent,
     SettingsContent, AboutContent, ProfileContent, WidgetsContent, AccountsContent, AddWidgetContent,
-    ApplicationComponent,
-    DummyApplicationComponent, ErrorApplicationComponent
+    ApplicationComponent, CalendarApplicationComponent,
+    DummyApplicationComponent, ErrorApplicationComponent, CalendarAddAccountComponent
   ],
 
   imports: [
@@ -69,7 +71,7 @@ import {ErrorApplicationComponent} from './applications/error-application/error-
   ],
   bootstrap: [ AppComponent ],
   entryComponents: [ SettingsContent, AboutContent, AddWidgetContent,
-    DummyApplicationComponent, ErrorApplicationComponent ],
+    DummyApplicationComponent, ErrorApplicationComponent, CalendarApplicationComponent,
+    CalendarAddAccountComponent],
 })
-
 export class AppModule {}
