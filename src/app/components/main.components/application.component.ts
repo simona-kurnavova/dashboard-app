@@ -1,12 +1,16 @@
 import {Component, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {WidgetInterface} from '../../services/widget.service';
 import {ApplicationInterface, ApplicationService} from '../../services/application.service';
+import {ErrorApplicationComponent} from '../../applications/error-application/error-application.component';
+
+export const MAPPINGS = {};
 
 @Component({
   selector: 'dummy-app',
   template: `<div>Dummy app</div>`
 })
 export class DummyApplicationComponent {}
+MAPPINGS['dummy'] = DummyApplicationComponent;
 
 @Component({
   selector: 'application',
@@ -15,17 +19,19 @@ export class DummyApplicationComponent {}
 
 export class ApplicationComponent implements OnInit, OnDestroy {
   @Input() widget: WidgetInterface;
+  @Input() dashboardState: String;
+  applicationState: String;
+
   application: ApplicationInterface;
-
-  type = 'dummy-app'; // TODO: application.name
-
+  type = 'error-application'; // TODO: application.name
   private componentRef: ComponentRef<{}>;
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
 
-  private mappings = {
-    'dummy-app': DummyApplicationComponent,
-  };
+  static getComponentType(typeName: string) {
+    const type = MAPPINGS[typeName];
+    return type;
+  }
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private appService: ApplicationService) {}
@@ -33,10 +39,11 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadApplication();
     if (this.type) {
-      let componentType = this.getComponentType(this.type);
-      let factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
+      const componentType = ApplicationComponent.getComponentType(this.type);
+      const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
       this.componentRef = this.container.createComponent(factory);
     }
+    this.setState();
   }
 
   ngOnDestroy() {
@@ -44,11 +51,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
       this.componentRef.destroy();
       this.componentRef = null;
     }
-  }
-
-  getComponentType(typeName: string) {
-    const type = this.mappings[typeName];
-    return type;
   }
 
   loadApplication() {
@@ -59,6 +61,19 @@ export class ApplicationComponent implements OnInit, OnDestroy {
       },
       err => console.log(err)
     );
+  }
+
+  /* possible states: normal, edit, noAccount */
+  setState() {
+    if (this.widget.account) {
+      this.applicationState = this.dashboardState;
+    } else {
+      if (this.application.required_account) {
+        this.applicationState = 'noAccount';
+      } else {
+        this.applicationState = this.dashboardState;
+      }
+    }
   }
 }
 

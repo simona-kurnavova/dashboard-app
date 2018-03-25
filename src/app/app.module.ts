@@ -32,6 +32,7 @@ import {WidgetComponent} from './components/main.components/widget.component';
 import {WidgetMatrixService} from './services/widget-matrix.service';
 import {DndModule} from 'ng2-dnd';
 import {ApplicationComponent, DummyApplicationComponent} from './components/main.components/application.component';
+import {ErrorApplicationComponent} from './applications/error-application/error-application.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import {ApplicationComponent, DummyApplicationComponent} from './components/main
     LoginFormComponent, MenuComponent, DashboardComponent, WidgetComponent,
     SettingsContent, AboutContent, ProfileContent, WidgetsContent, AccountsContent, AddWidgetContent,
     ApplicationComponent,
-    DummyApplicationComponent
+    DummyApplicationComponent, ErrorApplicationComponent
   ],
 
   imports: [
@@ -68,7 +69,7 @@ import {ApplicationComponent, DummyApplicationComponent} from './components/main
   ],
   bootstrap: [ AppComponent ],
   entryComponents: [ SettingsContent, AboutContent, AddWidgetContent,
-    DummyApplicationComponent ],
+    DummyApplicationComponent, ErrorApplicationComponent ],
 })
 
 export class AppModule {}
