@@ -40,6 +40,10 @@
           </div>
         </div>
       </div>
+
+      <div align="center" *ngIf="widgetList.length == 0">
+        <i>No widgets on the dashboard yet</i>
+      </div>
     </div>
 
   <div class="container" *ngIf="isState('edit')">
