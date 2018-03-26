@@ -12,7 +12,7 @@ import {AccountService} from '../../services/account.service';
 
 export class AddWidgetContent {
   public appList: ApplicationInterface[];
-  @Input() currentAppList;
+  @Input() currentEditAppList;
 
   constructor(public activeModal: NgbActiveModal,
               private appService: ApplicationService,
@@ -43,9 +43,9 @@ export class AddWidgetContent {
             console.log(data);
             widget = <WidgetInterface>data;
             const widgetRow: WidgetInterface[] = [widget];
-            this.currentAppList.push(widgetRow);
+            this.currentEditAppList.push(widgetRow);
           },
-          err => console.log(err),
+            err => console.log(err),
         );
         },
       err => console.log(err)

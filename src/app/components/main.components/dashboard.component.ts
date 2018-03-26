@@ -60,11 +60,11 @@ export class DashboardComponent {
 
   addWidget() {
     const popup = this.popupService.open(AddWidgetContent);
-    popup.componentInstance.currentAppList = this.widgetListEdit;
+    popup.componentInstance.currentEditAppList = this.widgetListEdit;
   }
 
   cancelEdit() {
-    this.widgetListEdit  = JSON.parse(JSON.stringify(this.widgetList));
+    this.loadWidgets();
     this.setState('normal');
   }
 

@@ -10,8 +10,7 @@
     <div class="row">
       <div class="col">
         <div class="list-group">
-
-          <a *ngFor="let app of appList; let i = index;" class="list-group-item">
+          <a *ngFor="let app of appList; let i = index;" (click)="addWidget(appList[i].id)" class="list-group-item">
             <div class="container">
               <div class="row">
                 <div class="col">
