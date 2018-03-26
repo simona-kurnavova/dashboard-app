@@ -27,6 +27,11 @@
 </div>
 
 <div *ngIf="isState('normal')" class="container">
+
+  <div *ngFor="let alert of alerts" class="notification">
+    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+  </div>
+
   <div class="row justify-content-center">
     Username: {{user.username}} <br>
   </div>

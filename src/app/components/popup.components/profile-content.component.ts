@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { UserService, UserInterface } from '../../services/user.service';
+import {AlertInterface, SERVER_ERROR_ALERT, USER_EDITED_ALERT} from '../../authentication-alerts';
 
 @Component({
   selector: 'profile-content',
@@ -13,6 +14,7 @@ export class ProfileContent {
   public user: UserInterface = {
     id: null, username: '', password: '', email: ''
   };
+  public alerts: Array<AlertInterface> = [];
 
   constructor(private service: AuthService, private userService: UserService) {}
 
@@ -22,7 +24,9 @@ export class ProfileContent {
         console.log(data);
         this.user = (<UserInterface[]>data['results'])[0];
       },
-      err => console.log(err)
+      err => {
+        this.alerts.push(SERVER_ERROR_ALERT);
+      }
     );
   }
 
@@ -36,16 +40,25 @@ export class ProfileContent {
   }
 
   setState(state: String) {
+    this.alerts = [];
     this.state = state;
   }
 
   saveUser() {
     this.setState('normal');
     this.userService.update(this.user).subscribe(
-      data => console.log(data),
-      err => console.log(err)
+      data => {
+        this.alerts.push(USER_EDITED_ALERT);
+      },
+      err => {
+        console.log(err);
+        this.alerts.push(SERVER_ERROR_ALERT);
+      }
     );
-    // TODO: notification of success/error
-    // TODO: user update
+  }
+
+  public closeAlert(alert: AlertInterface) {
+    const index: number = this.alerts.indexOf(alert);
+    this.alerts.splice(index, 1);
   }
 }

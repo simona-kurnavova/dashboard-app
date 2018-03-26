@@ -40,3 +40,8 @@ export const USER_ALREADY_EXISTS_ALERT: AlertInterface = {
   message: 'Username already registered'
 };
 
+export const USER_EDITED_ALERT: AlertInterface = {
+  id: 7,
+  type: 'success',
+  message: 'User successfully edited'
+};
