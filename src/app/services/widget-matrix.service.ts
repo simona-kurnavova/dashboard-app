@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {WidgetInterface} from './widget.service';
 
 @Injectable()
@@ -23,20 +23,15 @@ export class WidgetMatrixService {
     return widgetList;
   }
 
-  static parseWidgetsEdit(widgetList: WidgetInterface[][], dashboard: Number) {
-    return widgetList;
-  }
-
   static getFreeRow(widgets: WidgetInterface[]) {
     return this.parseWidgets(widgets).length;
   }
 
   static createWidget(app: Number, account: Number, dashboard: Number, widgets) {
-    const widget: WidgetInterface = {
+    return <WidgetInterface>{
       app: app, account: account, dashboard: dashboard,
       position_x: 0, position_y: this.getFreeRow(widgets),
       size_x: 4, size_y: 4
     };
-    return widget;
   }
 }
