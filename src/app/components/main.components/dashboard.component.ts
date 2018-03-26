@@ -4,6 +4,7 @@ import {AddWidgetContent} from '../popup.components/add-widget-content.component
 import {DashboardInterface, DashboardService} from '../../services/dashboard.service';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
 import {WidgetMatrixService} from '../../services/widget-matrix.service';
+import {AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
 
 @Component({
   selector: 'dashboard',
@@ -15,21 +16,19 @@ export class DashboardComponent {
   public state: String = 'normal';
   public widgetJustify = 'center';
   public dashboardList: DashboardInterface[];
-  public widgetList: WidgetInterface[][];
+  public widgetList: WidgetInterface[][] = [];
   public widgetListEdit: WidgetInterface[][];
+  public alerts: Array<AlertInterface> = [];
 
   constructor(private popupService: NgbModal,
               private dashboardService: DashboardService,
-              private widgetService: WidgetService) {
-    this.ngOnInit();
-  }
+              private widgetService: WidgetService) {}
 
   ngOnInit() {
     this.loadWidgets();
   }
 
   loadWidgets() {
-    // TODO: error handling
     this.dashboardService.retrieveAll().subscribe(
       dashboards => {
         this.dashboardList = <DashboardInterface[]>dashboards['results'];
@@ -38,10 +37,16 @@ export class DashboardComponent {
             this.widgetList = WidgetMatrixService.parseWidgets(<WidgetInterface[]>widgets['results']);
             this.widgetListEdit  = JSON.parse(JSON.stringify(this.widgetList));
           },
-          err => console.log(err)
+          err => {
+            console.log(err);
+            this.alerts.push(SERVER_ERROR_ALERT);
+          }
         );
       },
-      err => console.log(err)
+      err => {
+        console.log(err);
+        this.alerts.push(SERVER_ERROR_ALERT);
+      }
     );
   }
 
@@ -76,5 +81,10 @@ export class DashboardComponent {
     }
     this.loadWidgets();
     this.setState('normal');
+  }
+
+  public closeAlert(alert: AlertInterface) {
+    const index: number = this.alerts.indexOf(alert);
+    this.alerts.splice(index, 1);
   }
 }

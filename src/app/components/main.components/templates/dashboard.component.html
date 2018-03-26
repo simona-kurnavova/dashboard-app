@@ -32,6 +32,10 @@
 
     <hr>
 
+  <div *ngFor="let alert of alerts" class="notification">
+    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+  </div>
+
     <div class="container" *ngIf="isState('normal')">
       <div *ngFor="let row of widgetList; let i = index;">
         <div class="row justify-content-{{ widgetJustify }}">
@@ -41,8 +45,8 @@
         </div>
       </div>
 
-      <div align="center" *ngIf="widgetList.length == 0">
-        <i>No widgets on the dashboard yet</i>
+      <div align="center" *ngIf="widgetList.length == 0 && alerts.length == 0">
+        <i>No widgets on the dashboard</i>
       </div>
     </div>
 
@@ -57,9 +61,10 @@
       </div>
     </div>
   </div>
-</div>
 
-<hr>
+  <hr>
+
+</div>
 
 <div class="container" *ngIf="isState('edit')">
   <div class="row">
