@@ -63,7 +63,6 @@ export class DashboardComponent {
   }
 
   saveEdit() {
-    // TODO: nicer approach
     for (let row = 0; row < this.widgetListEdit.length; row ++) {
       for (let col = 0; col < this.widgetListEdit[row].length; col ++) {
         console.log(this.widgetListEdit[row][col]);
@@ -75,7 +74,7 @@ export class DashboardComponent {
         );
       }
     }
-    this.widgetList = JSON.parse(JSON.stringify(this.widgetListEdit));
+    this.loadWidgets();
     this.setState('normal');
   }
 }

@@ -31,7 +31,6 @@ export class AddWidgetContent {
   }
 
   addWidget(id: Number) {
-    // TODO: send to add account flow
     this.accountService.retrieveAll().subscribe(
       data => console.log(data),
       err => console.log(err)
@@ -49,6 +48,5 @@ export class AddWidgetContent {
       err => console.log(err)
     );
     this.activeModal.dismiss();
-    this.router.navigate(['/home']);
   }
 }
