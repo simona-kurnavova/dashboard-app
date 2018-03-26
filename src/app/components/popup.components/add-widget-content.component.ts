@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApplicationInterface, ApplicationService } from '../../services/application.service';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
@@ -13,6 +13,7 @@ import {Router} from '@angular/router';
 
 export class AddWidgetContent {
   public appList: ApplicationInterface[];
+  @Input() currentAppList;
 
   constructor(public activeModal: NgbActiveModal,
               private appService: ApplicationService,
@@ -35,14 +36,18 @@ export class AddWidgetContent {
       data => console.log(data),
       err => console.log(err)
     );
-
     this.widgetService.retrieveAll().subscribe(
       // TODO: remove fixed account after add flow implemented
       widgets => {
-        const widget = WidgetMatrixService.createWidget(id, 5, 4, <WidgetInterface[]>widgets['results']);
+        let widget = WidgetMatrixService.createWidget(id, 5, 4, <WidgetInterface[]>widgets['results']);
         this.widgetService.create(widget).subscribe(
-          data => console.log(data),
-          err => console.log(err)
+          data => {
+            console.log(data);
+            widget = <WidgetInterface>data;
+            const widgetRow: WidgetInterface[] = [widget];
+            this.currentAppList.push(widgetRow);
+          },
+          err => console.log(err),
         );
         },
       err => console.log(err)

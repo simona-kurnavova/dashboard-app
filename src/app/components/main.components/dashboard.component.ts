@@ -59,7 +59,8 @@ export class DashboardComponent {
   }
 
   addWidget() {
-    this.popupService.open(AddWidgetContent);
+    const popup = this.popupService.open(AddWidgetContent);
+    popup.componentInstance.currentAppList = this.widgetListEdit;
   }
 
   cancelEdit() {

@@ -24,7 +24,6 @@ export class WidgetMatrixService {
   }
 
   static parseWidgetsEdit(widgetList: WidgetInterface[][], dashboard: Number) {
-    // TODO
     return widgetList;
   }
 
