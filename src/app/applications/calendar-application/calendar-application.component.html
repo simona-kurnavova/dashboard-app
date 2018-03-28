@@ -19,7 +19,6 @@
         </mwl-calendar-month-view>
       </div>
 
-
       <mwl-calendar-week-view
         *ngSwitchCase="'week'"
         [viewDate]="viewDate"
@@ -30,7 +29,11 @@
       <mwl-calendar-day-view
         *ngSwitchCase="'day'"
         [viewDate]="viewDate"
-        [events]="events">
+        [events]="events"
+        [hourSegmentHeight]="25"
+        [hourSegments]="1"
+      [dayStartHour]="8"
+      [dayEndHour]="20">
       </mwl-calendar-day-view>
     </div>
   </div>
