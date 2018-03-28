@@ -10,3 +10,12 @@ input:-webkit-autofill, textarea:-webkit-autofill {
 button:focus {
   outline:0;
 }
+
+/* Calendar cell heights in month view */
+.cal-month-view .cal-day-cell {
+  min-height: 40px !important;
+  max-height: 60px  !important;
+}
+
+
+

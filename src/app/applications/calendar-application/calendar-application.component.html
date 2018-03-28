@@ -10,12 +10,15 @@
   <div class="col">
 
     <div [ngSwitch]="view" class="container">
-        <mwl-calendar-month-view
+      <div class="cal-month-view">
+        <mwl-calendar-month-view [style.height.px]="50"
           *ngSwitchCase="'month'"
           [viewDate]="viewDate"
           [events]="events"
           (dayClicked)="clickedDate = $event.day.date">
         </mwl-calendar-month-view>
+      </div>
+
 
       <mwl-calendar-week-view
         *ngSwitchCase="'week'"
@@ -33,10 +36,10 @@
   </div>
 </div>
 
-<div class="alert alert-info">
+<!-- <div class="alert alert-info">
   Click on a day on the view.
   <strong *ngIf="clickedDate">You clicked on this day: {{ clickedDate | date:'medium' }}</strong>
-</div>
+</div> -->
 
 </div>
 
@@ -52,6 +55,7 @@
     color: cadetblue;
     padding-top: 20px;
   }
+
 </style>
 
 
