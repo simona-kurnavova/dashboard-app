@@ -33,6 +33,7 @@ import {ErrorApplicationComponent} from './applications/error-application/error-
 import {CalendarApplicationComponent} from './applications/calendar-application/calendar-application.component';
 import {CalendarAddAccountComponent} from './applications/calendar-application/calendar-add-account.component';
 import {CalendarPopupComponent} from './applications/calendar-application/calendar-popup.component';
+import { CalendarModule } from 'angular-calendar';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import {CalendarPopupComponent} from './applications/calendar-application/calend
       { path: 'login', component: LoginFormComponent },
       { path: 'register', component: RegistrationFormComponent },
       ]),
+    CalendarModule.forRoot()
   ],
   providers: [
     AuthService, AccountService, ApplicationService, WidgetService, DashboardService, UserService,

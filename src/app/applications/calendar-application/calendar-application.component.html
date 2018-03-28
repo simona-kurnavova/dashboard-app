@@ -1,1 +1,57 @@
-calendar app test
+
+<div *ngIf="isState('normal'); else editState" class="container">
+
+  <div class="btn-group" style="padding-bottom: 10px;">
+    <button (click)="view='month'" class="btn btn-sm">Month</button>
+    <button (click)="view='week'" class="btn btn-sm">Week</button>
+    <button (click)="view='day'" class="btn btn-sm">Day</button>
+  </div>
+<div class="row" style="height: 100px">
+  <div class="col">
+
+    <div [ngSwitch]="view" class="container">
+        <mwl-calendar-month-view
+          *ngSwitchCase="'month'"
+          [viewDate]="viewDate"
+          [events]="events"
+          (dayClicked)="clickedDate = $event.day.date">
+        </mwl-calendar-month-view>
+
+      <mwl-calendar-week-view
+        *ngSwitchCase="'week'"
+        [viewDate]="viewDate"
+        [events]="events"
+        (dayHeaderClicked)="clickedDate = $event.day.date">
+      </mwl-calendar-week-view>
+
+      <mwl-calendar-day-view
+        *ngSwitchCase="'day'"
+        [viewDate]="viewDate"
+        [events]="events">
+      </mwl-calendar-day-view>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-info">
+  Click on a day on the view.
+  <strong *ngIf="clickedDate">You clicked on this day: {{ clickedDate | date:'medium' }}</strong>
+</div>
+
+</div>
+
+
+<ng-template #editState>
+  <div class="container" align="center">
+    <i class="fa fa-calendar fa-4x icon-calendar" aria-hidden="true"></i>
+  </div>
+</ng-template>
+
+<style>
+  .icon-calendar {
+    color: cadetblue;
+    padding-top: 20px;
+  }
+</style>
+
+

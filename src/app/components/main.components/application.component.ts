@@ -70,7 +70,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         this.setState(this.dashboardState);
       }
     }
-    this.setState('noAccount'); // TODO: delete
+    // this.setState('noAccount'); // TODO: delete
   }
 
   setState(state: String) {
