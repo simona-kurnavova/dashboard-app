@@ -10,7 +10,7 @@ import {AccountService} from '../../services/account.service';
   templateUrl: './templates/add-widget-content.html',
 })
 
-export class AddWidgetContent {
+  export class AddWidgetContent {
   public appList: ApplicationInterface[];
   @Input() currentEditAppList;
 

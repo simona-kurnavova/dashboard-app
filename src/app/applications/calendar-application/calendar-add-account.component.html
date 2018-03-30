@@ -6,7 +6,14 @@
 </div>
 
 <div class="modal-body">
-  Add account to this app
+
+
+
+  <h3>Add account to Calendar Application:</h3>
+  <div class="container" align="center">
+    <button class="btn btn-secondary" (click)="logIn()">Add Google Account</button>
+    logged: {{ calendarService.isUserLogged() }}
+  </div>
 </div>
 
 <div class="modal-footer">
