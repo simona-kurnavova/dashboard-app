@@ -7,13 +7,13 @@
           <p class="h5 text-center mb-4">Sign in</p>
 
           <div class="md-form">
-            <input type="text" id="l-username" [(ngModel)]="loginData.username" name="username" class="form-control"
+            <input autocomplete="username" type="text" id="l-username" [(ngModel)]="loginData.username" name="username" class="form-control"
                    mdbActive>
             <label for="l-username">Username</label>
           </div>
 
           <div class="md-form">
-            <input type="password" id="l-password" [(ngModel)]="loginData.password" name="password" class="form-control"
+            <input autocomplete="password" type="password" id="l-password" [(ngModel)]="loginData.password" name="password" class="form-control"
                    mdbActive>
             <label for="l-password">Your password</label>
           </div>

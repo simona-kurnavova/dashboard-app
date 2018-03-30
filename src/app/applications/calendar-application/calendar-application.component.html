@@ -9,13 +9,18 @@
 
   </div>
 
+  events:
+  <div *ngFor="let x of googleEvents;">
+    {{ x.summary }}
+  </div>
+
 
 <div class="row" style="height: 100px">
   <div class="col">
 
     <div [ngSwitch]="view" class="container">
       <div class="cal-month-view">
-        <mwl-calendar-month-view [style.height.px]="50"
+        <mwl-calendar-month-view
           *ngSwitchCase="'month'"
           [viewDate]="viewDate"
           [events]="events"

@@ -1,6 +1,14 @@
 import {Injectable} from '@angular/core';
 declare var gapi: any;
 
+export interface GoogleEvent {
+  id: Number;
+  summary: String;
+  start;
+  end;
+  htmlLink: String;
+}
+
 @Injectable()
 export class CalendarApplicationService {
   static clientID = '37169070793-3eec0n9hc1b6s8tca1njrc64v6jpejvs.apps.googleusercontent.com';
@@ -8,7 +16,6 @@ export class CalendarApplicationService {
     'https://www.googleapis.com/auth/calendar',
     'https://www.googleapis.com/auth/calendar.readonly',
   ];
-
   constructor() {}
 
   login(immediate: Boolean = true) {
@@ -35,11 +42,10 @@ export class CalendarApplicationService {
     });
   }
 
-  getList() {
-    gapi.client.calendar.events.list({'calendarId': 'primary'}).then(function(response) {
-      const events = response.result.items;
-      console.log(events);
-    });
+  getList(list: GoogleEvent[]) {
+  }
+  getClient() {
+    return gapi.client;
   }
 
   isUserLogged() {
