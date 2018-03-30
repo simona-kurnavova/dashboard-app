@@ -53,7 +53,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   loadApplication() {
     this.appService.retrieve(this.widget.app).subscribe(
       data => {
-        console.log(data);
         this.application = <ApplicationInterface>data;
       },
       err => console.log(err)
@@ -70,7 +69,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         this.setState(this.dashboardState);
       }
     }
-    this.setState('noAccount'); // TODO: delete
   }
 
   setState(state: String) {

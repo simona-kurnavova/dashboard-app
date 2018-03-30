@@ -45,3 +45,9 @@ export const USER_EDITED_ALERT: AlertInterface = {
   type: 'success',
   message: 'User successfully edited'
 };
+
+export const ACCOUNT_ADDED_ALERT: AlertInterface = {
+  id: 8,
+  type: 'success',
+  message: 'Account successfully added'
+};

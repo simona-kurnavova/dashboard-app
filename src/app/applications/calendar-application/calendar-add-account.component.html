@@ -7,12 +7,15 @@
 
 <div class="modal-body">
 
-
-
   <h3>Add account to Calendar Application:</h3>
   <div class="container" align="center">
-    <button class="btn btn-secondary" (click)="logIn()">Add Google Account</button>
-    logged: {{ calendarService.isUserLogged() }}
+    <button class="btn btn-secondary" (click)="addAccount()">Add Google Account</button>
+  </div>
+
+  <!-- <button class="btn" (click)="calendarService.getList()">Load list</button> -->
+
+  <div *ngFor="let alert of alerts" class="notification">
+    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
   </div>
 </div>
 

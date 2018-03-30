@@ -12,18 +12,23 @@ import {CalendarApplicationService} from './calendar-application.service';
 
 export class CalendarApplicationComponent implements OnInit {
   @Input() state = 'normal';
-  view: string = 'week';
+  view: String = 'month';
   viewDate: Date = new Date();
   events: CalendarEvent[] = [];
   clickedDate: Date;
 
-  constructor(private modal: NgbModal) {}
+  constructor(private modal: NgbModal, private calendarService: CalendarApplicationService) {}
 
   ngOnInit() {
+    this.calendarService.login();
   }
 
   isState(state: String) {
     return state === this.state;
+  }
+
+  getEvents() {
+    this.calendarService.getList();
   }
 }
 MAPPINGS['calendar-application'] = CalendarApplicationComponent;

@@ -21,7 +21,6 @@ export class MenuComponent {
     this.userService.retrieve().subscribe(
       data => {
         this.username = (<UserInterface[]>data['results'])[0].username;
-        console.log(data);
       },
       err => {
         console.log(err);
