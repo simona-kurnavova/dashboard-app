@@ -1,16 +1,21 @@
 import {Injectable} from '@angular/core';
 import {CalendarEvent} from 'angular-calendar';
-import {colors} from './calendar-application.component';
+
+export const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3'
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF'
+  },
+};
 
 declare var gapi: any;
 
 export interface GoogleEvent {
-  id;
-  summary;
-  start;
-  end;
-  htmlLink;
-  status;
+  id; summary; start; end; htmlLink; status;
 }
 
 @Injectable()
@@ -47,24 +52,19 @@ export class CalendarApplicationService {
     });
   }
 
-  getList(list: GoogleEvent[]) {
-  }
   getClient() {
     return gapi.client;
   }
 
-  isUserLogged() {
-    return !!localStorage.getItem('calendar_token');
-  }
-
   parseEvents(googleEvents: GoogleEvent[]) {
-    let events: CalendarEvent[] = [];
+    const events: CalendarEvent[] = [];
     for (let i = 0; i < googleEvents.length; i++) {
       if (googleEvents[i].status !== 'cancelled') {
         const event: CalendarEvent = {
           id: googleEvents[i].id,
           title: googleEvents[i].summary,
           color: colors.blue,
+          start: null,
         };
         if (googleEvents[i].start.dateTime) {
           event.start = new Date(googleEvents[i].start.dateTime);

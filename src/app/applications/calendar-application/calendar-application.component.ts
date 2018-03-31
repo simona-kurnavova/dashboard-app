@@ -5,35 +5,6 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';
 import {CalendarApplicationService, GoogleEvent} from './calendar-application.service';
 
-export const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3'
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
-  }
-};
-
-const test_events: CalendarEvent[] = [
-  {
-    title: 'An all day event',
-    start: new Date(),
-    allDay: true
-  },
-
-  {
-    title: 'A non all day event',
-    start: new Date(),
-    end: new Date()
-  }
-];
-
 @Component({
   selector: 'calendar-application',
   templateUrl: './calendar-application.component.html',
@@ -45,6 +16,7 @@ export class CalendarApplicationComponent implements OnInit {
   public googleEvents: GoogleEvent[] = [];
   public events: CalendarEvent[] = [];
   public clickedDate: Date;
+  activeDayIsOpen: boolean = true;
   @Input() state = 'normal';
 
   constructor(private modal: NgbModal, private calendarService: CalendarApplicationService) {}
@@ -60,12 +32,10 @@ export class CalendarApplicationComponent implements OnInit {
   getEvents() {
     const _that = this;
     const minDate = new Date();
-    minDate.setMonth(minDate.getMonth() - 1);
+    minDate.setMonth(minDate.getMonth() - 1); //TODO: customize
 
     this.calendarService.getClient().calendar.events.list({
-      'calendarId': 'primary',
-      'showDeleted': 'false',
-      'timeMin': minDate.toJSON(),
+      'calendarId': 'primary', 'timeMin': minDate.toJSON(),
     }).then(function(response) {
       _that.googleEvents = <GoogleEvent[]> response.result.items;
       _that.events = _that.calendarService.parseEvents(_that.googleEvents);

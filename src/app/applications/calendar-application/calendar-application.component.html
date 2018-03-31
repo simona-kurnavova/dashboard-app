@@ -6,7 +6,23 @@
     <button (click)="view='week'" class="btn btn-sm">Week</button>
     <button (click)="view='day'" class="btn btn-sm">Day</button>
     <button (click)="getEvents()" class="btn btn-blue-grey btn-sm">Sync</button>
+  </div>
 
+  <div class="btn-group" style="padding-bottom: 10px;">
+    <p><b>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }} </b></p>
+    &nbsp;&nbsp;
+
+    <div mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+      <a><i>previous</i></a>
+    </div>
+    &nbsp;&nbsp;
+    <div mwlCalendarToday [(viewDate)]="viewDate">
+      <a><i>today</i></a>
+    </div>
+    &nbsp;&nbsp;
+    <div mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+      <a><i>next</i></a>
+    </div>
   </div>
 
 <div class="row" style="height: 100px">
