@@ -21,3 +21,14 @@ button:focus {
 .cal-month-view .cal-event {
   display: none;
 }
+
+/* Fix of big margin of day numbers in month calendar */
+.cal-month-view .cal-day-number {
+  margin-right: 2px;
+  margin-top: 2px;
+}
+
+/*Fix of big font of current day number in month calendar*/
+.cal-month-view .cal-day-cell.cal-today .cal-day-number {
+  font-size: 1.2em;
+}
