@@ -1,12 +1,16 @@
 import {Injectable} from '@angular/core';
+import {CalendarEvent} from 'angular-calendar';
+import {colors} from './calendar-application.component';
+
 declare var gapi: any;
 
 export interface GoogleEvent {
-  id: Number;
-  summary: String;
+  id;
+  summary;
   start;
   end;
-  htmlLink: String;
+  htmlLink;
+  status;
 }
 
 @Injectable()
@@ -19,6 +23,7 @@ export class CalendarApplicationService {
   constructor() {}
 
   login(immediate: Boolean = true) {
+    console.log('trying login');
     gapi.load('client', () => {
       gapi.auth.authorize({
         client_id: CalendarApplicationService.clientID,
@@ -50,5 +55,28 @@ export class CalendarApplicationService {
 
   isUserLogged() {
     return !!localStorage.getItem('calendar_token');
+  }
+
+  parseEvents(googleEvents: GoogleEvent[]) {
+    let events: CalendarEvent[] = [];
+    for (let i = 0; i < googleEvents.length; i++) {
+      if (googleEvents[i].status !== 'cancelled') {
+        const event: CalendarEvent = {
+          id: googleEvents[i].id,
+          title: googleEvents[i].summary,
+          color: colors.blue,
+        };
+        if (googleEvents[i].start.dateTime) {
+          event.start = new Date(googleEvents[i].start.dateTime);
+          event.end = new Date(googleEvents[i].end.dateTime);
+        } else {
+          event.start = new Date(googleEvents[i].start.date);
+          event.end = new Date(googleEvents[i].end.date);
+          event.allDay = true;
+        }
+        events.push(event);
+      }
+    }
+    return events;
   }
 }

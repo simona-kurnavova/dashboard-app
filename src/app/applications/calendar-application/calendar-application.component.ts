@@ -23,14 +23,12 @@ export const colors: any = {
 const test_events: CalendarEvent[] = [
   {
     title: 'An all day event',
-    color: colors.yellow,
     start: new Date(),
     allDay: true
   },
 
   {
     title: 'A non all day event',
-    color: colors.blue,
     start: new Date(),
     end: new Date()
   }
@@ -61,8 +59,18 @@ export class CalendarApplicationComponent implements OnInit {
 
   getEvents() {
     const _that = this;
-    this.calendarService.getClient().calendar.events.list({'calendarId': 'primary'}).then(function(response) {
+    const minDate = new Date();
+    minDate.setMonth(minDate.getMonth() - 1);
+
+    this.calendarService.getClient().calendar.events.list({
+      'calendarId': 'primary',
+      'showDeleted': 'false',
+      'timeMin': minDate.toJSON(),
+    }).then(function(response) {
       _that.googleEvents = <GoogleEvent[]> response.result.items;
+      _that.events = _that.calendarService.parseEvents(_that.googleEvents);
+      console.log(_that.googleEvents);
+      console.log(_that.events);
     });
   }
 }
