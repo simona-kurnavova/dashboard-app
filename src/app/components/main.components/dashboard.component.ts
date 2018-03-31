@@ -80,7 +80,7 @@ export class DashboardComponent {
         );
       }
     }
-    this.loadWidgets();
+    this.widgetList  = JSON.parse(JSON.stringify(this.widgetListEdit));
     this.setState('normal');
   }
 
