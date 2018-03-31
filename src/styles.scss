@@ -17,5 +17,7 @@ button:focus {
   max-height: 60px  !important;
 }
 
-
-
+/* Hide calendar event color dots */
+.cal-month-view .cal-event {
+  display: none;
+}

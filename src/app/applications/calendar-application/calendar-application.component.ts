@@ -16,7 +16,7 @@ export class CalendarApplicationComponent implements OnInit {
   public googleEvents: GoogleEvent[] = [];
   public events: CalendarEvent[] = [];
   public clickedDate: Date;
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: Boolean = true;
   @Input() state = 'normal';
 
   constructor(private modal: NgbModal, private calendarService: CalendarApplicationService) {}
