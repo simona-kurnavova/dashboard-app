@@ -12,8 +12,6 @@
     <button class="btn btn-secondary" (click)="addAccount()">Add Google Account</button>
   </div>
 
-  <!-- <button class="btn" (click)="calendarService.getList()">Load list</button> -->
-
   <div *ngFor="let alert of alerts" class="notification">
     <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
   </div>

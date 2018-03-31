@@ -13,6 +13,7 @@ import {CalendarApplicationService, GoogleEvent} from './calendar-application.se
 export class CalendarApplicationComponent implements OnInit {
   public view: String = 'month';
   public viewDate: Date = new Date();
+  public currentEvents: CalendarEvent[] = [];
   public googleEvents: GoogleEvent[] = [];
   public events: CalendarEvent[] = [];
   public clickedDate: Date;
@@ -42,6 +43,11 @@ export class CalendarApplicationComponent implements OnInit {
       console.log(_that.googleEvents);
       console.log(_that.events);
     });
+  }
+
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    this.viewDate = date;
+    this.currentEvents = events;
   }
 }
 MAPPINGS['calendar-application'] = CalendarApplicationComponent;
