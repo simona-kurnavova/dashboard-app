@@ -25,11 +25,12 @@
   </div>
 
   <div class="pre-scrollable" style="max-height: 300px; overflow-x: hidden;">
-    <div class="alert alert-info" *ngIf="viewDate">
+    <div *ngIf="view == 'month'" class="alert alert-info">
       <strong> {{ viewDate | date:'medium' }}</strong>
       <ul *ngFor="let event of currentEvents">
         <div *ngIf="event.allDay" style="color: blue;">{{event.title}} <i style="color: black">(all day)</i></div>
-        <div *ngIf="!event.allDay">{{event.title}} {{event.start.getHours()}}:{{("0" + event.start.getMinutes()).substr(-2)}} -
+        <div *ngIf="!event.allDay">{{event.title}}
+          {{event.start.getHours()}}:{{("0" + event.start.getMinutes()).substr(-2)}} -
           {{event.end.getHours()}}:{{("0" + event.end.getMinutes()).substr(-2)}}</div>
       </ul>
     </div>
