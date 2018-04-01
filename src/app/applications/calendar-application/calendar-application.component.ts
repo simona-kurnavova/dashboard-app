@@ -5,6 +5,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';
 import {CalendarApplicationService, GoogleEvent} from './calendar-application.service';
 import {CalendarAddAccountComponent} from './calendar-add-account.component';
+import {WidgetInterface} from '../../services/widget.service';
 
 @Component({
   selector: 'calendar-application',
@@ -13,6 +14,8 @@ import {CalendarAddAccountComponent} from './calendar-add-account.component';
 
 export class CalendarApplicationComponent implements OnInit {
   @Input() state: String = 'normal';
+  @Input() widget: WidgetInterface;
+  @Input() modal: Boolean;
   public view: String = 'month';
   public viewDate: Date = new Date();
   public currentEvents: CalendarEvent[] = [];
@@ -20,14 +23,12 @@ export class CalendarApplicationComponent implements OnInit {
   public clickedDate: Date;
   activeDayIsOpen: Boolean = true;
 
-  constructor(private modal: NgbModal,
-              private calendarService: CalendarApplicationService,
+  constructor(private calendarService: CalendarApplicationService,
               public  popupService: NgbModal) {}
 
   ngOnInit() {
     this.loadEvents();
     // TODO: if no Account assigned -> noAccount state
-    // TODO: fix not getting dashboard state
   }
 
   isState(state: String) {
@@ -58,7 +59,13 @@ export class CalendarApplicationComponent implements OnInit {
   }
 
   addAccount() {
-    const popup = this.popupService.open(CalendarAddAccountComponent, {size: 'lg'});
+    this.popupService.open(CalendarAddAccountComponent, {size: 'lg'});
+  }
+
+  scrollable() {
+    if (!this.modal) {
+      return 'pre-scrollable calendar-scroll';
+    }
   }
 
 }

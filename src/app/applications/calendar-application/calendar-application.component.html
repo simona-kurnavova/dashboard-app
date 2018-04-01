@@ -25,9 +25,9 @@
     </div>
   </div>
 
-  <div class="pre-scrollable" style="max-height: 300px; overflow-x: hidden;">
+  <div class="{{ scrollable() }}">
     <div *ngIf="view == 'month'" class="alert alert-info">
-      <strong> {{ viewDate | date:'medium' }}</strong>
+      <strong> {{ viewDate.toDateString() }}</strong>
       <ul *ngFor="let event of currentEvents">
         <div *ngIf="event.allDay" style="color: blue;">{{event.title}} <i style="color: black">(all day)</i></div>
         <div *ngIf="!event.allDay">{{event.title}}
@@ -69,6 +69,11 @@
   .icon-calendar {
     color: cadetblue;
     padding-top: 20px;
+  }
+
+  .calendar-scroll {
+    max-height: 300px;
+    overflow-x: hidden;
   }
 </style>
 
