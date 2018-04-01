@@ -9,19 +9,19 @@
   <div class="container">
 
     <div class="row">
-      <div class="col">
-        <div class="list-group">
+      <div class="col-lg-4">
+        <div class="list-group" style="padding-bottom: 15px">
           <a class="list-group-item list-group-item-action" (click)="setActive('profile')">Profile</a>
           <a class="list-group-item list-group-item-action" (click)="setActive('accounts')">Accounts</a>
-          <a class="list-group-item list-group-item-action" (click)="setActive('widgets')">Applications</a>
+          <a class="list-group-item list-group-item-action" (click)="setActive('widgets')">Widgets</a>
         </div>
       </div>
 
-      <div class="col-8">
+      <div class="col-lg-8">
         <div [ngSwitch]="activeCard">
           <profile-content *ngSwitchCase="'profile'"></profile-content>
           <accounts-content *ngSwitchCase="'accounts'"></accounts-content>
-          <widgets-content [state]="list" *ngSwitchCase="'widgets'"></widgets-content>
+          <widgets-content [state]="'list'" *ngSwitchCase="'widgets'"></widgets-content>
         </div>
       </div>
     </div>
