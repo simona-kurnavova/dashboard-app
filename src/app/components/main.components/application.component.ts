@@ -60,27 +60,15 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   }
 
   initState() {
-    if (this.widget.account) {
-      this.setState(this.dashboardState);
-    } else {
-      if (this.application.required_account) {
-        this.setState('noAccount');
-      } else {
-        this.setState(this.dashboardState);
-      }
-    }
+    this.setState(this.dashboardState);
   }
 
   setState(state: String) {
     this.applicationState = state;
   }
+
   isState(state: String) {
     return state === this.applicationState;
-  }
-
-  addAccount() {
-    const popupContent = ApplicationComponent.getComponentType(this.type + '-add-account');
-    const popup = this.popupService.open(popupContent, {size: 'lg'});
   }
 
   openInPopUp() {

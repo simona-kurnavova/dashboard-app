@@ -20,6 +20,7 @@ export interface GoogleEvent {
 
 @Injectable()
 export class CalendarApplicationService {
+  private events: CalendarEvent[] = [];
   static clientID = '37169070793-3eec0n9hc1b6s8tca1njrc64v6jpejvs.apps.googleusercontent.com';
   static scope = [
     'https://www.googleapis.com/auth/calendar',
@@ -27,7 +28,7 @@ export class CalendarApplicationService {
   ];
   constructor() {}
 
-  login(immediate: Boolean = true) {
+  login(immediate: Boolean = true, callback:(response: any) => void) {
     console.log('trying login');
     gapi.load('client', () => {
       gapi.auth.authorize({
@@ -38,10 +39,11 @@ export class CalendarApplicationService {
         console.log(authResult);
         if (authResult['access_token']) {
           localStorage.setItem('calendar_token', authResult['access_token']);
-          // TODO: save access token to db
+          // TODO: save to database
         }
         gapi.client.load('calendar', 'v3', () => {
           console.log('successufly loaded calendar');
+          this.loadEvents(callback);
         });
         if (authResult && !authResult.error) {
           console.log('successfully auth');
@@ -78,5 +80,19 @@ export class CalendarApplicationService {
       }
     }
     return events;
+  }
+
+  loadEvents(callback) {
+    const _that = this;
+    const minDate = new Date();
+    minDate.setMonth(minDate.getMonth() - 1); //TODO: customize
+
+    gapi.client.calendar.events.list({
+      'calendarId': 'primary', 'timeMin': minDate.toJSON(),
+    }).then(callback);
+  }
+
+  getEvents(): CalendarEvent[] {
+    return this.events;
   }
 }

@@ -14,7 +14,7 @@ export class CalendarAddAccountComponent {
   constructor(public activeModal: NgbActiveModal, public calendarService: CalendarApplicationService) {}
 
   addAccount() {
-    this.calendarService.login(false);
+    this.calendarService.login(false, (response => {} ));
   }
 
   public closeAlert(alert: AlertInterface) {

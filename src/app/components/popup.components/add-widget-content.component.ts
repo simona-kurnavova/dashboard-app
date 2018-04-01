@@ -12,7 +12,8 @@ import {AccountService} from '../../services/account.service';
 
   export class AddWidgetContent {
   public appList: ApplicationInterface[];
-  @Input() currentEditAppList;
+  @Input() currentEditAppList = [[]];
+  @Input() currentDashboard;
 
   constructor(public activeModal: NgbActiveModal,
               private appService: ApplicationService,
@@ -35,9 +36,9 @@ import {AccountService} from '../../services/account.service';
       err => console.log(err)
     );
     this.widgetService.retrieveAll().subscribe(
-      // TODO: remove fixed account after add flow implemented
       widgets => {
-        let widget = WidgetMatrixService.createWidget(id, 5, 4, <WidgetInterface[]>widgets['results']);
+        // TODO: find the correct dashboard
+        let widget = WidgetMatrixService.createWidget(id, null, this.currentDashboard, <WidgetInterface[]>widgets['results']);
         this.widgetService.create(widget).subscribe(
           data => {
             console.log(data);

@@ -19,6 +19,7 @@ export class DashboardComponent {
   public widgetList: WidgetInterface[][] = [];
   public widgetListEdit: WidgetInterface[][];
   public alerts: Array<AlertInterface> = [];
+  public activeDashboard;
 
   constructor(private popupService: NgbModal,
               private dashboardService: DashboardService,
@@ -26,6 +27,7 @@ export class DashboardComponent {
 
   ngOnInit() {
     this.loadWidgets();
+    this.activeDashboard = 0;
   }
 
   loadWidgets() {
@@ -61,6 +63,7 @@ export class DashboardComponent {
   addWidget() {
     const popup = this.popupService.open(AddWidgetContent);
     popup.componentInstance.currentEditAppList = this.widgetListEdit;
+    popup.componentInstance.currentDashboard = this.dashboardList[this.activeDashboard].id;
   }
 
   cancelEdit() {
