@@ -16,7 +16,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   applicationState: String;
 
   application: ApplicationInterface;
-  type = 'calendar'; // TODO: application.name
+  type = 'calendar'; // TODO: real application.name
   private componentRef: ComponentRef<{}>;
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
@@ -39,9 +39,15 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         componentType = ApplicationComponent.getComponentType('error-application');
       }
       const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
+
       this.componentRef = this.container.createComponent(factory);
-      this.componentRef.instance.state = this.applicationState;
-      this.componentRef.instance.widget = this.widget;
+
+      if (this.componentRef.instance.hasOwnProperty('state')) {
+        this.componentRef.instance.state = this.applicationState;
+      }
+      if (this.componentRef.instance.hasOwnProperty('widget')) {
+        this.componentRef.instance.widget = this.widget;
+      }
     }
   }
 

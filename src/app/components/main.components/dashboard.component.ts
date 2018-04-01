@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AddWidgetContent} from '../popup.components/add-widget-content.component';
 import {DashboardInterface, DashboardService} from '../../services/dashboard.service';
@@ -12,7 +12,7 @@ import {AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
   templateUrl: './templates/dashboard.component.html'
 })
 
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   public state: String = 'normal';
   public widgetJustify = 'center';
   public dashboardList: DashboardInterface[];
@@ -78,12 +78,14 @@ export class DashboardComponent {
         this.widgetListEdit[row][col].position_x = col;
         this.widgetListEdit[row][col].position_y = row;
         this.widgetService.edit(this.widgetListEdit[row][col].id, this.widgetListEdit[row][col]).subscribe(
-          data => console.log(data),
-          err => console.log(err)
+          data => {
+            console.log(data);
+            this.loadWidgets();
+          },
+              err => console.log(err)
         );
       }
     }
-    this.widgetList  = JSON.parse(JSON.stringify(this.widgetListEdit));
     this.setState('normal');
   }
 
