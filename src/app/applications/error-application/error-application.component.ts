@@ -8,5 +8,6 @@ import {MAPPINGS} from '../../components/main.components/application.component';
 
 export class ErrorApplicationComponent {
   @Input() state;
+  @Input() widget;
 }
 MAPPINGS['error-application'] = ErrorApplicationComponent;

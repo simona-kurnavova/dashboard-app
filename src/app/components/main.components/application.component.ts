@@ -40,6 +40,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
       }
       const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
       this.componentRef = this.container.createComponent(factory);
+      this.componentRef.instance.state = this.applicationState;
+      this.componentRef.instance.widget = this.widget;
     }
   }
 

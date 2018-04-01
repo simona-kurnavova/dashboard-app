@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ApplicationComponent, MAPPINGS} from '../../components/main.components/application.component';
+import {MAPPINGS} from '../../components/main.components/application.component';
 import {CalendarEvent} from 'angular-calendar';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';

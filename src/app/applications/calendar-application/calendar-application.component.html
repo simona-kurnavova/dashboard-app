@@ -1,4 +1,4 @@
-<div *ngIf="isState('normal'); else editState" class="container">
+<div *ngIf="isState('normal')" class="container">
 
   <div class="btn-group" style="padding-bottom: 10px;">
     <button (click)="view='month'" class="btn btn-sm">Month</button>
@@ -8,6 +8,7 @@
   </div>
 
   <div class="btn-group" style="padding-bottom: 10px;">
+    &nbsp;&nbsp;&nbsp;&nbsp;
     <p><b>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }} </b></p>
     &nbsp;&nbsp;
 
@@ -53,12 +54,16 @@
   </div>
 </div>
 
-<ng-template #editState>
+<div *ngIf="isState('edit')">
   <div class="container" align="center">
     <i class="fa fa-calendar fa-4x icon-calendar" aria-hidden="true"></i>
   </div>
-</ng-template>
+</div>
 
+<div *ngIf="isState('noAccount')" align="center">
+  There is no Google account assigned to this widget. Please add one:
+  <button class="btn btn-blue-grey" (click)="addAccount()">Add Account</button>
+</div>
 
 <style>
   .icon-calendar {
