@@ -28,7 +28,18 @@ button:focus {
   margin-top: 2px;
 }
 
-/*Fix of big font of current day number in month calendar*/
+/* Fix of big font of current day number in month calendar*/
 .cal-month-view .cal-day-cell.cal-today .cal-day-number {
   font-size: 1.2em;
+}
+
+/* Scrollbar on the side of all modal dialogs */
+.modal-dialog{
+  overflow-y: initial !important
+}
+
+/* Sets size of the modal dialog with auto overflow */
+.modal-body{
+  height: 350px;
+  overflow-y: auto;
 }
