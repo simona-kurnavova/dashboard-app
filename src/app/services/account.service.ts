@@ -4,6 +4,7 @@ import { BACKEND } from '../settings';
 import { AuthService } from './auth.service';
 
 export interface AccountInterface {
+  id?: number;
   owner?: Number;
   type: String;
   name: String;

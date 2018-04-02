@@ -58,6 +58,7 @@ export class DashboardComponent implements OnInit {
 
   setState(state: String) {
     this.state = state;
+    this.loadWidgets();
   }
 
   addWidget() {

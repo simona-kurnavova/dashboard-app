@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { UserService, UserInterface } from '../../services/user.service';
 import {AlertInterface, SERVER_ERROR_ALERT, USER_EDITED_ALERT} from '../../authentication-alerts';
@@ -9,12 +9,12 @@ import {AlertInterface, SERVER_ERROR_ALERT, USER_EDITED_ALERT} from '../../authe
   providers: [ AuthService ],
 })
 
-export class ProfileContent {
+export class ProfileContent implements OnInit{
   private state: String;
   public user: UserInterface = {
     id: null, username: '', password: '', email: ''
   };
-  public alerts: Array<AlertInterface> = [];
+  public alerts: Array <AlertInterface> = [];
 
   constructor(private service: AuthService, private userService: UserService) {}
 
