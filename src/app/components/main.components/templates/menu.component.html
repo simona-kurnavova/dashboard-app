@@ -1,59 +1,41 @@
-<div class="container" *ngIf="!hideMenu">
-  <div class="row">
-    <div class="col col-lg-4">
-      <div class="btn-group">
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-light grey lighten-3">
 
-        <button type="button" (click)="openSettings()" class="btn btn-secondary waves-light" mdbRippleRadius>
-          <i class="fa fa-wrench mr-1"></i> Settings
-        </button>
+  <logo>
+    <a class="navbar-brand" href="#">Dashboard</a>
+  </logo>
 
-        <div class="btn-group">
-          <div class="dropdown" dropdown>
+  <links>
+    <ul class="navbar-nav mr-auto">
 
-            <button dropdownToggle type="button" class="btn btn-secondary dropdown-toggle waves-light"
-                    mdbRippleRadius>
-              Add
-            </button>
+      <li class="nav-item">
+        <a class="nav-link waves-light" (click)="openAbout()" mdbRippleRadius>About</a>
+      </li>
 
-            <div class="dropdown-menu">
-              <a class="dropdown-item" (click)="openAddWidget()">Widget</a>
-              <a class="dropdown-item" (click)="openAddAccount()">Account</a>
-            </div>
+      <li class="nav-item">
+        <a class="nav-link waves-light" (click)="openSettings()" mdbRippleRadius>Settings</a>
+      </li>
 
-          </div>
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbRippleRadius type="button" class="nav-link dropdown-toggle waves-light" mdbRippleRadius>
+          Profile<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item waves-light" (click)="openProfile()" mdbRippleRadius>Edit profile</a>
+          <a class="dropdown-item waves-light" (click)="logout()" mdbRippleRadius>Logout</a>
         </div>
+      </li>
 
-      </div>
-    </div>
+    </ul>
 
-    <div class="col col-lg-4">
-      <h3 class="h3-responsive" align="center">DASHBOARD</h3>
-    </div>
+    <span class="navbar-nav grey-text">
+    <li class="nav-item">
+      Hello, {{username}} !
+    </li>
+  </span>
 
-    <div class="col col-lg-4" align="right">
-      <div class="btn-group">
-        <div class="dropdown" dropdown>
+  </links>
 
-          <button dropdownToggle type="button" class="btn btn-secondary dropdown-toggle waves-light"
-                  mdbRippleRadius>
-            {{ username }}
-          </button>
+</mdb-navbar>
 
-          <div class="dropdown-menu">
-            <a class="dropdown-item" (click)="openProfile()">Profile</a>
-            <a class="dropdown-item" (click)="openAbout()">About</a>
-            <a class="dropdown-item" (click)="logout()">Logout</a>
-          </div>
-
-        </div>
-        &nbsp; &nbsp;
-        <a (click)="hideMenu=true">
-          <i class="fa fa-angle-double-up fa-2x menu-hide-icon" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="container" *ngIf="hideMenu">
   <div class="row">
@@ -70,7 +52,11 @@
 <style>
 
   .menu-hide-icon {
-  color: lightgrey;
+    color: lightgrey;
+  }
+
+  .menu-btn {
+    margin-left: 5px;
   }
 
 </style>
