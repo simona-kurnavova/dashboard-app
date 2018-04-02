@@ -6,15 +6,14 @@ import {startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMon
 import {CalendarApplicationService, GoogleEvent} from './calendar-application.service';
 import {CalendarAddAccountComponent} from './calendar-add-account.component';
 import {WidgetInterface} from '../../services/widget.service';
+import {ApplicationBaseComponent} from '../application-base.component';
 
 @Component({
   selector: 'calendar-application',
   templateUrl: './calendar-application.component.html',
 })
 
-export class CalendarApplicationComponent implements OnInit {
-  @Input() state: String = 'normal';
-  @Input() widget: WidgetInterface;
+export class CalendarApplicationComponent extends ApplicationBaseComponent implements OnInit {
   @Input() modal: Boolean;
   public view: String = 'month';
   public viewDate: Date = new Date();
@@ -24,7 +23,9 @@ export class CalendarApplicationComponent implements OnInit {
   activeDayIsOpen: Boolean = true;
 
   constructor(private calendarService: CalendarApplicationService,
-              public  popupService: NgbModal) {}
+              public  popupService: NgbModal) {
+    super();
+  }
 
   ngOnInit() {
     this.loadEvents();

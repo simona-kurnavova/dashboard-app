@@ -2,6 +2,7 @@ import {Component, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnI
 import {WidgetInterface} from '../../services/widget.service';
 import {ApplicationInterface, ApplicationService} from '../../services/application.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ApplicationBaseComponent} from '../../applications/application-base.component';
 
 export const MAPPINGS = {};
 
@@ -41,13 +42,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
       const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
 
       this.componentRef = this.container.createComponent(factory);
-
-      if (this.componentRef.instance.hasOwnProperty('state')) {
-        this.componentRef.instance.state = this.applicationState;
-      }
-      if (this.componentRef.instance.hasOwnProperty('widget')) {
-        this.componentRef.instance.widget = this.widget;
-      }
+      (<ApplicationBaseComponent>this.componentRef.instance).state = this.applicationState;
+      (<ApplicationBaseComponent>this.componentRef.instance).widget = this.widget;
     }
   }
 

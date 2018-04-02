@@ -1,13 +1,11 @@
 import {Component, Input} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
+import {ApplicationBaseComponent} from '../application-base.component';
 
 @Component({
   selector: 'error-application',
   templateUrl: './error-application.component.html',
 })
 
-export class ErrorApplicationComponent {
-  @Input() state;
-  @Input() widget;
-}
+export class ErrorApplicationComponent extends ApplicationBaseComponent {}
 MAPPINGS['error-application'] = ErrorApplicationComponent;
