@@ -51,3 +51,15 @@ export const ACCOUNT_ADDED_ALERT: AlertInterface = {
   type: 'success',
   message: 'Account successfully added'
 };
+
+export const ACCOUNT_DELETED_ALERT: AlertInterface = {
+  id: 9,
+  type: 'success',
+  message: 'Account successfully deleted'
+};
+
+export const ERROR_DELETING_ACCOUNT_ALERT: AlertInterface = {
+  id: 10,
+  type: 'danger',
+  message: 'Error while trying to delete account'
+};
