@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { UserService, UserInterface } from '../../services/user.service';
-import {AlertInterface, SERVER_ERROR_ALERT, USER_ALREADY_EXISTS_ALERT, USER_REGISTERED_ALERT} from '../../authentication-alerts';
+import {
+  AlertInterface, EMPTY_PASSWORD_ALERT, EMPTY_USERNAME_ALERT, SERVER_ERROR_ALERT, USER_ALREADY_EXISTS_ALERT,
+  USER_REGISTERED_ALERT
+} from '../../authentication-alerts';
 import {HttpErrorHandler} from '../../services/http-error-handler.service';
 
 @Component({
@@ -20,6 +23,15 @@ export class RegistrationFormComponent {
 
   register() {
     this.alerts = [];
+    if (this.user.username === '') {
+      this.alerts.push(EMPTY_USERNAME_ALERT);
+    }
+    if (this.user.password === '') {
+      this.alerts.push(EMPTY_PASSWORD_ALERT);
+    }
+    if (this.alerts.length > 0) {
+      return;
+    }
     this.userService.create(this.user).subscribe(data => {
         this.alerts.push(USER_REGISTERED_ALERT);
       }, err => {
