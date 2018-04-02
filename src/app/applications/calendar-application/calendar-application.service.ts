@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
 import {CalendarEvent} from 'angular-calendar';
+import {AccountInterface, AccountService} from '../../services/account.service';
+import {WidgetInterface, WidgetService} from '../../services/widget.service';
+import {Router} from '@angular/router';
 
 export const colors: any = {
   red: {
@@ -20,15 +23,17 @@ export interface GoogleEvent {
 
 @Injectable()
 export class CalendarApplicationService {
-  private events: CalendarEvent[] = [];
   static clientID = '37169070793-3eec0n9hc1b6s8tca1njrc64v6jpejvs.apps.googleusercontent.com';
   static scope = [
     'https://www.googleapis.com/auth/calendar',
     'https://www.googleapis.com/auth/calendar.readonly',
   ];
-  constructor() {}
 
-  login(immediate: Boolean = true, callback:(response: any) => void) {
+  constructor(private widgetService: WidgetService,
+              private accountService: AccountService,
+              private router: Router) {}
+
+  login(immediate: Boolean = true, callback: (response: any) => void) {
     console.log('trying login');
     gapi.load('client', () => {
       gapi.auth.authorize({
@@ -39,10 +44,8 @@ export class CalendarApplicationService {
         console.log(authResult);
         if (authResult['access_token']) {
           localStorage.setItem('calendar_token', authResult['access_token']);
-          // TODO: save to database
         }
         gapi.client.load('calendar', 'v3', () => {
-          console.log('successufly loaded calendar');
           this.loadEvents(callback);
         });
         if (authResult && !authResult.error) {
@@ -54,8 +57,45 @@ export class CalendarApplicationService {
     });
   }
 
-  getClient() {
-    return gapi.client;
+  addAccount(widget: WidgetInterface, addAccountCallback) {
+    gapi.load('client', () => {
+      gapi.auth.authorize({
+        client_id: CalendarApplicationService.clientID,
+        scope: CalendarApplicationService.scope,
+        immediate: false
+      }, authResult => {
+        console.log(authResult);
+        if (authResult['access_token']) {
+          localStorage.setItem('calendar_token', authResult['access_token']);
+          this.saveToken(authResult['access_token'], widget);
+        }
+        gapi.client.load('calendar', 'v3', addAccountCallback);
+        if (authResult && !authResult.error) {
+          console.log('successfully auth');
+        } else {
+          console.log('error while auth');
+        }
+      });
+    });
+  }
+
+  saveToken(token, widget: WidgetInterface) {
+    const account: AccountInterface = {
+      type: 'google',
+      name: 'Google',
+      token: token,
+    };
+    this.accountService.create(account).subscribe(
+      data => {
+        console.log(data);
+        widget.account = data['id'];
+        this.widgetService.edit(widget.id, widget).subscribe(
+          dataWidget => console.log(dataWidget),
+          err => console.log(err)
+        );
+        },
+      err => console.log(err)
+    );
   }
 
   parseEvents(googleEvents: GoogleEvent[]) {
@@ -83,16 +123,11 @@ export class CalendarApplicationService {
   }
 
   loadEvents(callback) {
-    const _that = this;
     const minDate = new Date();
-    minDate.setMonth(minDate.getMonth() - 1); //TODO: customize
+    minDate.setMonth(minDate.getMonth() - 3); // TODO: customize
 
     gapi.client.calendar.events.list({
       'calendarId': 'primary', 'timeMin': minDate.toJSON(),
     }).then(callback);
-  }
-
-  getEvents(): CalendarEvent[] {
-    return this.events;
   }
 }

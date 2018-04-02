@@ -63,7 +63,12 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
   }
 
   addAccount() {
-    this.popupService.open(CalendarAddAccountComponent, {size: 'lg'});
+    const _that = this;
+    const popup = this.popupService.open(CalendarAddAccountComponent, {size: 'lg'});
+    popup.componentInstance.widget = this.widget;
+    popup.componentInstance.addAccountCallback = () => {
+      _that.noAccount = false;
+    };
   }
 
   scrollable() {

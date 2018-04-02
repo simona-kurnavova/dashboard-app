@@ -4,11 +4,11 @@ import { BACKEND } from '../settings';
 import { AuthService } from './auth.service';
 
 export interface AccountInterface {
-  owner: Number;
+  owner?: Number;
   type: String;
   name: String;
   token: String;
-  info: String;
+  info?: String;
 }
 
 @Injectable()
