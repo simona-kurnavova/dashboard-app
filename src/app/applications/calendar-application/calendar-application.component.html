@@ -60,8 +60,8 @@
   </div>
 </div>
 
-<div *ngIf="isState('noAccount')" align="center">
-  There is no Google account assigned to this widget. Please add one:
+<div *ngIf="noAccount" align="center">
+  There is no Google account assigned to this widget. Please add one: <br>
   <button class="btn btn-blue-grey" (click)="addAccount()">Add Account</button>
 </div>
 

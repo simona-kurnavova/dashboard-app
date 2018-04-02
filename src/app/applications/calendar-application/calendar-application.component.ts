@@ -15,12 +15,13 @@ import {ApplicationBaseComponent} from '../application-base.component';
 
 export class CalendarApplicationComponent extends ApplicationBaseComponent implements OnInit {
   @Input() modal: Boolean;
+  public noAccount = false;
   public view: String = 'month';
   public viewDate: Date = new Date();
   public currentEvents: CalendarEvent[] = [];
   public events: CalendarEvent[] = [];
   public clickedDate: Date;
-  activeDayIsOpen: Boolean = true;
+  public activeDayIsOpen: Boolean = true;
 
   constructor(private calendarService: CalendarApplicationService,
               public  popupService: NgbModal) {
@@ -29,11 +30,13 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
 
   ngOnInit() {
     this.loadEvents();
-    // TODO: if no Account assigned -> noAccount state
+    if (!this.widget.account) {
+      this.noAccount = true;
+    }
   }
 
   isState(state: String) {
-    return state === this.state;
+    return state === this.state && !this.noAccount;
   }
 
   setState(state: String) {
