@@ -15,9 +15,7 @@ export class WidgetComponent {
   @Input() widget: WidgetInterface;
   public deleted: Boolean = false;
 
-  constructor(private widgetService: WidgetService,
-              private router: Router,
-              private applicationService: ApplicationService) {}
+  constructor(private widgetService: WidgetService) {}
 
   isState(state: String) {
     return this.state === state;

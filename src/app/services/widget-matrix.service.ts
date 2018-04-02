@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {WidgetInterface} from './widget.service';
+import {DEFAULT_WIDGET_HEIGHT, DEFAULT_WIDGET_WIDTH} from '../settings';
 
 @Injectable()
 export class WidgetMatrixService {
@@ -31,7 +32,7 @@ export class WidgetMatrixService {
     return <WidgetInterface>{
       app: app, account: account, dashboard: dashboard,
       position_x: 0, position_y: this.getFreeRow(widgets),
-      size_x: 4, size_y: 4
+      size_x: DEFAULT_WIDGET_WIDTH, size_y: DEFAULT_WIDGET_HEIGHT
     };
   }
 }
