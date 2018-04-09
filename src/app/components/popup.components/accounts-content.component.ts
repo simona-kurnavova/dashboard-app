@@ -64,6 +64,12 @@ export class AccountsContent implements OnInit {
             break;
           }
         }
+        if (i >= widgets.length) {
+          this.setState('list');
+          this.accountList.splice(this.currentAccount, 1);
+          this.alerts.push(ACCOUNT_DELETED_ALERT);
+          return;
+        }
         this.widgetService.edit(widgets[i].id, widgets[i]).subscribe(
           data => {
                this.accountService.delete(this.accountList[this.currentAccount].id).subscribe(
