@@ -5,10 +5,11 @@
           <div class="col" align="right">
             <div class="btn-group">
 
-              <div class="btn-group" dropdown>
-                <a dropdownToggle>
-                  <i class="fa fa-pencil fa-2x widget-control-icon"></i>
-                </a>
+              <div class="btn-group-sm widget-control" dropdown>
+                <button dropdownToggle type="button"
+                        class="btn btn-blue-grey btn-sm dropdown-toggle waves-light" mdbRippleRadius>
+                  Size
+                </button>
 
                 <div class="dropdown-menu dropdown-primary">
                   <a (click)="changeSize(5,4)" class="dropdown-item">Small</a>
@@ -19,7 +20,7 @@
               </div>
 
               <a (click)="deleteWidget()">
-                <i class="fa fa-remove fa-2x widget-control-icon"></i>
+                <i class="fa fa-remove fa-2x widget-control"></i>
               </a>
 
             </div>
@@ -38,10 +39,10 @@
     height: 450px;
   }
 
-  .widget-control-icon {
+  .widget-control {
     padding-top: 20px;
     padding-right: 15px;
-    color: grey;
+    color: purple;
   }
 
 </style>
