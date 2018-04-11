@@ -36,6 +36,8 @@ import {CalendarPopupComponent} from './applications/calendar-application/calend
 import { CalendarModule } from 'angular-calendar';
 import {CalendarApplicationService} from './applications/calendar-application/calendar-application.service';
 import {ApplicationBaseComponent} from './applications/application-base.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,9 @@ import {ApplicationBaseComponent} from './applications/application-base.componen
   imports: [
     BrowserModule, FormsModule, HttpClientModule, OAuthModule.forRoot(), DndModule.forRoot(), NgbModule.forRoot(),
     MDBBootstrapModule.forRoot(),
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    BrowserAnimationsModule,
 
     RouterModule.forRoot([
       { path: '', component: AuthComponent },

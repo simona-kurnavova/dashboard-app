@@ -9,7 +9,7 @@
 
   <div class="btn-group" style="padding-bottom: 10px;">
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <p><b>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }} </b></p>
+    <p><b>{{ viewDate.toDateString() }} </b></p>
     &nbsp;&nbsp;
 
     <div mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
@@ -22,7 +22,8 @@
     &nbsp;&nbsp;
     <div mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
       <a><i>next</i></a>
-    </div>
+    </div> &nbsp;&nbsp;
+    <a (click)="view='create'" style="color: purple"><b>new event</b></a>
   </div>
 
   <div class="{{ scrollable() }}">
@@ -40,12 +41,22 @@
         <div *ngIf="!event.allDay">{{event.title}}
           {{event.start.getHours()}}:{{("0" + event.start.getMinutes()).substr(-2)}} -
           {{event.end.getHours()}}:{{("0" + event.end.getMinutes()).substr(-2)}}
+          &nbsp;
+          <a (click)="editEvent(i)"> <i class="fa fa-pencil" aria-hidden="true" style="color: black"></i> </a>
+          <a (click)="removeEvent(i)"> <i class="fa fa-remove" aria-hidden="true" style="color: darkred"></i> </a>
         </div>
       </ul>
     </div>
 
     <div class="row">
       <div class="col">
+
+        <div class="container" *ngIf="(view == 'edit') || (view == 'create')">
+          <div *ngFor="let alert of alerts" class="notification">
+            <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+          </div>
+        </div>
+
         <div [ngSwitch]="view" class="container">
           <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
                                    (dayClicked)="dayClicked($event.day);">
@@ -56,6 +67,68 @@
           <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [hourSegmentHeight]="25"
                                  [hourSegments]="1" [dayStartHour]="8" [dayEndHour]="20">
           </mwl-calendar-day-view>
+
+          <div *ngSwitchCase="'create'" align="center">
+
+            <form class="new-event-form" style="max-width: 450px">
+              <p class="h5 text-center mb-4">New Event</p>
+
+              <div class="md-form">
+                <input autocomplete="none" type="text" id="event-title" [(ngModel)]="new_event.title" name="title" class="form-control"
+                       mdbActive>
+                <label for="event-title">Title</label>
+              </div>
+
+                From:<input [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
+                            [(ngModel)]="selectedMoments"
+                            [selectMode]="'rangeFrom'"
+                            [ngModelOptions]="{standalone: true}">
+                <owl-date-time #dt12></owl-date-time>
+
+               To:<input [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
+                         [(ngModel)]="selectedMoments"
+                         [selectMode]="'rangeTo'"
+                         [ngModelOptions]="{standalone: true}">
+                <owl-date-time #dt13></owl-date-time>
+
+              <div class="text-right" style="padding-top: 5px">
+                <button class="btn btn-default waves-light" (click)="createEvent()" mdbRippleRadius>Save</button>
+              </div>
+
+            </form>
+
+          </div>
+
+          <div *ngSwitchCase="'edit'" align="center">
+            <form class="new-event-form" style="max-width: 450px">
+              <p class="h5 text-center mb-4">Edit Event</p>
+
+              <div class="md-form">
+                <input autocomplete="none" type="text" id="edit-event" [(ngModel)]="edit_event.title" name="title" class="form-control"
+                       mdbActive>
+                <label for="event-title">Title</label>
+              </div>
+
+              From:<input [owlDateTimeTrigger]="dt14" [owlDateTime]="dt14"
+                          [(ngModel)]="selectedEditedMoments"
+                          [selectMode]="'rangeFrom'"
+                          [ngModelOptions]="{standalone: true}">
+              <owl-date-time #dt14></owl-date-time>
+
+              To:<input [owlDateTimeTrigger]="dt15" [owlDateTime]="dt15"
+                        [(ngModel)]="selectedEditedMoments"
+                        [selectMode]="'rangeTo'"
+                        [ngModelOptions]="{standalone: true}">
+              <owl-date-time #dt15></owl-date-time>
+
+              <div class="text-right" style="padding-top: 5px">
+                <button class="btn btn-default waves-light" (click)="saveEditEvent()" mdbRippleRadius>Edit</button>
+              </div>
+
+            </form>
+
+          </div>
+
         </div>
       </div>
     </div>

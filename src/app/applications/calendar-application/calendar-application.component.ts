@@ -7,6 +7,10 @@ import {CalendarApplicationService, GoogleEvent} from './calendar-application.se
 import {CalendarAddAccountComponent} from './calendar-add-account.component';
 import {WidgetInterface} from '../../services/widget.service';
 import {ApplicationBaseComponent} from '../application-base.component';
+import {
+  ACCOUNT_ADDED_ALERT, AlertInterface, EVENT_ADD_ERROR_ALERT, EVENT_ADDED_ALERT, EVENT_EDIT_ERROR_ALERT,
+  EVENT_EDITED_ALERT
+} from '../../authentication-alerts';
 
 @Component({
   selector: 'calendar-application',
@@ -15,13 +19,30 @@ import {ApplicationBaseComponent} from '../application-base.component';
 
 export class CalendarApplicationComponent extends ApplicationBaseComponent implements OnInit {
   @Input() modal: Boolean;
-  public noAccount = false;
+  public noAccount: Boolean = false;
   public view: String = 'month';
+  public clickedDate: Date;
   public viewDate: Date = new Date();
   public currentEvents: CalendarEvent[] = [];
   public events: CalendarEvent[] = [];
-  public clickedDate: Date;
   public activeDayIsOpen: Boolean = true;
+  public alerts: Array<AlertInterface> = [];
+
+  public new_event: CalendarEvent = {
+    title: null, start: null, end: null
+  };
+
+  public edit_event: CalendarEvent = {
+    title: null, start: null, end: null
+  };
+
+  public selectedMoments = [
+    new Date(), new Date()
+  ];
+
+  public selectedEditedMoments = [
+    new Date(), new Date()
+  ];
 
   constructor(private calendarService: CalendarApplicationService,
               public  popupService: NgbModal) {
@@ -78,19 +99,61 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
     }
   }
 
-  editEvent(index) {}
+  saveEditEvent() {
+    const _that = this;
+    const callback = (response: any): void => {
+      if (response.status === 200) {
+        this.alerts.push(EVENT_EDITED_ALERT);
+      } else {
+        this.alerts.push(EVENT_EDIT_ERROR_ALERT);
+      }
+      _that.loadEvents();
+    };
+
+    this.edit_event.start = this.selectedEditedMoments[0];
+    this.edit_event.end = this.selectedEditedMoments[1];
+    console.log(this.edit_event);
+    this.calendarService.editEvent(this.edit_event, callback);
+  }
+
+  editEvent(index) {
+    this.edit_event = this.currentEvents[index];
+    this.selectedEditedMoments[0] = this.edit_event.start;
+    this.selectedEditedMoments[1] = this.edit_event.end;
+    this.view = 'edit';
+  }
 
   removeEvent(index) {
     const _that = this;
-    console.log(this.currentEvents[index]);
     const callback = (response: any): void => {
-      console.log(response);
       _that.currentEvents.splice(index, 1);
       _that.loadEvents();
     };
     this.calendarService.removeEvent(this.currentEvents[index], callback);
   }
 
+  createEvent() {
+    this.alerts = [];
+    const _that = this;
+
+    const callback = (response: any): void => {
+      console.log(response);
+      if (response.status === 200) {
+        _that.alerts.push(EVENT_ADDED_ALERT);
+      } else {
+        _that.alerts.push(EVENT_ADD_ERROR_ALERT);
+      }
+      _that.loadEvents();
+    };
+    this.new_event.start = this.selectedMoments[0];
+    this.new_event.end = this.selectedMoments[1];
+    this.calendarService.createEvent(this.new_event, callback);
+  }
+
+  public closeAlert(alert: AlertInterface) {
+    const index: number = this.alerts.indexOf(alert);
+    this.alerts.splice(index, 1);
+  }
 }
 MAPPINGS['calendar-application'] = CalendarApplicationComponent;
 

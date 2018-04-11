@@ -63,3 +63,27 @@ export const ERROR_DELETING_ACCOUNT_ALERT: AlertInterface = {
   type: 'danger',
   message: 'Error while trying to delete account'
 };
+
+export const EVENT_ADDED_ALERT: AlertInterface = {
+  id: 11,
+  type: 'success',
+  message: 'Event successfully created'
+};
+
+export const EVENT_ADD_ERROR_ALERT: AlertInterface = {
+  id: 12,
+  type: 'danger',
+  message: 'Error creating event'
+};
+
+export const EVENT_EDITED_ALERT: AlertInterface = {
+  id: 13,
+  type: 'success',
+  message: 'Event successfully edited'
+};
+
+export const EVENT_EDIT_ERROR_ALERT: AlertInterface = {
+  id: 14,
+  type: 'danger',
+  message: 'Error editing event'
+};
