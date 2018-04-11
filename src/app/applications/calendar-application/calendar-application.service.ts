@@ -127,7 +127,19 @@ export class CalendarApplicationService {
     minDate.setMonth(minDate.getMonth() - 3); // TODO: customize
 
     gapi.client.calendar.events.list({
-      'calendarId': 'primary', 'timeMin': minDate.toJSON(),
+      'calendarId': 'primary',
+      'timeMin': minDate.toJSON(),
     }).then(callback);
+  }
+
+  removeEvent(event: CalendarEvent, callback: (response: any) => void) {
+    gapi.client.calendar.events.delete({
+      'calendarId': 'primary',
+      'eventId': event.id.toString()
+    }).then(callback);
+  }
+
+  editEvent(event: CalendarEvent) {
+    // TODO
   }
 }

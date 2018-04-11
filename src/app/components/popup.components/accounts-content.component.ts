@@ -53,39 +53,11 @@ export class AccountsContent implements OnInit {
   }
 
   deleteAccount() {
-
-    this.widgetService.retrieveAll().subscribe(
+    this.accountService.delete(this.accountList[this.currentAccount].id).subscribe(
       data => {
-        const widgets = <WidgetInterface[]>data['results'];
-        let i;
-        for (i = 0; i < widgets.length; i++) {
-          if (widgets[i].account === this.accountList[this.currentAccount].id) {
-            widgets[i].account = null;
-            break;
-          }
-        }
-        if (i >= widgets.length) {
-          this.setState('list');
-          this.accountList.splice(this.currentAccount, 1);
-          this.alerts.push(ACCOUNT_DELETED_ALERT);
-          return;
-        }
-        this.widgetService.edit(widgets[i].id, widgets[i]).subscribe(
-          data => {
-               this.accountService.delete(this.accountList[this.currentAccount].id).subscribe(
-              data => {
-                this.setState('list');
-                this.accountList.splice(this.currentAccount, 1);
-                this.alerts.push(ACCOUNT_DELETED_ALERT);
-              },
-              err => {
-                this.setState('list');
-                this.alerts.push(ERROR_DELETING_ACCOUNT_ALERT);
-              }
-            );
-          },
-          err => console.log(err)
-        );
+        this.setState('list');
+        this.accountList.splice(this.currentAccount, 1);
+        this.alerts.push(ACCOUNT_DELETED_ALERT);
       },
       err => {
         this.setState('list');

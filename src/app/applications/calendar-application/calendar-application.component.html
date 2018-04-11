@@ -28,11 +28,19 @@
   <div class="{{ scrollable() }}">
     <div *ngIf="view == 'month'" class="alert alert-info">
       <strong> {{ viewDate.toDateString() }}</strong>
-      <ul *ngFor="let event of currentEvents">
-        <div *ngIf="event.allDay" style="color: blue;">{{event.title}} <i style="color: black">(all day)</i></div>
+      <ul *ngFor="let event of currentEvents; let i = index">
+
+        <div *ngIf="event.allDay" style="color: blue;">
+          {{event.title}} <i style="color: black">(all day)</i>
+          &nbsp;
+          <a (click)="editEvent(i)"> <i class="fa fa-pencil" aria-hidden="true" style="color: black"></i> </a>
+          <a (click)="removeEvent(i)"> <i class="fa fa-remove" aria-hidden="true" style="color: darkred"></i> </a>
+        </div>
+
         <div *ngIf="!event.allDay">{{event.title}}
           {{event.start.getHours()}}:{{("0" + event.start.getMinutes()).substr(-2)}} -
-          {{event.end.getHours()}}:{{("0" + event.end.getMinutes()).substr(-2)}}</div>
+          {{event.end.getHours()}}:{{("0" + event.end.getMinutes()).substr(-2)}}
+        </div>
       </ul>
     </div>
 

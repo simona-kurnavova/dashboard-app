@@ -46,6 +46,7 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
   loadEvents() {
     const _that = this;
     const callback = (response: any): void => {
+      console.log(response);
       const googleEvents = <GoogleEvent[]> response.result.items;
       _that.events = _that.calendarService.parseEvents(googleEvents);
       console.log(_that.events);
@@ -75,6 +76,19 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
     if (!this.modal) {
       return 'pre-scrollable calendar-scroll';
     }
+  }
+
+  editEvent(index) {}
+
+  removeEvent(index) {
+    const _that = this;
+    console.log(this.currentEvents[index]);
+    const callback = (response: any): void => {
+      console.log(response);
+      _that.currentEvents.splice(index, 1);
+      _that.loadEvents();
+    };
+    this.calendarService.removeEvent(this.currentEvents[index], callback);
   }
 
 }
