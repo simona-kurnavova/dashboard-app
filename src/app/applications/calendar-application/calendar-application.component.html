@@ -78,18 +78,21 @@
                        mdbActive>
                 <label for="event-title">Title</label>
               </div>
-
-                From:<input [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
+              <div class="container">
+                From: <input [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
                             [(ngModel)]="selectedMoments"
                             [selectMode]="'rangeFrom'"
                             [ngModelOptions]="{standalone: true}">
                 <owl-date-time #dt12></owl-date-time>
+              </div>
 
-               To:<input [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
+              <div class="container" style="padding-top: 10px">
+                To: <input [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
                          [(ngModel)]="selectedMoments"
                          [selectMode]="'rangeTo'"
                          [ngModelOptions]="{standalone: true}">
                 <owl-date-time #dt13></owl-date-time>
+              </div>
 
               <div class="text-right" style="padding-top: 5px">
                 <button class="btn btn-default waves-light" (click)="createEvent()" mdbRippleRadius>Save</button>
@@ -109,17 +112,21 @@
                 <label for="event-title">Title</label>
               </div>
 
-              From:<input [owlDateTimeTrigger]="dt14" [owlDateTime]="dt14"
-                          [(ngModel)]="selectedEditedMoments"
-                          [selectMode]="'rangeFrom'"
-                          [ngModelOptions]="{standalone: true}">
-              <owl-date-time #dt14></owl-date-time>
+              <div class="container">
+                From:<input [owlDateTimeTrigger]="dt14" [owlDateTime]="dt14"
+                            [(ngModel)]="selectedEditedMoments"
+                            [selectMode]="'rangeFrom'"
+                            [ngModelOptions]="{standalone: true}">
+                <owl-date-time #dt14></owl-date-time>
+              </div>
 
-              To:<input [owlDateTimeTrigger]="dt15" [owlDateTime]="dt15"
-                        [(ngModel)]="selectedEditedMoments"
-                        [selectMode]="'rangeTo'"
-                        [ngModelOptions]="{standalone: true}">
-              <owl-date-time #dt15></owl-date-time>
+              <div class="container" style="padding-top: 10px">
+                To:<input [owlDateTimeTrigger]="dt15" [owlDateTime]="dt15"
+                          [(ngModel)]="selectedEditedMoments"
+                          [selectMode]="'rangeTo'"
+                          [ngModelOptions]="{standalone: true}">
+                <owl-date-time #dt15></owl-date-time>
+              </div>
 
               <div class="text-right" style="padding-top: 5px">
                 <button class="btn btn-default waves-light" (click)="saveEditEvent()" mdbRippleRadius>Edit</button>

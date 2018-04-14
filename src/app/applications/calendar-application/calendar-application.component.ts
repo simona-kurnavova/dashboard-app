@@ -5,12 +5,9 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';
 import {CalendarApplicationService, GoogleEvent} from './calendar-application.service';
 import {CalendarAddAccountComponent} from './calendar-add-account.component';
-import {WidgetInterface} from '../../services/widget.service';
 import {ApplicationBaseComponent} from '../application-base.component';
-import {
-  ACCOUNT_ADDED_ALERT, AlertInterface, EVENT_ADD_ERROR_ALERT, EVENT_ADDED_ALERT, EVENT_EDIT_ERROR_ALERT,
-  EVENT_EDITED_ALERT
-} from '../../authentication-alerts';
+import { AlertInterface, EVENT_ADD_ERROR_ALERT, EVENT_ADDED_ALERT, EVENT_EDIT_ERROR_ALERT,
+  EVENT_EDITED_ALERT} from '../../authentication-alerts';
 
 @Component({
   selector: 'calendar-application',

@@ -26,6 +26,7 @@
     "@ng-bootstrap/ng-bootstrap": "^1.0.0",
     "angular-bootstrap-md": "^5.2.2",
     "angular-calendar": "^0.23.7",
+    "angular-clock": "^0.7.0",
     "angular-oauth2-oidc": "^3.1.4",
     "ap-angular2-fullcalendar": "^1.3.7",
     "chart.js": "^2.5.0",

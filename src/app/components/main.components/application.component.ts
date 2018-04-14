@@ -17,7 +17,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   applicationState: String;
 
   application: ApplicationInterface;
-  type = 'calendar'; // TODO: real application.name
+  type;
+
   private componentRef: ComponentRef<{}>;
   @ViewChild('container', { read: ViewContainerRef })
   container: ViewContainerRef;
@@ -33,7 +34,9 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadApplication();
     this.initState();
+  }
 
+  loadComponent() {
     if (this.type) {
       let componentType = ApplicationComponent.getComponentType(this.type + '-application');
       if (!componentType) {
@@ -58,6 +61,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     this.appService.retrieve(this.widget.app).subscribe(
       data => {
         this.application = <ApplicationInterface>data;
+        this.type = this.application.name;
+        this.loadComponent();
       },
       err => console.log(err)
     );
