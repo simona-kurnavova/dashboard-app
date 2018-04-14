@@ -38,13 +38,14 @@ import {CalendarApplicationService} from './applications/calendar-application/ca
 import {ApplicationBaseComponent} from './applications/application-base.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TimeApplicationComponent} from './applications/time-application/time-application.component';
 
 @NgModule({
   declarations: [
     AppComponent, HomeComponent, AuthComponent, RegistrationFormComponent, LoginFormComponent, MenuComponent,
     DashboardComponent, WidgetComponent, SettingsContent, AboutContent, ProfileContent, WidgetsContent,
     AccountsContent, AddWidgetContent, ApplicationComponent, CalendarApplicationComponent, ErrorApplicationComponent,
-    CalendarAddAccountComponent, CalendarPopupComponent, ApplicationBaseComponent
+    CalendarAddAccountComponent, CalendarPopupComponent, ApplicationBaseComponent, TimeApplicationComponent
   ],
 
   imports: [
@@ -68,7 +69,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   ],
   bootstrap: [ AppComponent ],
   entryComponents: [ SettingsContent, AboutContent, AddWidgetContent, ErrorApplicationComponent,
-    CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent, ApplicationBaseComponent
+    CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent, ApplicationBaseComponent,
+    TimeApplicationComponent
   ],
 })
 export class AppModule {}
