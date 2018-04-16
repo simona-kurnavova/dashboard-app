@@ -1,8 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { AccountInterface, AccountService } from '../../services/account.service';
+import {AuthService} from '../../services/auth.service';
+import {AccountInterface, AccountService} from '../../services/account.service';
 import {ACCOUNT_DELETED_ALERT, AlertInterface, ERROR_DELETING_ACCOUNT_ALERT} from '../../authentication-alerts';
-import {WidgetInterface, WidgetService} from '../../services/widget.service';
 
 @Component({
   selector: 'accounts-content',
@@ -17,8 +16,7 @@ export class AccountsContent implements OnInit {
   currentAccount: number;
 
   constructor(private authService: AuthService,
-              private accountService: AccountService,
-              private widgetService: WidgetService) {}
+              private accountService: AccountService) {}
 
   ngOnInit() {
     this.setState('list');

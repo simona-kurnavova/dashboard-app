@@ -1,19 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { AuthService } from './auth.service';
-import { BACKEND } from '../settings';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {AuthService} from './auth.service';
+import {BACKEND} from '../settings';
 
 export interface ApplicationInterface {
   name: String;
   description: String;
   required_account: String;
 }
-
-/* if (err.error instanceof Error) {
-console.log("Client-side error occured.");
-} else {
-  console.log("Server-side error occured.");
-} */
 
 @Injectable()
 export class ApplicationService {
@@ -31,7 +25,6 @@ export class ApplicationService {
     return this.http.get(this.url, {headers: this.authService.getHeaders()});
   }
 
-  // TODO: handle error: name: ["app with this name already exists."], "POST /apps/ HTTP/1.1" 400 47
   create(app: ApplicationInterface) {
     return this.http.post<ApplicationInterface>(this.url, {
       'name': app.name, 'description': app.description, 'required_account': app.required_account

@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'home',
@@ -7,9 +7,8 @@ import { AuthService } from '../../services/auth.service';
   providers: [ AuthService ],
 })
 
-export class HomeComponent {
-  constructor(private authService: AuthService) {
-  }
+export class HomeComponent implements OnInit {
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.authService.checkCredentials();

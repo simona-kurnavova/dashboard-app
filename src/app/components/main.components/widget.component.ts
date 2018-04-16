@@ -1,7 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
-import {Router} from '@angular/router';
-import {ApplicationService} from '../../services/application.service';
 
 const WIDGET_OVERLAY = 'view overlay hm-indigo-light';
 

@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ApplicationInterface, ApplicationService } from '../../services/application.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {ApplicationInterface, ApplicationService} from '../../services/application.service';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
 import {WidgetMatrixService} from '../../services/widget-matrix.service';
 import {AccountService} from '../../services/account.service';
@@ -10,7 +10,7 @@ import {AccountService} from '../../services/account.service';
   templateUrl: './templates/add-widget-content.html',
 })
 
-  export class AddWidgetContent {
+export class AddWidgetContent implements OnInit{
   public appList: ApplicationInterface[];
   @Input() currentEditAppList = [[]];
   @Input() currentDashboard;

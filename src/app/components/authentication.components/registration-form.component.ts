@@ -1,17 +1,14 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { UserService, UserInterface } from '../../services/user.service';
-import {
-  AlertInterface, EMPTY_PASSWORD_ALERT, EMPTY_USERNAME_ALERT, SERVER_ERROR_ALERT, USER_ALREADY_EXISTS_ALERT,
-  USER_REGISTERED_ALERT
-} from '../../authentication-alerts';
+import {Component} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
+import {UserService, UserInterface} from '../../services/user.service';
+import {AlertInterface, EMPTY_PASSWORD_ALERT, EMPTY_USERNAME_ALERT, USER_REGISTERED_ALERT} from '../../authentication-alerts';
 import {HttpErrorHandler} from '../../services/http-error-handler.service';
 
 @Component({
   selector: 'registration-form',
-  providers: [ AuthService ],
-  styleUrls: ['./styles/form-style.css'],
-  templateUrl: './templates/registration-form.component.html'
+  styleUrls: [ './styles/form-style.css' ],
+  templateUrl: './templates/registration-form.component.html',
+  providers: [ AuthService ]
 })
 
 
@@ -26,12 +23,15 @@ export class RegistrationFormComponent {
     if (this.user.username === '') {
       this.alerts.push(EMPTY_USERNAME_ALERT);
     }
+
     if (this.user.password === '') {
       this.alerts.push(EMPTY_PASSWORD_ALERT);
     }
+
     if (this.alerts.length > 0) {
       return;
     }
+
     this.userService.create(this.user).subscribe(data => {
         this.alerts.push(USER_REGISTERED_ALERT);
       }, err => {

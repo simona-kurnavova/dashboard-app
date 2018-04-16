@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { ApplicationInterface, ApplicationService } from '../../services/application.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
+import {ApplicationInterface, ApplicationService} from '../../services/application.service';
 
 @Component({
   selector: 'widgets-content',
@@ -8,12 +8,13 @@ import { ApplicationInterface, ApplicationService } from '../../services/applica
   providers: [ AuthService ],
 })
 
-export class WidgetsContent {
+export class WidgetsContent implements OnInit {
   @Input() state: String = 'list';
   appList: ApplicationInterface[];
   currentApp: Number;
 
-  constructor(private authService: AuthService, private appService: ApplicationService) {}
+  constructor(private authService: AuthService,
+              private appService: ApplicationService) {}
 
   ngOnInit() {
     this.setState('list');

@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SettingsContent } from '../popup.components/settings-content.component';
-import { AboutContent } from '../popup.components/about-content.component';
-import {AddWidgetContent} from '../popup.components/add-widget-content.component';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {SettingsContent} from '../popup.components/settings-content.component';
+import {AboutContent} from '../popup.components/about-content.component';
 import {UserInterface, UserService} from '../../services/user.service';
 
 @Component({
@@ -11,11 +10,13 @@ import {UserInterface, UserService} from '../../services/user.service';
   templateUrl: './templates/menu.component.html',
 })
 
-export class MenuComponent {
+export class MenuComponent implements OnInit {
   public username: String;
   public hideMenu: false;
 
-  constructor(private authService: AuthService, public popupService: NgbModal, private userService: UserService) {}
+  constructor(public popupService: NgbModal,
+              private authService: AuthService,
+              private userService: UserService) {}
 
   ngOnInit() {
     this.userService.retrieve().subscribe(
@@ -44,14 +45,5 @@ export class MenuComponent {
 
   openAbout() {
     this.popupService.open(AboutContent);
-  }
-
-  openAddWidget() {
-    const popup = this.popupService.open(AddWidgetContent);
-  }
-
-  openAddAccount() {
-    const popup = this.popupService.open(SettingsContent, { size: 'lg' });
-    popup.componentInstance.activeCard = 'accounts';
   }
 }

@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Cookie } from 'ng2-cookies';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {AccountInterface} from './account.service';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {Cookie} from 'ng2-cookies';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {CLIENT_ID, CLIENT_SECRET} from '../settings';
 
 export interface UserInterface {
   username: String;
@@ -22,16 +22,15 @@ export class AuthService {
     params.append('grant_type', 'password');
     const headers = new HttpHeaders({
       'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
-      'Authorization': 'Basic ' + btoa('u9XjgyEGxDXtTDN80TG5tgk8TnHzGSmp7rqO5Gfs:UwUnaGxgKhEadmTz0j6so0VIzLZQHaAV1MfXBa10H0SSbjirskawdSfh7cGem5tmh06G4yCnUWSLZr8pfhVCxiGj3sPwmPbpyxMUHL6bT1DPT2uErrW5V8dne50tLoD1')
+      'Authorization': 'Basic ' + btoa(CLIENT_ID + ':' + CLIENT_SECRET)
     });
     return this.http.post('http://127.0.0.1:8000/o/token/', params.toString(),
       {headers: headers});
   }
 
   saveToken(token) {
-    let expireDate = new Date().getTime() + (1000 * token.expires_in);
+    const expireDate = new Date().getTime() + (1000 * token.expires_in);
     Cookie.set('access_token', token.access_token, expireDate);
-    // TODO: Refresh token save and use after expiration
     this.router.navigate(['/home']);
   }
 
