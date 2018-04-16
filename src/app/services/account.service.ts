@@ -16,7 +16,8 @@ export interface AccountInterface {
 export class AccountService {
   url = BACKEND + 'accounts/';
 
-  constructor(private authService: AuthService, private http: HttpClient) {}
+  constructor(private authService: AuthService,
+              private http: HttpClient) {}
 
   retrieve(id: Number) {
     return this.http.get<AccountInterface>(

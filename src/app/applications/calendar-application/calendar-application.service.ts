@@ -120,7 +120,7 @@ export class CalendarApplicationService {
   /* Loads events from primary calendar via Google Calendar API */
   loadEvents(callback) {
     const minDate = new Date();
-    minDate.setMonth(minDate.getMonth() - 3); // TODO: customize
+    minDate.setMonth(minDate.getMonth() - 3);
 
     gapi.client.calendar.events.list({
       'calendarId': CalendarApplicationService.calendar_id,
