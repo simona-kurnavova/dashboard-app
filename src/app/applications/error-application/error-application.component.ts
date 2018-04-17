@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
 import {ApplicationBaseComponent} from '../application-base.component';
 

@@ -39,13 +39,16 @@ import {ApplicationBaseComponent} from './applications/application-base.componen
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TimeApplicationComponent} from './applications/time-application/time-application.component';
+import {OneNoteApplicationComponent} from './applications/onenote-application/onenote-application.component';
+import {OneNoteApplicationService} from './applications/onenote-application/onenote-application.service';
 
 @NgModule({
   declarations: [
     AppComponent, HomeComponent, AuthComponent, RegistrationFormComponent, LoginFormComponent, MenuComponent,
     DashboardComponent, WidgetComponent, SettingsContent, AboutContent, ProfileContent, WidgetsContent,
     AccountsContent, AddWidgetContent, ApplicationComponent, CalendarApplicationComponent, ErrorApplicationComponent,
-    CalendarAddAccountComponent, CalendarPopupComponent, ApplicationBaseComponent, TimeApplicationComponent
+    CalendarAddAccountComponent, CalendarPopupComponent, ApplicationBaseComponent, TimeApplicationComponent,
+    OneNoteApplicationComponent
   ],
 
   imports: [
@@ -60,17 +63,18 @@ import {TimeApplicationComponent} from './applications/time-application/time-app
       { path: 'home', component: HomeComponent },
       { path: 'login', component: LoginFormComponent },
       { path: 'register', component: RegistrationFormComponent },
+      { path: '*', component: HomeComponent},
       ]),
     CalendarModule.forRoot()
   ],
   providers: [
     AuthService, AccountService, ApplicationService, WidgetService, DashboardService, UserService,
-    WidgetMatrixService, CalendarApplicationService
+    WidgetMatrixService, CalendarApplicationService, OneNoteApplicationService
   ],
   bootstrap: [ AppComponent ],
   entryComponents: [ SettingsContent, AboutContent, AddWidgetContent, ErrorApplicationComponent,
     CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent, ApplicationBaseComponent,
-    TimeApplicationComponent
+    TimeApplicationComponent, OneNoteApplicationComponent
   ],
 })
 export class AppModule {}
