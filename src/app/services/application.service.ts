@@ -4,9 +4,10 @@ import {AuthService} from './auth.service';
 import {BACKEND} from '../settings';
 
 export interface ApplicationInterface {
+  id?: number;
   name: String;
-  description: String;
-  required_account: String;
+  description?: String;
+  required_account?: String;
 }
 
 @Injectable()

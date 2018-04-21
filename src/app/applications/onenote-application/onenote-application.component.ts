@@ -16,8 +16,12 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
 
   ngOnInit() {}
 
-  async getToken() {
-    await this.appService.getToken();
+  getToken() {
+    this.appService.getToken();
+  }
+
+  getAccessToken() {
+    this.appService.getAccessToken();
   }
 }
 

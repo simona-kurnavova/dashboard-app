@@ -1,6 +1,7 @@
 @import "./../node_modules/ng2-dnd/bundles/style.css";
 @import "./../node_modules/angular-calendar/css/angular-calendar.css"; // Angular calendar CSS
 @import "~ng-pick-datetime/assets/style/picker.min.css"; // Angular datetimepicker CSS
+@import "~@ng-select/ng-select/themes/material.theme.css"; //Material ng-select theme
 
 /* White form background due to Material autofill handling */
 input:-webkit-autofill, textarea:-webkit-autofill {

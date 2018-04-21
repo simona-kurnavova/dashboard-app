@@ -41,6 +41,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TimeApplicationComponent} from './applications/time-application/time-application.component';
 import {OneNoteApplicationComponent} from './applications/onenote-application/onenote-application.component';
 import {OneNoteApplicationService} from './applications/onenote-application/onenote-application.service';
+import {TranslateApplicationComponent} from './applications/translate-application/translate-application.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,7 @@ import {OneNoteApplicationService} from './applications/onenote-application/onen
     DashboardComponent, WidgetComponent, SettingsContent, AboutContent, ProfileContent, WidgetsContent,
     AccountsContent, AddWidgetContent, ApplicationComponent, CalendarApplicationComponent, ErrorApplicationComponent,
     CalendarAddAccountComponent, CalendarPopupComponent, ApplicationBaseComponent, TimeApplicationComponent,
-    OneNoteApplicationComponent
+    OneNoteApplicationComponent, TranslateApplicationComponent
   ],
 
   imports: [
@@ -57,6 +59,7 @@ import {OneNoteApplicationService} from './applications/onenote-application/onen
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     BrowserAnimationsModule,
+    NgSelectModule,
 
     RouterModule.forRoot([
       { path: '', component: AuthComponent },
@@ -74,7 +77,7 @@ import {OneNoteApplicationService} from './applications/onenote-application/onen
   bootstrap: [ AppComponent ],
   entryComponents: [ SettingsContent, AboutContent, AddWidgetContent, ErrorApplicationComponent,
     CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent, ApplicationBaseComponent,
-    TimeApplicationComponent, OneNoteApplicationComponent
+    TimeApplicationComponent, OneNoteApplicationComponent, TranslateApplicationComponent
   ],
 })
 export class AppModule {}

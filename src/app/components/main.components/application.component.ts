@@ -58,10 +58,17 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   }
 
   loadApplication() {
-    this.appService.retrieve(this.widget.app).subscribe(
+    // Solved Firefox unabillity to perform redirection with retrieveAll() replacing retrieve()
+    this.appService.retrieveAll().subscribe(
       data => {
-        this.application = <ApplicationInterface>data;
-        this.type = this.application.name;
+        const applications = <ApplicationInterface[]>data['results'];
+        for (let i = 0; i < applications.length; i++) {
+          if (this.widget.app === applications[i].id) {
+            this.application = applications[i];
+            this.type = applications[i].name;
+          }
+        }
+
         this.loadComponent();
       },
       err => console.log(err)
