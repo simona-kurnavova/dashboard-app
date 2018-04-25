@@ -42,7 +42,8 @@ import {TimeApplicationComponent} from './applications/time-application/time-app
 import {OneNoteApplicationComponent} from './applications/onenote-application/onenote-application.component';
 import {OneNoteApplicationService} from './applications/onenote-application/onenote-application.service';
 import {TranslateApplicationComponent} from './applications/translate-application/translate-application.component';
-import { NgSelectModule } from '@ng-select/ng-select';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {TranslatePopupComponent} from './applications/translate-application/translate-popup.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     DashboardComponent, WidgetComponent, SettingsContent, AboutContent, ProfileContent, WidgetsContent,
     AccountsContent, AddWidgetContent, ApplicationComponent, CalendarApplicationComponent, ErrorApplicationComponent,
     CalendarAddAccountComponent, CalendarPopupComponent, ApplicationBaseComponent, TimeApplicationComponent,
-    OneNoteApplicationComponent, TranslateApplicationComponent
+    OneNoteApplicationComponent, TranslateApplicationComponent, TranslatePopupComponent
   ],
 
   imports: [
@@ -77,7 +78,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
   bootstrap: [ AppComponent ],
   entryComponents: [ SettingsContent, AboutContent, AddWidgetContent, ErrorApplicationComponent,
     CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent, ApplicationBaseComponent,
-    TimeApplicationComponent, OneNoteApplicationComponent, TranslateApplicationComponent
+    TimeApplicationComponent, OneNoteApplicationComponent, TranslateApplicationComponent, TranslatePopupComponent
   ],
 })
 export class AppModule {}

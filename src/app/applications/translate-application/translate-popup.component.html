@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <h4 class="modal-title">Translate application</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="container" style="height: 350px">
+
+    <translate-application [state]="'normal'"></translate-application>
+
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+</div>
