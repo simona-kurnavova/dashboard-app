@@ -12,7 +12,6 @@ import {UserInterface, UserService} from '../../services/user.service';
 
 export class MenuComponent implements OnInit {
   public username: String;
-  public hideMenu: false;
 
   constructor(public popupService: NgbModal,
               private authService: AuthService,

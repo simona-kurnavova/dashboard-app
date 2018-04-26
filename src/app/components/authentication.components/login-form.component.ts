@@ -7,7 +7,7 @@ import {HttpErrorHandler} from '../../services/http-error-handler.service';
   selector: 'login-form',
   styleUrls: ['./styles/form-style.css'],
   templateUrl: './templates/login-form.component.html',
-  providers: [ AuthService ],
+  providers: [AuthService],
 })
 
 export class LoginFormComponent {

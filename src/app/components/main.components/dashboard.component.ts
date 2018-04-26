@@ -14,12 +14,12 @@ import {AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
 
 export class DashboardComponent implements OnInit {
   public state: String = 'normal';
-  public widgetJustify = 'center';
+  public widgetJustify: String = 'center';
   public dashboardList: DashboardInterface[];
   public widgetList: WidgetInterface[][] = [];
-  public widgetListEdit: WidgetInterface[][];
+  public widgetListEdit: WidgetInterface[][] = [];
   public alerts: Array<AlertInterface> = [];
-  public activeDashboard;
+  public activeDashboard: number;
 
   constructor(private popupService: NgbModal,
               private dashboardService: DashboardService,

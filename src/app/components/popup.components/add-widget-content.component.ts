@@ -10,10 +10,10 @@ import {AccountService} from '../../services/account.service';
   templateUrl: './templates/add-widget-content.html',
 })
 
-export class AddWidgetContent implements OnInit{
-  public appList: ApplicationInterface[];
+export class AddWidgetContent implements OnInit {
   @Input() currentEditAppList = [[]];
-  @Input() currentDashboard;
+  @Input() currentDashboard: number;
+  public appList: ApplicationInterface[];
 
   constructor(public activeModal: NgbActiveModal,
               private appService: ApplicationService,
@@ -21,6 +21,7 @@ export class AddWidgetContent implements OnInit{
               private accountService: AccountService) {}
 
   ngOnInit() {
+    // TODO: handle error
     this.appService.retrieveAll().subscribe(
       data => {
         this.appList = <ApplicationInterface[]>data['results'];

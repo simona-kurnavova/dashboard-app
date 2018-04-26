@@ -4,7 +4,7 @@ import {AuthService} from '../../services/auth.service';
 @Component({
   selector: 'home',
   templateUrl: './templates/home.component.html',
-  providers: [ AuthService ],
+  providers: [AuthService],
 })
 
 export class HomeComponent implements OnInit {

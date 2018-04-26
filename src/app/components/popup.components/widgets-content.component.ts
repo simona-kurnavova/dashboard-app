@@ -5,7 +5,7 @@ import {ApplicationInterface, ApplicationService} from '../../services/applicati
 @Component({
   selector: 'widgets-content',
   templateUrl: './templates/widgets-content.html',
-  providers: [ AuthService ],
+  providers: [AuthService],
 })
 
 export class WidgetsContent implements OnInit {
@@ -22,19 +22,14 @@ export class WidgetsContent implements OnInit {
   }
 
   getList() {
+    // TODO: handle error and add alerts
     this.appService.retrieveAll().subscribe(
-      data => {
-        this.appList = <ApplicationInterface[]>data['results'];
-        console.log(this.appList);
-      },
-      err => {
-        console.log(err);
-        this.setState('error');
-      }
+      data => this.appList = <ApplicationInterface[]>data['results'],
+      err => console.log(err)
     );
   }
 
-  isState(state: String) {
+  isState(state: String): Boolean {
     return this.state === state;
   }
 

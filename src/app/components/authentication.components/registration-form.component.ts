@@ -6,9 +6,9 @@ import {HttpErrorHandler} from '../../services/http-error-handler.service';
 
 @Component({
   selector: 'registration-form',
-  styleUrls: [ './styles/form-style.css' ],
+  styleUrls: ['./styles/form-style.css'],
   templateUrl: './templates/registration-form.component.html',
-  providers: [ AuthService ]
+  providers: [AuthService]
 })
 
 

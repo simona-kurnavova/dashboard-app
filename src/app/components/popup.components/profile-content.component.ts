@@ -6,27 +6,23 @@ import {AlertInterface, SERVER_ERROR_ALERT, USER_EDITED_ALERT} from '../../authe
 @Component({
   selector: 'profile-content',
   templateUrl: './templates/profile-content.html',
-  providers: [ AuthService ],
+  providers: [AuthService],
 })
 
 export class ProfileContent implements OnInit {
   private state: String;
+  public alerts: Array <AlertInterface> = [];
   public user: UserInterface = {
     id: null, username: '', password: '', email: ''
   };
-  public alerts: Array <AlertInterface> = [];
 
-  constructor(private service: AuthService, private userService: UserService) {}
+  constructor(private service: AuthService,
+              private userService: UserService) {}
 
   getUser() {
     this.userService.retrieve().subscribe(
-      data => {
-        console.log(data);
-        this.user = (<UserInterface[]>data['results'])[0];
-      },
-      err => {
-        this.alerts.push(SERVER_ERROR_ALERT);
-      }
+      data => this.user = (<UserInterface[]>data['results'])[0],
+      err => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
@@ -47,13 +43,8 @@ export class ProfileContent implements OnInit {
   saveUser() {
     this.setState('normal');
     this.userService.update(this.user).subscribe(
-      data => {
-        this.alerts.push(USER_EDITED_ALERT);
-      },
-      err => {
-        console.log(err);
-        this.alerts.push(SERVER_ERROR_ALERT);
-      }
+      data => this.alerts.push(USER_EDITED_ALERT),
+      err => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 

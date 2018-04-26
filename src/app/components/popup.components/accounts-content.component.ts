@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {AccountInterface, AccountService} from '../../services/account.service';
-import {ACCOUNT_DELETED_ALERT, AlertInterface, ERROR_DELETING_ACCOUNT_ALERT} from '../../authentication-alerts';
+import {ACCOUNT_DELETED_ALERT, AlertInterface, ERROR_DELETING_ACCOUNT_ALERT, SERVER_ERROR_ALERT} from '../../authentication-alerts';
 
 @Component({
   selector: 'accounts-content',
@@ -10,8 +10,8 @@ import {ACCOUNT_DELETED_ALERT, AlertInterface, ERROR_DELETING_ACCOUNT_ALERT} fro
 })
 
 export class AccountsContent implements OnInit {
-  public alerts: Array<AlertInterface> = [];
   @Input() state: String = 'list';
+  public alerts: Array<AlertInterface> = [];
   accountList: AccountInterface[];
   currentAccount: number;
 
@@ -25,14 +25,8 @@ export class AccountsContent implements OnInit {
 
   getList() {
     this.accountService.retrieveAll().subscribe(
-      data => {
-        this.accountList = <AccountInterface[]>data['results'];
-        console.log(this.accountList);
-      },
-      err => {
-        console.log(err);
-        this.setState('error');
-      }
+      data => this.accountList = <AccountInterface[]>data['results'],
+      err => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
@@ -41,7 +35,7 @@ export class AccountsContent implements OnInit {
     this.state = state;
   }
 
-  isState(state: String) {
+  isState(state: String): Boolean {
     return state === this.state;
   }
 

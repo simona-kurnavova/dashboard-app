@@ -27,7 +27,7 @@ export class WidgetComponent {
 
   deleteWidget() {
     this.widgetService.delete(this.widget.id).subscribe(
-      data => {},
+      null,
       err => console.log(err)
     );
     this.deleted = true;
