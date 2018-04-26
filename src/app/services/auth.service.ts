@@ -68,6 +68,7 @@ export class AuthService {
    * Returns HTTP headers with access token for resource requests
    */
   getHeaders(): HttpHeaders {
+    this.checkCredentials();
     return new HttpHeaders({
       'Content-type': 'application/json; ' + 'charset=utf-8',
       'Authorization': 'Bearer ' + Cookie.get('access_token')
