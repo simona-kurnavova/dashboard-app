@@ -4,7 +4,7 @@ import {ApplicationInterface, ApplicationService} from '../../services/applicati
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ApplicationBaseComponent} from '../../applications/application-base.component';
 
-export const MAPPINGS = {};
+export let MAPPINGS = {};
 
 @Component({
   selector: 'application',

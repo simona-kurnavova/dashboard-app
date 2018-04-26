@@ -3,19 +3,20 @@ import {Router} from '@angular/router';
 import {Cookie} from 'ng2-cookies';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CLIENT_ID, CLIENT_SECRET} from '../settings';
+import {Observable} from 'rxjs/Observable';
 
-export interface UserInterface {
-  username: String;
-  password: String;
-  email: String;
-}
-
+/**
+ * Service for authentication of the user and management of obtained access token
+ */
 @Injectable()
 export class AuthService {
-  constructor(private router: Router, private http: HttpClient) {
-  }
+  constructor(private router: Router,
+              private http: HttpClient) {}
 
-  getToken(loginData) {
+  /**
+   * Retrieves token according to login data provided
+   */
+  getToken(loginData): Observable<any> {
     const params = new URLSearchParams();
     params.append('username', loginData.username);
     params.append('password', loginData.password);
@@ -28,30 +29,45 @@ export class AuthService {
       {headers: headers});
   }
 
-  saveToken(token) {
+  /**
+   * Stores access token in web browser
+   */
+  saveToken(token): void {
     const expireDate = new Date().getTime() + (1000 * token.expires_in);
     Cookie.set('access_token', token.access_token, expireDate);
     this.router.navigate(['/home']);
   }
 
-  checkCredentials() {
+  /**
+   * Checks if user is logged in. If not, redirects to login page
+   */
+  checkCredentials(): void {
     if (!Cookie.check('access_token')) {
       this.router.navigate(['/login']);
     }
   }
 
-  isLoggedIn() {
+  /**
+   * Checks if user is logged in. If it is, redirects to home page
+   */
+  isLoggedIn(): void {
     if (Cookie.check('access_token')) {
       this.router.navigate(['/home']);
     }
   }
 
-  logout() {
+  /**
+   * Deletes access token stored in browser and redirects to login page
+   */
+  logout(): void {
     Cookie.delete('access_token');
     this.router.navigate(['/login']);
   }
 
-  getHeaders() {
+  /**
+   * Returns HTTP headers with access token for resource requests
+   */
+  getHeaders(): HttpHeaders {
     return new HttpHeaders({
       'Content-type': 'application/json; ' + 'charset=utf-8',
       'Authorization': 'Bearer ' + Cookie.get('access_token')

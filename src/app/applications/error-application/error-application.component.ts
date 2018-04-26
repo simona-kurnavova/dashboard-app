@@ -9,3 +9,5 @@ import {ApplicationBaseComponent} from '../application-base.component';
 
 export class ErrorApplicationComponent extends ApplicationBaseComponent {}
 MAPPINGS['error-application'] = ErrorApplicationComponent;
+
+

@@ -12,6 +12,7 @@ import { AlertInterface, EVENT_ADD_ERROR_ALERT, EVENT_ADDED_ALERT, EVENT_EDIT_ER
 @Component({
   selector: 'calendar-application',
   templateUrl: './calendar-application.component.html',
+  providers: [CalendarApplicationService]
 })
 
 export class CalendarApplicationComponent extends ApplicationBaseComponent implements OnInit {
@@ -153,5 +154,4 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
   }
 }
 MAPPINGS['calendar-application'] = CalendarApplicationComponent;
-
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AlertInterface, INCORRECT_CREDENTIALS, SERVER_ERROR_ALERT, USER_ALREADY_EXISTS_ALERT } from '../authentication-alerts';
 
 const statusMap: Map<Number, AlertInterface> = new Map([

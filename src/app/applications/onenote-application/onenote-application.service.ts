@@ -1,5 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {BACKEND} from '../../settings';
 
 @Injectable()
 export class OneNoteApplicationService implements OnInit {
@@ -45,6 +46,7 @@ export class OneNoteApplicationService implements OnInit {
   getAccessToken() {
     const url = 'https://login.microsoftonline.com/common/oauth2/v2.0/' + 'token?';
     const headers = new HttpHeaders({
+      'Host': 'https://login.microsoftonline.com',
       'Content-type': 'application/x-www-form-urlencoded',
     });
 
@@ -57,7 +59,13 @@ export class OneNoteApplicationService implements OnInit {
       data => console.log(data),
       err => console.log(err)
     );
-    // client_secret if does not work
+
+    /* this.http.post(BACKEND + 'onenote/token', {
+      'code': this.code
+    }).subscribe(
+      data => console.log(data),
+      err => console.log(err)
+    ); */
   }
 
   getMessages() {

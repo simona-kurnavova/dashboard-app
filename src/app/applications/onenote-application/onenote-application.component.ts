@@ -6,6 +6,7 @@ import {OneNoteApplicationService} from './onenote-application.service';
 @Component({
   selector: 'onenote-application',
   templateUrl: './onenote-application.component.html',
+  providers: [OneNoteApplicationService]
 })
 
 export class OneNoteApplicationComponent extends ApplicationBaseComponent implements OnInit {

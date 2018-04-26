@@ -11,3 +11,4 @@ export class TranslatePopupComponent {
 }
 
 MAPPINGS['translate-popup'] = TranslatePopupComponent;
+
