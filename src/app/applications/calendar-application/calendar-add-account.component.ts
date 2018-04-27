@@ -8,6 +8,7 @@ import {WidgetInterface} from '../../services/widget.service';
 @Component({
   selector: 'calendar-add-account',
   templateUrl: './calendar-add-account.component.html',
+  providers: [CalendarApplicationService]
 })
 export class CalendarAddAccountComponent {
   @Input() widget: WidgetInterface;
