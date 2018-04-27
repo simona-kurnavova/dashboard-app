@@ -1,14 +1,16 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BACKEND} from '../../settings';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class OneNoteApplicationService implements OnInit {
   static URL = 'https://login.microsoftonline.com/common/oauth2/v2.0/';
+  static URL_RESOURCES = 'https://graph.microsoft.com/v1.0/me/onenote/';
   static CLIENT_ID = '78b9d80b-aab3-4615-8a23-5864573f967a';
-  static CLIENT_SECRET = 'jbmrWQW22}[^pepHFCP598#';
   static REDIRECT_URI = 'http://localhost:4200/home/';
   static SCOPE = [ 'https://graph.microsoft.com/Notes.ReadWrite.All' ];
+
   private code: String;
 
   constructor(private http: HttpClient) {
@@ -19,6 +21,7 @@ export class OneNoteApplicationService implements OnInit {
   ngOnInit() {}
 
   parseCode() {
+    // TODO: stupid way to do it!
     if (location.href === 'http://localhost:4200/home') {
       return;
     }
@@ -30,11 +33,13 @@ export class OneNoteApplicationService implements OnInit {
     }
   }
 
-  saveToken() {
-    // TODO: save to DB
+  saveToken(data) {
+    const expiresAt =  new Date().getTime() + (1000 * data['expires_in']);
+    localStorage.setItem('onenote_access_token', data['access_token']);
+    localStorage.setItem('onenote_expires_at', expiresAt.toString());
   }
 
-  getToken() {
+  getCode() {
     window.location.href = OneNoteApplicationService.URL + 'authorize?'
       + 'client_id=' + OneNoteApplicationService.CLIENT_ID
       + '&response_type=code'
@@ -43,40 +48,21 @@ export class OneNoteApplicationService implements OnInit {
       + '&response_mode=fragment';
   }
 
-  getAccessToken() {
-    const url = 'https://login.microsoftonline.com/common/oauth2/v2.0/' + 'token?';
-    const headers = new HttpHeaders({
-      'Host': 'https://login.microsoftonline.com',
-      'Content-type': 'application/x-www-form-urlencoded',
-    });
-
-    this.http.post(url, 'grant_type:authorization_code'
-      + 'client_id=' + OneNoteApplicationService.CLIENT_ID
-      + 'scope=' + OneNoteApplicationService.SCOPE
-      + 'code=' + this.code
-      + 'redirect_uri=' + OneNoteApplicationService.REDIRECT_URI
-      + 'client_secret=' + OneNoteApplicationService.CLIENT_SECRET, {headers: headers}).subscribe(
-      data => console.log(data),
-      err => console.log(err)
-    );
-
-    /* this.http.post(BACKEND + 'onenote/token', {
+  getAccessToken(): Observable<any> {
+    return this.http.post(BACKEND + 'onenote/token', {
       'code': this.code
-    }).subscribe(
-      data => console.log(data),
-      err => console.log(err)
-    ); */
+    });
   }
 
-  getMessages() {
-    console.log(this.code);
-    const headers = new HttpHeaders({
+  getNotebooks(): Observable<any> {
+    return this.http.get(OneNoteApplicationService.URL_RESOURCES + 'notebooks',
+      {headers: this.getHeaders()});
+  }
+
+  getHeaders(): HttpHeaders {
+    return new HttpHeaders({
       'Content-type': 'application/json; ' + 'charset=utf-8',
-      'Authorization': 'Bearer ' + this.code.toString(),
+      'Authorization': 'Bearer ' + localStorage.getItem('onenote_access_token'),
     });
-    this.http.get('https://graph.microsoft.com/v2.0/me/onenote/notebooks', {headers: headers}).subscribe(
-      data => console.log(data),
-      err => console.log(err)
-    );
   }
 }
