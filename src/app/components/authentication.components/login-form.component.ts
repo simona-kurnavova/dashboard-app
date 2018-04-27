@@ -32,14 +32,8 @@ export class LoginFormComponent {
     }
 
     this.authService.getToken(this.loginData).subscribe(
-      data => {
-        this.authService.saveToken(data);
-        console.log(data);
-      },
-      err => {
-        this.alerts.push(HttpErrorHandler.getAlert(err['status']));
-        console.log(err);
-      }
+      data => this.authService.saveToken(data),
+      err => this.alerts.push(HttpErrorHandler.getAlert(err['status']))
     );
   }
 
