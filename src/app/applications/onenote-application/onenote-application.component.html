@@ -1,4 +1,85 @@
-<h3 style="color: purple">One Note</h3>
-<button (click)="getCode()" type="button" class="btn btn-secondary">Add Microsoft Account</button>
-<button (click)="getAccessToken()" type="button" class="btn btn-primary">Get token</button>
-<button (click)="getNotebooks()" type="button" class="btn btn-secondary">Get notebooks</button>
+<div *ngIf="state == 'normal'">
+  <div class="menu container" style="padding-bottom: 15px">
+    <div class="row">
+      <div class="col">
+        <h5><b style="color: #0184bb">ONE NOTE</b>
+          <a class="location-link" *ngIf="activeNotebook" (click)="openNotebook(activeNotebook)">{{ activeNotebook.displayName }}</a>
+          <a class="location-link" *ngIf="activeSection" (click)="openSection(activeSection)">/{{activeSection.displayName}}</a>
+        </h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="btn-group">
+        <button (click)="setView('notebooks')" class="btn btn-sm btn-primary">Notebooks</button>
+        <button (click)="setView('all pages')" class="btn btn-sm btn-primary">All pages</button>
+        <button (click)="setView('editor')" class="btn btn-sm btn-primary">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="view == 'notebooks'" class="container list-containers">
+    <h5>Notebooks</h5>
+    <hr>
+    <div *ngFor="let notebook of notebookList">
+      <p><a (click)="openNotebook(notebook)">{{ notebook.displayName }}</a></p>
+    </div>
+
+  </div>
+
+  <div *ngIf="view == 'sections'" class="container list-containers">
+    <h5>{{ activeNotebook.displayName }}</h5>
+    <hr>
+    <div *ngFor="let section of activeNotebook.sections">
+      <p><a (click)="openSection(section)">{{ section.displayName }}</a></p>
+    </div>
+
+  </div>
+
+  <div *ngIf="view == 'all pages'" class="container pre-scrollable list-containers">
+    <h5>Pages</h5>
+    <hr>
+    <div *ngFor="let page of pageList">
+      <p><a (click)="openPage(page)">{{ page.title }}</a></p>
+    </div>
+  </div>
+
+  <div *ngIf="view == 'pages'" class="container pre-scrollable list-containers">
+    <h5>Pages</h5>
+    <hr>
+    <div *ngFor="let page of pageList">
+      <p *ngIf="page.parentSection.id == activeSection.id"><a (click)="openPage(page)">{{ page.title }}</a></p>
+    </div>
+  </div>
+
+  <div *ngIf="view == 'page'" class="container pre-scrollable list-containers">
+    <span [innerHTML]="activePage.content"></span>
+  </div>
+
+  <div *ngIf="view == 'editor'" class="container pre-scrollable list-containers">
+    <form id="page-form">
+      <button class="btn btn-sm btn-primary">Save</button>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="view === 'no account'" class="container">
+  <button (click)="getCode()" type="button" class="btn btn-secondary">Add Microsoft Account</button>
+  <button (click)="getAccessToken()" type="button" class="btn btn-primary">Get token</button>
+</div>
+
+<div *ngIf="view === 'edit'">
+...
+</div>
+
+<style>
+  .list-containers {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 300px;
+  }
+
+  .location-link {
+    font-size: x-small;
+    color: grey;
+  }
+</style>
