@@ -2,8 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {CalendarApplicationService} from './calendar-application.service';
-import {AlertInterface} from '../../authentication-alerts';
-import {WidgetInterface} from '../../services/widget.service';
+import {ACCOUNT_ADDED_ALERT, AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
+import {WidgetInterface, WidgetService} from '../../services/widget.service';
 
 @Component({
   selector: 'calendar-add-account',
@@ -15,10 +15,19 @@ export class CalendarAddAccountComponent {
   @Input() addAccountCallback;
   public alerts: Array<AlertInterface> = [];
 
-  constructor(public activeModal: NgbActiveModal, public calendarService: CalendarApplicationService) {}
+  constructor(public activeModal: NgbActiveModal,
+              public calendarService: CalendarApplicationService,
+              private widgetService: WidgetService) {}
 
   addAccount() {
-    this.calendarService.addAccount(this.widget, this.addAccountCallback);
+    const callback = (data) => {
+      this.widget.account = data['id'];
+      this.widgetService.edit(this.widget.id, this.widget).subscribe(
+        data => this.alerts.push(ACCOUNT_ADDED_ALERT),
+        err => this.alerts.push(SERVER_ERROR_ALERT)
+      );
+    };
+    this.calendarService.addAccount(callback, this.addAccountCallback);
   }
 
   public closeAlert(alert: AlertInterface) {

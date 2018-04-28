@@ -56,7 +56,7 @@ export class CalendarApplicationService {
     });
   }
 
-  addAccount(widget: WidgetInterface, addAccountCallback) {
+  addAccount(callback, addAccountCallback) {
     gapi.load('client', () => {
       gapi.auth.authorize({
         client_id: CalendarApplicationService.clientID,
@@ -65,7 +65,7 @@ export class CalendarApplicationService {
       }, authResult => {
         if (authResult['access_token']) {
           localStorage.setItem('calendar_token', authResult['access_token']);
-          this.saveToken(authResult['access_token'], widget);
+          this.saveToken(authResult['access_token'], callback);
         }
         gapi.client.load('calendar', 'v3', addAccountCallback);
         if (authResult && !authResult.error) {
@@ -77,17 +77,14 @@ export class CalendarApplicationService {
     });
   }
 
-  saveToken(token, widget: WidgetInterface) {
+  saveToken(token, callback) {
     const account: AccountInterface = {
       type: CalendarApplicationService.account_type,
       name: CalendarApplicationService.account_name,
       token: token,
     };
     this.accountService.create(account).subscribe(
-      data => {
-          widget.account = data['id'];
-          this.widgetService.edit(widget.id, widget).subscribe();
-        }, err => {
+      callback, err => {
         // TODO: handle error
       }
     );
