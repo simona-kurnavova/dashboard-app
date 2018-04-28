@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {Cookie} from 'ng2-cookies';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BACKEND, CLIENT_ID, CLIENT_SECRET} from '../settings';
 import {Observable} from 'rxjs/Observable';
@@ -38,7 +37,7 @@ export class AuthService {
     });
 
     const params = new URLSearchParams();
-    params.append('refresh_token', Cookie.get('refresh_token'));
+    params.append('refresh_token', localStorage.getItem('refresh_token'));
     params.append('grant_type', 'refresh_token');
 
     return this.http.post(BACKEND + 'o/token/', params.toString(), {headers: headers});
@@ -49,9 +48,9 @@ export class AuthService {
    */
   saveToken(token): void {
     const expireDate = new Date().getTime() + (1000 * token.expires_in);
-    Cookie.set('expire_date', expireDate.toString());
-    Cookie.set('access_token', token.access_token);
-    Cookie.set('refresh_token', token.refresh_token);
+    localStorage.setItem('expire_date', expireDate.toString());
+    localStorage.setItem('access_token', token.access_token);
+    localStorage.setItem('refresh_token', token.refresh_token);
     this.router.navigate(['/home']);
   }
 
@@ -59,8 +58,8 @@ export class AuthService {
    * Checks if user is logged in. If possible, tries to refresh token, if not, redirects to login page
    */
   checkCredentials(): void {
-    if (Cookie.get('access_token')) {
-      if (+Cookie.get('expire_date') <= new Date().getTime()) {
+    if (localStorage.getItem('access_token')) {
+      if (+localStorage.getItem('expire_date') <= new Date().getTime()) {
         this.refreshToken().subscribe(
           data => this.saveToken(data),
           err => this.router.navigate(['/login'])
@@ -75,10 +74,10 @@ export class AuthService {
    * Checks if user is logged in.
    */
   isLoggedIn(): Boolean {
-    if (!Cookie.get('access_token')) {
+    if (!localStorage.getItem('access_token')) {
       return false;
     }
-    return +Cookie.get('expire_date') > new Date().getTime();
+    return +localStorage.getItem('expire_date') > new Date().getTime();
   }
 
   /**
@@ -93,9 +92,9 @@ export class AuthService {
    * Is called from logout() and deletes access token, refresh token and expiration date from browser
    */
   deleteToken() {
-    Cookie.delete('access_token');
-    Cookie.delete('expire_date');
-    Cookie.delete('refresh_token');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('expire_date');
+    localStorage.removeItem('refresh_token');
   }
 
   /**
@@ -105,7 +104,7 @@ export class AuthService {
     this.checkCredentials();
     return new HttpHeaders({
       'Content-type': 'application/json; ' + 'charset=utf-8',
-      'Authorization': 'Bearer ' + Cookie.get('access_token')
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
     });
   }
 }
