@@ -38,7 +38,7 @@
 
       <div *ngFor="let row of widgetList; let i = index;">
         <div class="row justify-content-{{ widgetJustify }}">
-          <div class="col-lg-{{widgetList[i][j].size_x}} widget-column" *ngFor="let col of widgetList[i]; let j = index;">
+          <div *ngFor="let col of widgetList[i]; let j = index;" class="col-lg-{{widgetList[i][j].size_x}} widget-column">
               <widget [state]="state" [widget]="widgetList[i][j]"></widget>
           </div>
         </div>
@@ -52,8 +52,8 @@
   <div class="container" *ngIf="isState('edit')">
     <div *ngFor="let row of widgetListEdit; let i = index;">
       <div class="row justify-content-{{ widgetJustify }}" dnd-sortable-container [sortableData]="widgetListEdit[i]">
-        <div class="col-lg-{{widgetListEdit[i][j].size_x}} widget-column" *ngFor="let col of widgetListEdit[i]; let j = index;">
-          <div class="card" dnd-sortable [sortableIndex]="j">
+        <div *ngFor="let col of widgetListEdit[i]; let j = index;" class="col-lg-{{widgetListEdit[i][j].size_x}} widget-column">
+          <div *ngIf="!widgetListEdit[i][j].deleted" class="card" dnd-sortable [sortableIndex]="j">
             <widget [state]="state" [widget]="widgetListEdit[i][j]"></widget>
           </div>
         </div>

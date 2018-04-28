@@ -10,8 +10,15 @@ const WIDGET_OVERLAY = 'view overlay hm-indigo-light';
 
 export class WidgetComponent {
   @Input() state: String;
-  @Input() widget: WidgetInterface;
-  public deleted: Boolean = false;
+  @Input() widget: WidgetInterface = {
+    dashboard: null,
+    app: null,
+    position_x: null,
+    position_y: null,
+    size_x: null,
+    size_y: null,
+    deleted: false
+  };
 
   constructor(private widgetService: WidgetService) {}
 
@@ -26,11 +33,7 @@ export class WidgetComponent {
   }
 
   deleteWidget() {
-    this.widgetService.delete(this.widget.id).subscribe(
-      null,
-      err => console.log(err)
-    );
-    this.deleted = true;
+    this.widget.deleted = true;
   }
 
   changeSize(x: Number, y: Number) {

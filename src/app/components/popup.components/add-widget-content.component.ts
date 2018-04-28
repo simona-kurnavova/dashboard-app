@@ -42,16 +42,15 @@ export class AddWidgetContent implements OnInit {
         let widget = WidgetMatrixService.createWidget(id, null, this.currentDashboard, <WidgetInterface[]>widgets['results']);
         this.widgetService.create(widget).subscribe(
           data => {
-            console.log(data);
             widget = <WidgetInterface>data;
             const widgetRow: WidgetInterface[] = [widget];
             this.currentEditAppList.push(widgetRow);
+            this.activeModal.dismiss();
           },
             err => console.log(err),
         );
         },
       err => console.log(err)
     );
-    this.activeModal.dismiss();
   }
 }

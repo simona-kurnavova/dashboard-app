@@ -38,17 +38,10 @@ export class DashboardComponent implements OnInit {
           widgets => {
             this.widgetList = WidgetMatrixService.parseWidgets(<WidgetInterface[]>widgets['results']);
             this.widgetListEdit  = JSON.parse(JSON.stringify(this.widgetList));
-          },
-          err => {
-            console.log(err);
-            this.alerts.push(SERVER_ERROR_ALERT);
-          }
+            this.setState('normal');
+          }, () => this.alerts.push(SERVER_ERROR_ALERT)
         );
-      },
-      err => {
-        console.log(err);
-        this.alerts.push(SERVER_ERROR_ALERT);
-      }
+      }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
@@ -58,7 +51,6 @@ export class DashboardComponent implements OnInit {
 
   setState(state: String) {
     this.state = state;
-    this.loadWidgets();
   }
 
   addWidget() {
@@ -69,24 +61,25 @@ export class DashboardComponent implements OnInit {
 
   cancelEdit() {
     this.loadWidgets();
-    this.setState('normal');
   }
 
   saveEdit() {
-    for (let row = 0; row < this.widgetListEdit.length; row ++) {
-      for (let col = 0; col < this.widgetListEdit[row].length; col ++) {
-        console.log(this.widgetListEdit[row][col]);
+    for (let row = 0; row < this.widgetListEdit.length; row++) {
+      for (let col = 0; col < this.widgetListEdit[row].length; col++) {
         this.widgetListEdit[row][col].position_x = col;
         this.widgetListEdit[row][col].position_y = row;
-        this.widgetService.edit(this.widgetListEdit[row][col].id, this.widgetListEdit[row][col]).subscribe(
-          data => {
-            console.log(data);
-            this.loadWidgets();
-          },
-              err => console.log(err)
-        );
+        if (!this.widgetListEdit[row][col].deleted) {
+          this.widgetService.edit(this.widgetListEdit[row][col].id, this.widgetListEdit[row][col]).subscribe(
+            () => this.loadWidgets(),
+            () => this.alerts.push(SERVER_ERROR_ALERT)
+          );
+        } else {
+          this.widgetService.delete(this.widgetListEdit[row][col].id).subscribe(
+            () => this.loadWidgets(),
+            () => this.alerts.push(SERVER_ERROR_ALERT)
+          );
+        }
       }
     }
-    this.setState('normal');
   }
 }

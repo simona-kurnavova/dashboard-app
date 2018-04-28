@@ -16,6 +16,7 @@ export interface WidgetInterface {
   position_y: number;
   size_x: Number;
   size_y: Number;
+  deleted?: Boolean;
 }
 
 /**
