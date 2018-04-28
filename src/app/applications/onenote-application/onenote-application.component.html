@@ -12,7 +12,6 @@
       <div class="btn-group">
         <button (click)="setView('notebooks')" class="btn btn-sm btn-primary">Notebooks</button>
         <button (click)="setView('all pages')" class="btn btn-sm btn-primary">All pages</button>
-        <button (click)="setView('editor')" class="btn btn-sm btn-primary">Create</button>
       </div>
     </div>
   </div>
@@ -30,7 +29,8 @@
     <h5>{{ activeNotebook.displayName }}</h5>
     <hr>
     <div *ngFor="let section of activeNotebook.sections">
-      <p><a (click)="openSection(section)">{{ section.displayName }}</a></p>
+      <p><a (click)="openSection(section)">{{ section.displayName }}</a>
+        <a (click)="openEditor(section)" style="color: grey; font-size: x-small">Create page</a></p>
     </div>
 
   </div>
@@ -44,7 +44,7 @@
   </div>
 
   <div *ngIf="view == 'pages'" class="container pre-scrollable list-containers">
-    <h5>Pages</h5>
+    <h5>Pages <a (click)="openEditor(activeSection)" style="color: grey; font-size: x-small">Create another page</a></h5>
     <hr>
     <div *ngFor="let page of pageList">
       <p *ngIf="page.parentSection.id == activeSection.id"><a (click)="openPage(page)">{{ page.title }}</a></p>
@@ -57,7 +57,18 @@
 
   <div *ngIf="view == 'editor'" class="container pre-scrollable list-containers">
     <form id="page-form">
-      <button class="btn btn-sm btn-primary">Save</button>
+      <div class="md-form">
+        <div class="md-form" style="width: 150px">
+          <input type="text" placeholder="title" id="title" [(ngModel)]="editor.title" class="form-control"
+                 [ngModelOptions]="{standalone: true}" mdbActive>
+
+        </div>
+            <textarea mdbInputDirective placeholder="Text" [(ngModel)]="editor.text" type="text" id="text"
+                      class="md-textarea form-control" rows="10" [ngModelOptions]="{standalone: true}">
+
+            </textarea>
+      </div>
+      <button (click)="createPage()" class="btn btn-sm btn-primary">Save</button>
     </form>
   </div>
 </div>
@@ -67,8 +78,8 @@
   <button (click)="getAccessToken()" type="button" class="btn btn-primary">Get token</button>
 </div>
 
-<div *ngIf="view === 'edit'">
-...
+<div *ngIf="state === 'edit'" class="container" align="center">
+  <img width="50px" src="http://icons.iconarchive.com/icons/carlosjj/microsoft-office-2013/256/OneNote-icon.png">
 </div>
 
 <style>

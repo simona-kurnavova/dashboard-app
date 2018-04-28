@@ -45,6 +45,7 @@ import {TranslatePopupComponent} from './applications/translate-application/tran
 import {OneNotePopupComponent} from './applications/onenote-application/onenote-popup.component';
 import {ErrorPopupComponent} from './applications/error-application/error-popup.component';
 
+
 @NgModule({
   declarations: [
     AppComponent, HomeComponent, AuthComponent, RegistrationFormComponent, LoginFormComponent, MenuComponent,

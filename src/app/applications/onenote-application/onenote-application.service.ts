@@ -1,8 +1,8 @@
 import {Injectable, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BACKEND} from '../../settings';
 import {Observable} from 'rxjs/Observable';
-import {Notebook} from './onenote-application.component';
+import {Notebook, Page} from './onenote-application.component';
 
 @Injectable()
 export class OneNoteApplicationService implements OnInit {
@@ -36,6 +36,7 @@ export class OneNoteApplicationService implements OnInit {
     const expiresAt =  new Date().getTime() + (1000 * data['expires_in']);
     localStorage.setItem('onenote_access_token', data['access_token']);
     localStorage.setItem('onenote_refresh_token', data['refresh_token']);
+    console.log(data['refresh_token']);
     localStorage.setItem('onenote_expires_at', expiresAt.toString());
   }
 
@@ -77,6 +78,7 @@ export class OneNoteApplicationService implements OnInit {
   }
 
   getPage(url: string): Observable<any> {
+    // 'Accept':'text/html' headers
     return this.http.get(url, {headers: this.getHeaders()});
   }
 
@@ -87,13 +89,25 @@ export class OneNoteApplicationService implements OnInit {
     );
   }
 
-  createSection(id: number, section): Observable<any> {
-    return this.http.post(OneNoteApplicationService.URL_RESOURCES + 'notebooks/' + id.toString() + '/sections',
+  createSection(notebookId: number, section): Observable<any> {
+    return this.http.post(OneNoteApplicationService.URL_RESOURCES + 'notebooks/' + notebookId.toString() + '/sections',
       {headers: this.getHeaders()});
   }
 
-  getHeaders(): HttpHeaders {
+  createPage(sectionId: string, text)/*:Observable<any>*/ {
     this.isLoggedIn();
+    const headers = {
+      'Content-type': 'text/html',
+      'Authorization': 'Bearer ' + localStorage.getItem('onenote_access_token'),
+    };
+    return this.http.post(OneNoteApplicationService.URL_RESOURCES + 'sections/' + sectionId.toString() + '/pages',
+      text, {headers: headers});
+  }
+
+  getHeaders(): HttpHeaders {
+    if (!this.isLoggedIn()) {
+      this.login();
+    }
     return new HttpHeaders({
       'Content-type': 'application/json; ' + 'charset=utf-8',
       'Authorization': 'Bearer ' + localStorage.getItem('onenote_access_token'),
@@ -104,12 +118,16 @@ export class OneNoteApplicationService implements OnInit {
     if (!localStorage.getItem('onenote_access_token')) {
       return false;
     }
-    if (+localStorage.getItem('onenote_expires_at') > new Date().getTime()) {
-      return true;
-    } else {
-      this.refreshToken().subscribe(
-        data => this.saveToken(data),
-      );
-    }
+    return +localStorage.getItem('onenote_expires_at') > new Date().getTime();
+  }
+
+  login() {
+    this.refreshToken().subscribe(
+      data => {
+        console.log(data);
+        this.saveToken(data);
+      },
+      err => console.log(err)
+    );
   }
 }

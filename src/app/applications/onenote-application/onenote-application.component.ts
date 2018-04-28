@@ -4,11 +4,13 @@ import {ApplicationBaseComponent} from '../application-base.component';
 import {OneNoteApplicationService} from './onenote-application.service';
 
 export interface Page {
-  id;
-  title;
-  contentUrl;
+  id?;
+  title?;
+  contentUrl?;
   content?: any;
-  parentSection: {id;};
+  parentSection?: {
+    id?;
+  };
 }
 export interface Section {
   id;
@@ -33,6 +35,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
   public activeSection: Section;
   public activePage: Page;
   public pageList: Page[] = [];
+  editor = {text: '', title: ''};
   public view;
 
   constructor(private appService: OneNoteApplicationService) {
@@ -81,6 +84,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
           this.appService.getSections(this.notebookList[i].id).subscribe(
             data => {
                 this.notebookList[i].sections = <Section[]>data['value'];
+                console.log(data['value']);
             },
             err => console.log(err)
           );
@@ -128,11 +132,24 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
   }
 
   setView(view: String) {
-    if (view === 'all pages' || view === 'editor' || view === 'notebooks') {
+    if (view === 'all pages' || view === 'notebooks') {
       this.activeNotebook = null;
       this.activeSection = null;
     }
     this.view = view;
+  }
+
+  openEditor(section: Section) {
+    this.setView('editor');
+    this.activeSection = section;
+  }
+
+  createPage() {
+    // TODO: error and success handling
+    this.appService.createPage(this.activeSection.id, this.editor.text).subscribe(
+      data => console.log(data),
+      err => console.log(err)
+    );
   }
 }
 
