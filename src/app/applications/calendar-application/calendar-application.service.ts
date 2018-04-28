@@ -56,7 +56,7 @@ export class CalendarApplicationService {
     });
   }
 
-  addAccount(callback, addAccountCallback) {
+  addAccount(addAccountCallback, loadGapiCallback) {
     gapi.load('client', () => {
       gapi.auth.authorize({
         client_id: CalendarApplicationService.clientID,
@@ -65,9 +65,12 @@ export class CalendarApplicationService {
       }, authResult => {
         if (authResult['access_token']) {
           localStorage.setItem('calendar_token', authResult['access_token']);
-          this.saveToken(authResult['access_token'], callback);
+          this.saveToken(authResult['access_token'], addAccountCallback); // adds ID of account to DB
         }
-        gapi.client.load('calendar', 'v3', addAccountCallback);
+        gapi.client.load('calendar', 'v3',
+          loadGapiCallback, // defines success of connecting and triggers notification
+          err => console.log(err)
+        );
         if (authResult && !authResult.error) {
           // Successfully authenticated via Google API
         } else {

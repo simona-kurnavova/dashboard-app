@@ -89,9 +89,4 @@ export class DashboardComponent implements OnInit {
     }
     this.setState('normal');
   }
-
-  public closeAlert(alert: AlertInterface) {
-    const index: number = this.alerts.indexOf(alert);
-    this.alerts.splice(index, 1);
-  }
 }

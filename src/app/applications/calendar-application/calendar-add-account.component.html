@@ -7,10 +7,8 @@
 
 <div class="modal-body">
 
-  <div *ngFor="let alert of alerts" class="notification">
-    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
-  </div>
-  
+  <alert [alerts]="alerts"></alert>
+
   <h3 align="center">Add account to Calendar Application:</h3>
   <div class="container" align="center">
     <button class="btn btn-secondary" (click)="addAccount()">Add Google Account</button>

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
 import {ApplicationBaseComponent} from '../application-base.component';
 import {OneNoteApplicationService} from './onenote-application.service';
+import {AlertInterface} from '../../authentication-alerts';
 
 export interface Page {
   id?;
@@ -39,6 +40,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
   public newNotebook: Notebook = {displayName: ''};
   public newSection: Section = {displayName: ''};
   public view;
+  public alerts: AlertInterface[] = [];
 
   constructor(private appService: OneNoteApplicationService) {
     super();

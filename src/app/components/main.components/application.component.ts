@@ -15,7 +15,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   @Input() widget: WidgetInterface;
   @Input() dashboardState: String;
   applicationState: String;
-
   application: ApplicationInterface;
   type;
 

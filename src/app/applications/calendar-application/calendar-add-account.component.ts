@@ -20,20 +20,16 @@ export class CalendarAddAccountComponent {
               private widgetService: WidgetService) {}
 
   addAccount() {
-    const callback = (data) => {
-      this.widget.account = data['id'];
-      this.widgetService.edit(this.widget.id, this.widget).subscribe(
-        data => this.alerts.push(ACCOUNT_ADDED_ALERT),
-        err => this.alerts.push(SERVER_ERROR_ALERT)
-      );
+    const callback = () => {
+      this.alerts.push(ACCOUNT_ADDED_ALERT);
     };
-    this.calendarService.addAccount(callback, this.addAccountCallback);
+    this.calendarService.addAccount(this.addAccountCallback, callback);
   }
 
-  public closeAlert(alert: AlertInterface) {
+  /*public closeAlert(alert: AlertInterface) {
     const index: number = this.alerts.indexOf(alert);
     this.alerts.splice(index, 1);
-  }
+  }*/
 }
 
 MAPPINGS['calendar-add-account'] = CalendarAddAccountComponent;

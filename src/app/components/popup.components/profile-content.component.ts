@@ -47,9 +47,4 @@ export class ProfileContent implements OnInit {
       err => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
-
-  public closeAlert(alert: AlertInterface) {
-    const index: number = this.alerts.indexOf(alert);
-    this.alerts.splice(index, 1);
-  }
 }
