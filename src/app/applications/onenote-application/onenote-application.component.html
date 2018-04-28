@@ -54,6 +54,8 @@
 
   <div *ngIf="view == 'page'" class="container pre-scrollable list-containers">
     <span [innerHTML]="activePage.content"></span>
+    <button (click)="editPage()" class="btn btn-sm btn-primary">edit</button>
+    <button (click)="deletePage(activePage)" class="btn btn-sm btn-primary">delete</button>
   </div>
 
   <div *ngIf="view == 'editor'" class="container pre-scrollable list-containers">

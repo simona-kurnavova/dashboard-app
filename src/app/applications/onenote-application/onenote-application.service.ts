@@ -96,8 +96,7 @@ export class OneNoteApplicationService implements OnInit {
       }, {headers: this.getHeaders()});
   }
 
-  createPage(sectionId: string, text)/*:Observable<any>*/ {
-    this.isLoggedIn();
+  createPage(sectionId: string, text): Observable<any> {
     const headers = {
       'Content-type': 'text/html',
       'Authorization': 'Bearer ' + localStorage.getItem('onenote_access_token'),
@@ -106,7 +105,23 @@ export class OneNoteApplicationService implements OnInit {
       text, {headers: headers});
   }
 
-  getHeaders(): HttpHeaders {
+  editPage(id: string, sectionId: string, text){
+    this.deletePage(id).subscribe(
+      data => {
+        this.createPage(sectionId, text).subscribe(
+          data => console.log(data),
+          err => console.log(err)
+        );
+      }
+    );
+  }
+
+  deletePage(id: string): Observable<any> {
+    return this.http.delete(OneNoteApplicationService.URL_RESOURCES + 'pages/' + id,
+      {headers: this.getHeaders()});
+  }
+
+    getHeaders(): HttpHeaders {
     return new HttpHeaders({
       'Content-type': 'application/json; ' + 'charset=utf-8',
       'Authorization': 'Bearer ' + localStorage.getItem('onenote_access_token'),
@@ -132,5 +147,20 @@ export class OneNoteApplicationService implements OnInit {
 
   tokenExists(): Boolean {
      return !!localStorage.getItem('onenote_refresh_token');
+  }
+
+  parsePage(page: Page) {
+    const editor = {id: page.id, title: '', text: ''};
+    const el = document.createElement( 'html' );
+    el.innerHTML = page.content;
+    const nodeListTitle = el.getElementsByTagName( 'title' );
+    for (let index = 0; index < nodeListTitle.length; index++) {
+      editor.title += nodeListTitle[index].innerHTML;
+    }
+    const nodeListText = el.getElementsByTagName( 'body' );
+    for (let index = 0; index < nodeListText.length; index++) {
+      editor.text += nodeListText[index].innerHTML;
+    }
+    return editor;
   }
 }
