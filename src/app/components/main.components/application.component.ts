@@ -88,8 +88,11 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   }
 
   openInPopUp() {
-    const popupContent = ApplicationComponent.getComponentType(this.type + '-popup');
-    const popup = this.popupService.open(popupContent, {size: 'lg'});
+    let popupContent = ApplicationComponent.getComponentType(this.type + '-popup');
+    if (!popupContent) {
+      popupContent = ApplicationComponent.getComponentType('error-popup');
+    }
+    this.popupService.open(popupContent, {size: 'lg'});
   }
 }
 
