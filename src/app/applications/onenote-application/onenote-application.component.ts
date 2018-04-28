@@ -13,12 +13,12 @@ export interface Page {
   };
 }
 export interface Section {
-  id;
+  id?;
   displayName;
 }
 
 export interface Notebook {
-  id;
+  id?;
   displayName;
   sections?: Section[];
 }
@@ -35,7 +35,9 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
   public activeSection: Section;
   public activePage: Page;
   public pageList: Page[] = [];
-  editor = {text: '', title: ''};
+  public editor = {text: '', title: ''};
+  public newNotebook: Notebook = {displayName: ''};
+  public newSection: Section = {displayName: ''};
   public view;
 
   constructor(private appService: OneNoteApplicationService) {
@@ -50,7 +52,11 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
       this.setView('notebooks');
       this.getResources();
     } else {
-      this.setView('no account');
+      if (this.appService.tokenExists()) {
+        this.appService.login();
+      } else {
+        this.setView('no account');
+      }
     }
   }
 
@@ -144,9 +150,31 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
     this.activeSection = section;
   }
 
+  openSectionEditor(notebook: Notebook) {
+    this.setView('editor-section');
+    this.activeNotebook = notebook;
+  }
+
   createPage() {
     // TODO: error and success handling
-    this.appService.createPage(this.activeSection.id, this.editor.text).subscribe(
+    const html = `<!DOCTYPE html><html><head><title>` + this.editor.title + `</title></head>`
+    + `<body>` + this.editor.text + `</body></html>`;
+
+    this.appService.createPage(this.activeSection.id, html).subscribe(
+      data => console.log(data),
+      err => console.log(err)
+    );
+  }
+
+  createNotebook() {
+    this.appService.createNotebook(this.newNotebook).subscribe(
+      data => console.log(data),
+      err => console.log(err)
+    );
+  }
+
+  createSection() {
+    this.appService.createSection(this.activeNotebook.id, this.newSection).subscribe(
       data => console.log(data),
       err => console.log(err)
     );

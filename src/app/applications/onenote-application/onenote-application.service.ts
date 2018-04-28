@@ -85,13 +85,15 @@ export class OneNoteApplicationService implements OnInit {
   createNotebook(notebook: Notebook): Observable<any> {
     return this.http.post(OneNoteApplicationService.URL_RESOURCES + 'notebooks', {
         'displayName': notebook.displayName
-      }
+      }, {headers: this.getHeaders()}
     );
   }
 
   createSection(notebookId: number, section): Observable<any> {
     return this.http.post(OneNoteApplicationService.URL_RESOURCES + 'notebooks/' + notebookId.toString() + '/sections',
-      {headers: this.getHeaders()});
+      {
+        'displayName': section.displayName,
+      }, {headers: this.getHeaders()});
   }
 
   createPage(sectionId: string, text)/*:Observable<any>*/ {
@@ -105,9 +107,6 @@ export class OneNoteApplicationService implements OnInit {
   }
 
   getHeaders(): HttpHeaders {
-    if (!this.isLoggedIn()) {
-      this.login();
-    }
     return new HttpHeaders({
       'Content-type': 'application/json; ' + 'charset=utf-8',
       'Authorization': 'Bearer ' + localStorage.getItem('onenote_access_token'),
@@ -129,5 +128,9 @@ export class OneNoteApplicationService implements OnInit {
       },
       err => console.log(err)
     );
+  }
+
+  tokenExists(): Boolean {
+     return !!localStorage.getItem('onenote_refresh_token');
   }
 }
