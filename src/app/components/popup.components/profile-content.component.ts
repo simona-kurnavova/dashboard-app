@@ -20,7 +20,7 @@ export class ProfileContent implements OnInit {
   /**
    * Array of alerts passed to AlertComponent for error handling
    */
-  public alerts: Array <AlertInterface> = [];
+  public alerts: AlertInterface[] = [];
   /**
    * Stores user data
    */

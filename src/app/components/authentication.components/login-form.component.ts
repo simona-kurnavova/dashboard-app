@@ -21,7 +21,7 @@ export class LoginFormComponent {
   /**
    * Array of alerts passed to AlertComponent for error handling
    */
-  public alerts: Array<AlertInterface> = [];
+  public alerts: AlertInterface[] = [];
 
   constructor(private authService: AuthService) {}
 

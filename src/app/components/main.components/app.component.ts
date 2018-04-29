@@ -9,6 +9,6 @@ import {Component} from '@angular/core';
 })
 
 export class AppComponent {
-  title = 'Dashboard';
+  public title: String = 'Dashboard';
 }
 

@@ -30,11 +30,11 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   /**
    * Application in given widget
    */
-  application: ApplicationInterface;
+  private application: ApplicationInterface;
   /**
    * Type of component to load
    */
-  type: String;
+  private type: String;
   /**
    * Reference to application component for dynamic loading
    */
@@ -43,7 +43,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   /**
    * Reference to container for the application component to load
    */
-  container: ViewContainerRef;
+  private container: ViewContainerRef;
 
   /**
    * Returns component from the string name of application

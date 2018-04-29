@@ -25,11 +25,11 @@ export class AccountsContent implements OnInit {
   /**
    * List of accounts owned by user
    */
-  accountList: AccountInterface[];
+  public accountList: AccountInterface[];
   /**
    * Active account for detail mode
    */
-  currentAccount: number;
+  public currentAccount: number;
 
   constructor(private authService: AuthService,
               private accountService: AccountService) {}

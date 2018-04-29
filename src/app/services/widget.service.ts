@@ -24,6 +24,9 @@ export interface WidgetInterface {
  */
 @Injectable()
 export class WidgetService {
+  /**
+   * Url to access widget API
+   */
   url: string = BACKEND + 'widgets/';
 
   constructor(private http: HttpClient,
