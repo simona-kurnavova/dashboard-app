@@ -61,6 +61,17 @@
     </div>
   </div>
 
+  <div class="container" *ngIf="noWidgets && isState('normal')">
+    <div class="row justify-content-center">
+      <div class="col-lg-12" align="center">
+        <div class="card card-body" style="height: 250px">
+          <h4 style="color: lightgrey" align="center"><i>No widgets on your dashboard!</i></h4>
+          <button style="width: 200px" type="button" (click)="setState('edit')" class="btn btn-sm btn-default">Manage dashboard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <hr>
 
 <div class="container" *ngIf="isState('edit')">

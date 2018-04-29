@@ -20,14 +20,16 @@ export class DashboardComponent implements OnInit {
   public widgetListEdit: WidgetInterface[][] = [];
   public alerts: Array<AlertInterface> = [];
   public activeDashboard: number;
+  public noWidgets: Boolean;
 
   constructor(private popupService: NgbModal,
               private dashboardService: DashboardService,
               private widgetService: WidgetService) {}
 
   ngOnInit() {
-    this.loadWidgets();
+    this.noWidgets = false;
     this.activeDashboard = 0;
+    this.loadWidgets();
   }
 
   loadWidgets() {
@@ -36,6 +38,11 @@ export class DashboardComponent implements OnInit {
         this.dashboardList = <DashboardInterface[]>dashboards['results'];
         this.widgetService.retrieveAll().subscribe(
           widgets => {
+            if (widgets['results'].length <= 0) {
+              this.noWidgets = true;
+            } else {
+              this.noWidgets = false;
+            }
             this.widgetList = WidgetMatrixService.parseWidgets(<WidgetInterface[]>widgets['results']);
             this.widgetListEdit  = JSON.parse(JSON.stringify(this.widgetList));
             this.setState('normal');
