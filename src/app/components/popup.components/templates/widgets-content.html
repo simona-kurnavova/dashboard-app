@@ -1,16 +1,19 @@
 <div *ngIf="isState('list')" class="container" align="center">
-  <h3>Your applications:</h3>
-  <div *ngFor="let app of appList; let i = index;">
-    <a (click)="setCurrentApp(i)"><b>{{ app.name }}</b></a>
+  <h3>Your active widgets:</h3>
+  <div *ngFor="let widget of widgetList; let i = index;">
+    <a (click)="setCurrentWidget(i)"><b>{{ findApp(widget.app).name }}</b></a>
   </div>
 </div>
 
 <div *ngIf="isState('detail')" class="container">
 
-  <h3 align="center">{{ appList[currentApp].name }}</h3>
+  <h3 align="center">{{ findApp(widgetList[currentWidget].app).name }}</h3>
 
-  <p *ngIf="appList[currentApp].description; else nodescription" align="center">
-    <i>{{ appList[currentApp].description }}</i>
+  <p *ngIf="findApp(widgetList[currentWidget].app).description; else nodescription" align="center">
+    <i>{{ findApp(widgetList[currentWidget].app).description }}</i>
+  </p>
+  <p align="center">
+    <b>Has account:</b> {{ hasAccount(widgetList[currentWidget]) }}
   </p>
 
   <ng-template #nodescription>
@@ -20,7 +23,6 @@
   </ng-template>
 
   <hr>
-
   <a (click)="setState('list')"><i class="fa fa-arrow-left return-icon" aria-hidden="true"></i> return</a>
 
 </div>
@@ -29,5 +31,4 @@
   .return-icon {
     color: grey;
   }
-
 </style>
