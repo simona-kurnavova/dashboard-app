@@ -19,6 +19,9 @@ export interface ApplicationInterface {
  */
 @Injectable()
 export class ApplicationService {
+  /**
+   * Url to access application API
+   */
   url: string = BACKEND + 'apps/';
 
   constructor(private authService: AuthService,

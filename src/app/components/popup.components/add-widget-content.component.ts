@@ -3,55 +3,75 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ApplicationInterface, ApplicationService} from '../../services/application.service';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
 import {WidgetMatrixService} from '../../services/widget-matrix.service';
-import {AccountService} from '../../services/account.service';
+import {ADD_WIDGET_ERROR_ALERT, AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
 
+/**
+ * Content component for Bootstrap modal window
+ * Allows adding widgets to the dashboard by choosing application
+ */
 @Component({
   selector: 'add-widget-content',
   templateUrl: './templates/add-widget-content.html',
+  providers: [ApplicationService, WidgetService]
 })
 
 export class AddWidgetContent implements OnInit {
-  @Input() currentEditAppList = [[]];
+  /**
+   * Widget list of current dashboard passed from dashboard
+   */
+  @Input() widgetListEdit = [[]];
+  /**
+   * ID of current dashboard
+   */
   @Input() currentDashboard: number;
+  /**
+   * List of available applications
+   */
   public appList: ApplicationInterface[];
+
+  /**
+   * Array of alerts passed to AlertComponent
+   */
+  public alerts: AlertInterface[] = [];
 
   constructor(public activeModal: NgbActiveModal,
               private appService: ApplicationService,
-              private widgetService: WidgetService,
-              private accountService: AccountService) {}
+              private widgetService: WidgetService) {}
 
+  /**
+   * Calls loadApps()
+   */
   ngOnInit() {
-    // TODO: handle error
+    this.loadApps();
+  }
+
+  /**
+   * Retrieves application list from database
+   */
+  loadApps() {
     this.appService.retrieveAll().subscribe(
       data => {
         this.appList = <ApplicationInterface[]>data['results'];
-        console.log(this.appList);
-      },
-      err => console.log(err)
+      }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
+  /**
+   * Adds new Widget to database with chosen application and also adds it to dashboard widgetListEdit
+   */
   addWidget(id: Number) {
-    this.accountService.retrieveAll().subscribe(
-      data => console.log(data),
-      err => console.log(err)
-    );
     this.widgetService.retrieveAll().subscribe(
       widgets => {
-        // TODO: find the correct dashboard
         let widget = WidgetMatrixService.createWidget(id, null, this.currentDashboard, <WidgetInterface[]>widgets['results']);
         this.widgetService.create(widget).subscribe(
           data => {
-            console.log(data);
             widget = <WidgetInterface>data;
             const widgetRow: WidgetInterface[] = [widget];
-            this.currentEditAppList.push(widgetRow);
-          },
-            err => console.log(err),
+            this.widgetListEdit.push(widgetRow);
+            this.activeModal.dismiss();
+          }, () => this.alerts.push(ADD_WIDGET_ERROR_ALERT)
         );
-        },
-      err => console.log(err)
+      }, () => this.alerts.push(ADD_WIDGET_ERROR_ALERT)
     );
-    this.activeModal.dismiss();
   }
 }

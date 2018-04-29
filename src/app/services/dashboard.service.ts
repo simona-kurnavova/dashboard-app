@@ -17,6 +17,9 @@ export interface DashboardInterface {
  */
 @Injectable()
 export class DashboardService {
+  /**
+   * Url to access dashboard API
+   */
   url: string = BACKEND + 'dashboards/';
 
   constructor(private authService: AuthService,

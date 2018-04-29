@@ -52,9 +52,7 @@
       <div class="col">
 
         <div class="container" *ngIf="(view == 'edit') || (view == 'create')">
-          <div *ngFor="let alert of alerts" class="notification">
-            <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
-          </div>
+          <alert [alerts]="alerts"></alert>
         </div>
 
         <div [ngSwitch]="view" class="container">
@@ -142,13 +140,16 @@
   </div>
 </div>
 
-<div *ngIf="isState('edit')">
+<div *ngIf="state === 'edit'">
   <div class="container" align="center">
-    <i class="fa fa-calendar fa-4x icon-calendar" aria-hidden="true"></i>
+    <div class="row justify-content-center"><h4 style="color: cadetblue">Google Calendar</h4></div>
+    <div class="row justify-content-center">
+      <i class="fa fa-calendar fa-4x icon-calendar" aria-hidden="true"></i>
+    </div>
   </div>
 </div>
 
-<div *ngIf="noAccount" align="center">
+<div *ngIf="noAccount && (state != 'edit')" align="center">
   There is no Google account assigned to this widget. Please add one: <br>
   <button class="btn btn-blue-grey" (click)="addAccount()">Add Account</button>
 </div>

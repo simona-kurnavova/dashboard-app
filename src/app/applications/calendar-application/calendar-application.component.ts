@@ -8,6 +8,7 @@ import {CalendarAddAccountComponent} from './calendar-add-account.component';
 import {ApplicationBaseComponent} from '../application-base.component';
 import { AlertInterface, EVENT_ADD_ERROR_ALERT, EVENT_ADDED_ALERT, EVENT_EDIT_ERROR_ALERT,
   EVENT_EDITED_ALERT} from '../../authentication-alerts';
+import {WidgetService} from '../../services/widget.service';
 
 @Component({
   selector: 'calendar-application',
@@ -43,7 +44,8 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
   ];
 
   constructor(private calendarService: CalendarApplicationService,
-              public  popupService: NgbModal) {
+              public  popupService: NgbModal,
+              private widgetService: WidgetService) {
     super();
   }
 
@@ -86,8 +88,13 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
     const _that = this;
     const popup = this.popupService.open(CalendarAddAccountComponent, {size: 'lg'});
     popup.componentInstance.widget = this.widget;
-    popup.componentInstance.addAccountCallback = () => {
+    popup.componentInstance.addAccountCallback = (data) => {
       _that.noAccount = false;
+      _that.widget.account = data['id'];
+      this.widgetService.edit(_that.widget.id, _that.widget).subscribe(
+        data => console.log(data),
+        err => console.log(err)
+      );
     };
   }
 
@@ -146,11 +153,6 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
     this.new_event.start = this.selectedMoments[0];
     this.new_event.end = this.selectedMoments[1];
     this.calendarService.createEvent(this.new_event, callback);
-  }
-
-  public closeAlert(alert: AlertInterface) {
-    const index: number = this.alerts.indexOf(alert);
-    this.alerts.splice(index, 1);
   }
 }
 MAPPINGS['calendar-application'] = CalendarApplicationComponent;

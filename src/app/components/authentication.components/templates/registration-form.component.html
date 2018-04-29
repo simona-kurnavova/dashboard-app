@@ -36,32 +36,11 @@
       <br>
       or <a routerLink="/login" href="/login">login</a>
 
-      <div *ngFor="let alert of alerts" class="notification">
-        <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
-      </div>
+      <alert [alerts]="alerts"></alert>
 
     </div>
   </div>
 </div>
-
-<style>
-  .registration-content {
-    padding-top: 50px;
-  }
-
-  .notification {
-    padding-top: 10px;
-  }
-</style>
-
-
-
-
-
-
-
-
-
 
 
 

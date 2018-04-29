@@ -21,6 +21,9 @@ export interface AccountInterface {
  */
 @Injectable()
 export class AccountService {
+  /**
+   * Url to access account API
+   */
   url: string = BACKEND + 'accounts/';
 
   constructor(private authService: AuthService,

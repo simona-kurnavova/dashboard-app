@@ -16,6 +16,7 @@ export interface WidgetInterface {
   position_y: number;
   size_x: Number;
   size_y: Number;
+  deleted?: Boolean;
 }
 
 /**
@@ -23,6 +24,9 @@ export interface WidgetInterface {
  */
 @Injectable()
 export class WidgetService {
+  /**
+   * Url to access widget API
+   */
   url: string = BACKEND + 'widgets/';
 
   constructor(private http: HttpClient,

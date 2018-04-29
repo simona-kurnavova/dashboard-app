@@ -2,21 +2,24 @@ import {Component, OnInit} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
 import {ApplicationBaseComponent} from '../application-base.component';
 import {OneNoteApplicationService} from './onenote-application.service';
+import {AlertInterface} from '../../authentication-alerts';
 
 export interface Page {
-  id;
-  title;
-  contentUrl;
+  id?;
+  title?;
+  contentUrl?;
   content?: any;
-  parentSection: {id;};
+  parentSection?: {
+    id?;
+  };
 }
 export interface Section {
-  id;
+  id?;
   displayName;
 }
 
 export interface Notebook {
-  id;
+  id?;
   displayName;
   sections?: Section[];
 }
@@ -33,7 +36,11 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
   public activeSection: Section;
   public activePage: Page;
   public pageList: Page[] = [];
+  public editor = {id: null, text: '', title: ''};
+  public newNotebook: Notebook = {displayName: ''};
+  public newSection: Section = {displayName: ''};
   public view;
+  public alerts: AlertInterface[] = [];
 
   constructor(private appService: OneNoteApplicationService) {
     super();
@@ -47,7 +54,16 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
       this.setView('notebooks');
       this.getResources();
     } else {
-      this.setView('no account');
+      if (this.appService.tokenExists()) {
+        const callback = (data) => {
+          this.appService.saveToken(data);
+          this.setView('notebooks');
+          this.getResources();
+        };
+        this.appService.login(callback);
+      } else {
+        this.setView('no account');
+      }
     }
   }
 
@@ -81,6 +97,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
           this.appService.getSections(this.notebookList[i].id).subscribe(
             data => {
                 this.notebookList[i].sections = <Section[]>data['value'];
+                console.log(data['value']);
             },
             err => console.log(err)
           );
@@ -128,11 +145,75 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
   }
 
   setView(view: String) {
-    if (view === 'all pages' || view === 'editor' || view === 'notebooks') {
+    if (view === 'all pages' || view === 'notebooks') {
       this.activeNotebook = null;
       this.activeSection = null;
     }
     this.view = view;
+  }
+
+  openEditor(section: Section) {
+    this.setView('editor');
+    this.activeSection = section;
+  }
+
+  openSectionEditor(notebook: Notebook) {
+    this.setView('editor-section');
+    this.activeNotebook = notebook;
+  }
+
+  editPage() {
+    this.editor = this.appService.parsePage(this.activePage);
+    this.openEditor(this.activeSection);
+  }
+
+  createPage() {
+    // TODO: error and success handling
+    const html = `<!DOCTYPE html><html><head><title>` + this.editor.title + `</title></head>`
+    + `<body>` + this.editor.text + `</body></html>`;
+
+    if (this.editor.id) {
+      this.appService.editPage(this.editor.id, this.activeSection.id, html);
+      // TODO callback
+      return;
+    }
+    this.appService.createPage(this.activeSection.id, html).subscribe(
+      data => {
+        console.log(data);
+       this.getResources();
+      },
+          err => console.log(err)
+    );
+  }
+
+  deletePage(page: Page) {
+    this.appService.deletePage(page.id).subscribe(
+      data => {
+        console.log(data);
+        this.getResources();
+      },
+          err => console.log(err)
+    );
+  }
+
+  createNotebook() {
+    this.appService.createNotebook(this.newNotebook).subscribe(
+      data => {
+        console.log(data);
+        this.getResources();
+      },
+          err => console.log(err)
+    );
+  }
+
+  createSection() {
+    this.appService.createSection(this.activeNotebook.id, this.newSection).subscribe(
+      data => {
+        console.log(data);
+        this.getResources();
+      },
+      err => console.log(err)
+    );
   }
 }
 

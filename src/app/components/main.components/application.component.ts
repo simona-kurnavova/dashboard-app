@@ -4,25 +4,50 @@ import {ApplicationInterface, ApplicationService} from '../../services/applicati
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ApplicationBaseComponent} from '../../applications/application-base.component';
 
+/**
+ * Mappings of the components and their names for dynamic loading of applications
+ */
 export let MAPPINGS = {};
 
+/**
+ * Loads application into widget dynamically and passes necessary values to it
+ */
 @Component({
   selector: 'application',
   templateUrl: './templates/application.component.html',
+  providers: [ApplicationService, NgbModal]
 })
 
 export class ApplicationComponent implements OnInit, OnDestroy {
+  /**
+   * Widget object handed from dashboard
+   */
   @Input() widget: WidgetInterface;
+  /**
+   * State of the dashboard
+   */
   @Input() dashboardState: String;
-  applicationState: String;
-
-  application: ApplicationInterface;
-  type;
-
+  /**
+   * Application in given widget
+   */
+  private application: ApplicationInterface;
+  /**
+   * Type of component to load
+   */
+  private type: String;
+  /**
+   * Reference to application component for dynamic loading
+   */
   private componentRef: ComponentRef<{}>;
   @ViewChild('container', { read: ViewContainerRef })
-  container: ViewContainerRef;
+  /**
+   * Reference to container for the application component to load
+   */
+  private container: ViewContainerRef;
 
+  /**
+   * Returns component from the string name of application
+   */
   static getComponentType(typeName: string) {
     return MAPPINGS[typeName];
   }
@@ -31,11 +56,16 @@ export class ApplicationComponent implements OnInit, OnDestroy {
               private appService: ApplicationService,
               public popupService: NgbModal) {}
 
+  /**
+   * Calls loading of application
+   */
   ngOnInit() {
     this.loadApplication();
-    this.initState();
   }
 
+  /**
+   * Loads Application component from app name and passes values
+   */
   loadComponent() {
     if (this.type) {
       let componentType = ApplicationComponent.getComponentType(this.type + '-application');
@@ -45,11 +75,14 @@ export class ApplicationComponent implements OnInit, OnDestroy {
       const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
 
       this.componentRef = this.container.createComponent(factory);
-      (<ApplicationBaseComponent>this.componentRef.instance).state = this.applicationState;
+      (<ApplicationBaseComponent>this.componentRef.instance).state = this.dashboardState;
       (<ApplicationBaseComponent>this.componentRef.instance).widget = this.widget;
     }
   }
 
+  /**
+   * Destroys component reference
+   */
   ngOnDestroy() {
     if (this.componentRef) {
       this.componentRef.destroy();
@@ -57,8 +90,14 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Retrieves application data from server
+   */
   loadApplication() {
-    // Solved Firefox unabillity to perform redirection with retrieveAll() replacing retrieve()
+
+    /* NOTE: should be handled by retrieve(), but due to Firefox redirecting bug of http sites,
+    for the testing purposes changed to retrieveAll() */
+
     this.appService.retrieveAll().subscribe(
       data => {
         const applications = <ApplicationInterface[]>data['results'];
@@ -68,28 +107,31 @@ export class ApplicationComponent implements OnInit, OnDestroy {
             this.type = applications[i].name;
           }
         }
-
         this.loadComponent();
       },
-      err => console.log(err)
+      () => {
+        this.application = null;
+        this.type = 'error';
+      }
     );
   }
 
-  initState() {
-    this.setState(this.dashboardState);
-  }
-
-  setState(state: String) {
-    this.applicationState = state;
-  }
-
+  /**
+   * Checks state of the component
+   */
   isState(state: String) {
-    return state === this.applicationState;
+    return state === this.dashboardState;
   }
 
+  /**
+   * Opens application in popup if available, otherwise opens ErrorPopupComponent
+   */
   openInPopUp() {
-    const popupContent = ApplicationComponent.getComponentType(this.type + '-popup');
-    const popup = this.popupService.open(popupContent, {size: 'lg'});
+    let popupContent = ApplicationComponent.getComponentType(this.type + '-popup');
+    if (!popupContent) {
+      popupContent = ApplicationComponent.getComponentType('error-popup');
+    }
+    this.popupService.open(popupContent, {size: 'lg'});
   }
 }
 

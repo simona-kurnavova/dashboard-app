@@ -32,15 +32,13 @@
 
     <hr>
 
-  <div *ngFor="let alert of alerts" class="notification">
-    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
-  </div>
+  <alert [alerts]="alerts"></alert>
 
-    <div class="container" *ngIf="isState('normal')">
+  <div class="container" *ngIf="isState('normal')">
 
       <div *ngFor="let row of widgetList; let i = index;">
         <div class="row justify-content-{{ widgetJustify }}">
-          <div class="col-lg-{{widgetList[i][j].size_x}} widget-column" *ngFor="let col of widgetList[i]; let j = index;">
+          <div *ngFor="let col of widgetList[i]; let j = index;" class="col-lg-{{widgetList[i][j].size_x}} widget-column">
               <widget [state]="state" [widget]="widgetList[i][j]"></widget>
           </div>
         </div>
@@ -54,10 +52,21 @@
   <div class="container" *ngIf="isState('edit')">
     <div *ngFor="let row of widgetListEdit; let i = index;">
       <div class="row justify-content-{{ widgetJustify }}" dnd-sortable-container [sortableData]="widgetListEdit[i]">
-        <div class="col-lg-{{widgetListEdit[i][j].size_x}} widget-column" *ngFor="let col of widgetListEdit[i]; let j = index;">
-          <div class="card" dnd-sortable [sortableIndex]="j">
+        <div *ngFor="let col of widgetListEdit[i]; let j = index;" class="col-lg-{{widgetListEdit[i][j].size_x}} widget-column">
+          <div *ngIf="!widgetListEdit[i][j].deleted" class="card" dnd-sortable [sortableIndex]="j">
             <widget [state]="state" [widget]="widgetListEdit[i][j]"></widget>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="noWidgets && isState('normal')">
+    <div class="row justify-content-center">
+      <div class="col-lg-12" align="center">
+        <div class="card card-body" style="height: 250px">
+          <h4 style="color: lightgrey" align="center"><i>No widgets on your dashboard!</i></h4>
+          <button style="width: 200px" type="button" (click)="setState('edit')" class="btn btn-sm btn-default">Manage dashboard</button>
         </div>
       </div>
     </div>

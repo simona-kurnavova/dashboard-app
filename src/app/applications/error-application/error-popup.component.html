@@ -1,19 +1,16 @@
 <div class="modal-header">
-  <h4 class="modal-title">Add account</h4>
+  <h4 class="modal-title">Error</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 
 <div class="modal-body">
+  <div class="container" style="height: 350px">
 
-  <alert [alerts]="alerts"></alert>
+    <h5 align="center" style="color: purple">No popup view available for this application.</h5>
 
-  <h3 align="center">Add account to Calendar Application:</h3>
-  <div class="container" align="center">
-    <button class="btn btn-secondary" (click)="addAccount()">Add Google Account</button>
   </div>
-
 </div>
 
 <div class="modal-footer">

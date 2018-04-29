@@ -42,6 +42,10 @@ import {OneNoteApplicationComponent} from './applications/onenote-application/on
 import {CalendarPopupComponent} from './applications/calendar-application/calendar-popup.component';
 import {TranslateApplicationComponent} from './applications/translate-application/translate-application.component';
 import {TranslatePopupComponent} from './applications/translate-application/translate-popup.component';
+import {OneNotePopupComponent} from './applications/onenote-application/onenote-popup.component';
+import {ErrorPopupComponent} from './applications/error-application/error-popup.component';
+import {AlertComponent} from './components/alert.component';
+
 
 @NgModule({
   declarations: [
@@ -51,6 +55,7 @@ import {TranslatePopupComponent} from './applications/translate-application/tran
     ApplicationBaseComponent, ErrorApplicationComponent,
     CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent,
     TimeApplicationComponent, OneNoteApplicationComponent, TranslateApplicationComponent, TranslatePopupComponent,
+    OneNotePopupComponent, ErrorPopupComponent, AlertComponent
   ],
 
   imports: [
@@ -74,8 +79,9 @@ import {TranslatePopupComponent} from './applications/translate-application/tran
   entryComponents: [
     SettingsContent, AboutContent, AddWidgetContent, ApplicationBaseComponent,
     ErrorApplicationComponent,
-    CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent,
+    CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent, OneNotePopupComponent,
     TimeApplicationComponent, OneNoteApplicationComponent, TranslateApplicationComponent, TranslatePopupComponent,
+    ErrorPopupComponent
   ],
 })
 export class AppModule {}

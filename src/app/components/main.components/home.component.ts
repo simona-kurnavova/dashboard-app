@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 
+/**
+ * Homepage component
+ */
+
 @Component({
   selector: 'home',
   templateUrl: './templates/home.component.html',
@@ -10,7 +14,10 @@ import {AuthService} from '../../services/auth.service';
 export class HomeComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
-  async ngOnInit() {
-    await this.authService.checkCredentials();
+  /**
+   * Checks if user is logged in on every initialization of component, if isn't, redirects to home page
+   */
+  ngOnInit() {
+    this.authService.checkCredentials();
   }
 }

@@ -19,6 +19,9 @@ export interface UserInterface {
  */
 @Injectable()
 export class UserService {
+  /**
+   * Url to access user API
+   */
   private url: string = BACKEND + 'users/';
 
   constructor(private authService: AuthService,

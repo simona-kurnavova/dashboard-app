@@ -12,13 +12,17 @@
       <div class="btn-group">
         <button (click)="setView('notebooks')" class="btn btn-sm btn-primary">Notebooks</button>
         <button (click)="setView('all pages')" class="btn btn-sm btn-primary">All pages</button>
-        <button (click)="setView('editor')" class="btn btn-sm btn-primary">Create</button>
       </div>
     </div>
   </div>
 
+  <div *ngIf="state != 'edit'">
+    <alert [alerts]="alerts"></alert>
+  </div>
+
   <div *ngIf="view == 'notebooks'" class="container list-containers">
-    <h5>Notebooks</h5>
+    <h5>Notebooks
+      <a (click)="setView('editor-notebook')" style="color: grey; font-size: x-small">Create notebook</a></h5>
     <hr>
     <div *ngFor="let notebook of notebookList">
       <p><a (click)="openNotebook(notebook)">{{ notebook.displayName }}</a></p>
@@ -27,10 +31,11 @@
   </div>
 
   <div *ngIf="view == 'sections'" class="container list-containers">
-    <h5>{{ activeNotebook.displayName }}</h5>
+    <h5>{{ activeNotebook.displayName }} <a (click)="openSectionEditor(activeNotebook)" style="color: grey; font-size: x-small">Create section</a></h5>
     <hr>
     <div *ngFor="let section of activeNotebook.sections">
-      <p><a (click)="openSection(section)">{{ section.displayName }}</a></p>
+      <p><a (click)="openSection(section)">{{ section.displayName }}</a>
+        <a (click)="openEditor(section)" style="color: grey; font-size: x-small">Create page</a></p>
     </div>
 
   </div>
@@ -44,7 +49,7 @@
   </div>
 
   <div *ngIf="view == 'pages'" class="container pre-scrollable list-containers">
-    <h5>Pages</h5>
+    <h5>Pages <a (click)="openEditor(activeSection)" style="color: grey; font-size: x-small">Create another page</a></h5>
     <hr>
     <div *ngFor="let page of pageList">
       <p *ngIf="page.parentSection.id == activeSection.id"><a (click)="openPage(page)">{{ page.title }}</a></p>
@@ -53,13 +58,52 @@
 
   <div *ngIf="view == 'page'" class="container pre-scrollable list-containers">
     <span [innerHTML]="activePage.content"></span>
+    <button (click)="editPage()" class="btn btn-sm btn-primary">edit</button>
+    <button (click)="deletePage(activePage)" class="btn btn-sm btn-primary">delete</button>
   </div>
 
   <div *ngIf="view == 'editor'" class="container pre-scrollable list-containers">
     <form id="page-form">
-      <button class="btn btn-sm btn-primary">Save</button>
+      <div class="md-form">
+        <div class="md-form" style="width: 150px">
+          <input type="text" placeholder="title" id="title" [(ngModel)]="editor.title" class="form-control"
+                 [ngModelOptions]="{standalone: true}" mdbActive>
+
+        </div>
+            <textarea mdbInputDirective placeholder="Text" [(ngModel)]="editor.text" type="text" id="text"
+                      class="md-textarea form-control" rows="10" [ngModelOptions]="{standalone: true}">
+
+            </textarea>
+      </div>
+      <button (click)="createPage()" class="btn btn-sm btn-primary">Save</button>
     </form>
   </div>
+</div>
+
+<div *ngIf="view == 'editor-section'" class="container pre-scrollable list-containers">
+  <form id="section-form">
+    <div class="md-form">
+      <div class="md-form" style="width: 200px">
+        <input type="text" placeholder="title" id="section-name" [(ngModel)]="newSection.displayName" class="form-control"
+               [ngModelOptions]="{standalone: true}" mdbActive>
+
+      </div>
+    </div>
+    <button (click)="createSection()" class="btn btn-sm btn-primary">Save</button>
+  </form>
+</div>
+
+<div *ngIf="view == 'editor-notebook'" class="container pre-scrollable list-containers">
+  <form id="notebook-form">
+    <div class="md-form">
+      <div class="md-form" style="width: 200px">
+        <input type="text" placeholder="title" id="notebook-name" [(ngModel)]="newNotebook.displayName" class="form-control"
+               [ngModelOptions]="{standalone: true}" mdbActive>
+
+      </div>
+    </div>
+    <button (click)="createNotebook()" class="btn btn-sm btn-primary">Save</button>
+  </form>
 </div>
 
 <div *ngIf="view === 'no account'" class="container">
@@ -67,8 +111,11 @@
   <button (click)="getAccessToken()" type="button" class="btn btn-primary">Get token</button>
 </div>
 
-<div *ngIf="view === 'edit'">
-...
+<div *ngIf="state === 'edit'" class="container" align="center">
+  <div class="row justify-content-center"><h4 style="color: purple">OneNote</h4></div>
+  <div class="row justify-content-center" style="padding-top: 20px;">
+    <img width="60px" height="60px" src="http://icons.iconarchive.com/icons/carlosjj/microsoft-office-2013/256/OneNote-icon.png">
+  </div>
 </div>
 
 <style>

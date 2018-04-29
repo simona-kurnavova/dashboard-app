@@ -3,15 +3,27 @@ import {AuthService} from '../../services/auth.service';
 import {UserService, UserInterface} from '../../services/user.service';
 import {AlertInterface, SERVER_ERROR_ALERT, USER_EDITED_ALERT} from '../../authentication-alerts';
 
+/**
+ * Represents profile settings, allowing user to change their user data
+ */
 @Component({
   selector: 'profile-content',
   templateUrl: './templates/profile-content.html',
-  providers: [AuthService],
+  providers: [AuthService, UserService],
 })
 
 export class ProfileContent implements OnInit {
+  /**
+   * State of component
+   */
   private state: String;
-  public alerts: Array <AlertInterface> = [];
+  /**
+   * Array of alerts passed to AlertComponent for error handling
+   */
+  public alerts: AlertInterface[] = [];
+  /**
+   * Stores user data
+   */
   public user: UserInterface = {
     id: null, username: '', password: '', email: ''
   };
@@ -19,37 +31,47 @@ export class ProfileContent implements OnInit {
   constructor(private service: AuthService,
               private userService: UserService) {}
 
-  getUser() {
+  /**
+   * Sets default state and calls loadUser()
+   */
+  ngOnInit() {
+    this.state = 'normal';
+    this.loadUser();
+  }
+
+  /**
+   * Retrieves user from database
+   */
+  loadUser() {
     this.userService.retrieve().subscribe(
       data => this.user = (<UserInterface[]>data['results'])[0],
-      err => this.alerts.push(SERVER_ERROR_ALERT)
+      () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
-  ngOnInit() {
-    this.state = 'normal';
-    this.getUser();
-  }
-
+  /**
+   * Returns true if given string is current state
+   */
   isState(state: String) {
     return this.state === state;
   }
 
+  /**
+   * Sets current state of the component
+   */
   setState(state: String) {
     this.alerts = [];
     this.state = state;
   }
 
+  /**
+   * Saves new user data to database
+   */
   saveUser() {
     this.setState('normal');
     this.userService.update(this.user).subscribe(
-      data => this.alerts.push(USER_EDITED_ALERT),
-      err => this.alerts.push(SERVER_ERROR_ALERT)
+      () => this.alerts.push(USER_EDITED_ALERT),
+      () => this.alerts.push(SERVER_ERROR_ALERT)
     );
-  }
-
-  public closeAlert(alert: AlertInterface) {
-    const index: number = this.alerts.indexOf(alert);
-    this.alerts.splice(index, 1);
   }
 }

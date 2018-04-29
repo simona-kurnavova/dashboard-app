@@ -1,7 +1,4 @@
-<div *ngFor="let alert of alerts" class="notification">
-  <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
-</div>
-
+<alert [alerts]="alerts"></alert>
 <div *ngIf="isState('list')" class="container" align="center">
 
   <h3>Your accounts:</h3>
