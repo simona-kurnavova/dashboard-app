@@ -32,8 +32,7 @@ export class MenuComponent implements OnInit {
       data => {
         this.username = (<UserInterface[]>data['results'])[0].username;
       },
-      err => {
-        console.log(err);
+      () => {
         this.username = 'User';
       }
     );

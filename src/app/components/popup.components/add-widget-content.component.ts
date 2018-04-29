@@ -3,6 +3,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ApplicationInterface, ApplicationService} from '../../services/application.service';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
 import {WidgetMatrixService} from '../../services/widget-matrix.service';
+import {ADD_WIDGET_ERROR_ALERT, AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
 
 /**
  * Content component for Bootstrap modal window
@@ -28,6 +29,11 @@ export class AddWidgetContent implements OnInit {
    */
   public appList: ApplicationInterface[];
 
+  /**
+   * Array of alerts passed to AlertComponent
+   */
+  public alerts: AlertInterface[] = [];
+
   constructor(public activeModal: NgbActiveModal,
               private appService: ApplicationService,
               private widgetService: WidgetService) {}
@@ -43,13 +49,10 @@ export class AddWidgetContent implements OnInit {
    * Retrieves application list from database
    */
   loadApps() {
-    // TODO: handle error
     this.appService.retrieveAll().subscribe(
       data => {
         this.appList = <ApplicationInterface[]>data['results'];
-        console.log(this.appList);
-      },
-      err => console.log(err)
+      }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
@@ -57,10 +60,8 @@ export class AddWidgetContent implements OnInit {
    * Adds new Widget to database with chosen application and also adds it to dashboard widgetListEdit
    */
   addWidget(id: Number) {
-    // TODO: error handling
     this.widgetService.retrieveAll().subscribe(
       widgets => {
-        // TODO: error handling
         let widget = WidgetMatrixService.createWidget(id, null, this.currentDashboard, <WidgetInterface[]>widgets['results']);
         this.widgetService.create(widget).subscribe(
           data => {
@@ -68,11 +69,9 @@ export class AddWidgetContent implements OnInit {
             const widgetRow: WidgetInterface[] = [widget];
             this.widgetListEdit.push(widgetRow);
             this.activeModal.dismiss();
-          },
-            err => console.log(err),
+          }, () => this.alerts.push(ADD_WIDGET_ERROR_ALERT)
         );
-        },
-      err => console.log(err)
+      }, () => this.alerts.push(ADD_WIDGET_ERROR_ALERT)
     );
   }
 }

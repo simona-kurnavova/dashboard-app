@@ -48,7 +48,7 @@ export class AccountsContent implements OnInit {
   getList() {
     this.accountService.retrieveAll().subscribe(
       data => this.accountList = <AccountInterface[]>data['results'],
-      err => this.alerts.push(SERVER_ERROR_ALERT)
+      () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 

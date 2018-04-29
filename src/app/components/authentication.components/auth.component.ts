@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
  */
 @Component({
   selector: 'login',
-  providers: [ AuthService ],
+  providers: [AuthService],
   templateUrl: './templates/auth.component.html'
 })
 

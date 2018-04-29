@@ -1,5 +1,6 @@
 <div *ngIf="isState('list')" class="container" align="center">
   <h3>Your active widgets:</h3>
+  <alert [alerts]="alerts"></alert>
   <div *ngFor="let widget of widgetList; let i = index;">
     <a (click)="setCurrentWidget(i)"><b>{{ findApp(widget.app).name }}</b></a>
   </div>

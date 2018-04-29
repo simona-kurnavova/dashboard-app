@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
 import {ApplicationInterface, ApplicationService} from '../../services/application.service';
+import {AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
 
 /**
  * Represents Widget settings
@@ -20,15 +21,17 @@ export class WidgetsContent implements OnInit {
   /**
    * List of widgets belonging to user
    */
-  widgetList: WidgetInterface[] = [];
+  public widgetList: WidgetInterface[] = [];
   /**
    * List of applications availbale
    */
-  applicationList: ApplicationInterface[] = [];
+  public applicationList: ApplicationInterface[] = [];
   /**
    * Index of active widget in detail state
    */
-  currentWidget: Number;
+  public currentWidget: Number;
+
+  public alerts: AlertInterface[] = [];
 
   constructor(private authService: AuthService,
               private widgetService: WidgetService,
@@ -52,10 +55,9 @@ export class WidgetsContent implements OnInit {
         this.applicationList = <ApplicationInterface[]>data['results'];
         this.widgetService.retrieveAll().subscribe(
           data => this.widgetList = <WidgetInterface[]>data['results'],
-          err => console.log(err)
+          () => this.alerts.push(SERVER_ERROR_ALERT)
         );
-      },
-      err => console.log(err)
+      }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
@@ -85,10 +87,8 @@ export class WidgetsContent implements OnInit {
    * Finds corresponding app to its ID and returns it
    */
   findApp(id: Number): ApplicationInterface {
-    console.log(this.applicationList);
     for (let i = 0; i < this.applicationList.length; i++) {
       if (this.applicationList[i].id === id) {
-        console.log(this.applicationList[i]);
         return this.applicationList[i];
       }
     }

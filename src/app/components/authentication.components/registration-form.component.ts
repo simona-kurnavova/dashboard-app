@@ -46,10 +46,7 @@ export class RegistrationFormComponent {
 
     this.userService.create(this.user).subscribe(data => {
         this.alerts.push(USER_REGISTERED_ALERT);
-      }, err => {
-        console.log(err);
-        this.alerts.push(HttpErrorHandler.getAlert(err['status']));
-      }
+      }, err => this.alerts.push(HttpErrorHandler.getAlert(err['status']))
     );
   }
 }

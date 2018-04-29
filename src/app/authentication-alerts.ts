@@ -87,3 +87,9 @@ export const EVENT_EDIT_ERROR_ALERT: AlertInterface = {
   type: 'danger',
   message: 'Error editing event'
 };
+
+export const ADD_WIDGET_ERROR_ALERT: AlertInterface = {
+  id: 15,
+  type: 'danger',
+  message: 'Error adding widget to dashboard'
+};

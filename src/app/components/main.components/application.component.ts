@@ -34,7 +34,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   /**
    * Type of component to load
    */
-  type;
+  type: String;
   /**
    * Reference to application component for dynamic loading
    */
