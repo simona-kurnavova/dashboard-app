@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
               private widgetService: WidgetService) {}
 
   /**
-   * Sets default values of attributes, calls loadWidgets()
+   * Sets default values of attributes, calls loadResources()
    */
   ngOnInit() {
     this.noWidgets = false;
@@ -105,7 +105,7 @@ export class DashboardComponent implements OnInit {
    */
   addWidget() {
     const popup = this.popupService.open(AddWidgetContent);
-    popup.componentInstance.currentEditAppList = this.widgetListEdit;
+    popup.componentInstance.widgetListEdit = this.widgetListEdit;
     popup.componentInstance.currentDashboard = this.dashboardList[this.activeDashboard].id;
   }
 
