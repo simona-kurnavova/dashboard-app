@@ -55,7 +55,12 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
       this.getResources();
     } else {
       if (this.appService.tokenExists()) {
-        this.appService.login();
+        const callback = (data) => {
+          this.appService.saveToken(data);
+          this.setView('notebooks');
+          this.getResources();
+        };
+        this.appService.login(callback);
       } else {
         this.setView('no account');
       }

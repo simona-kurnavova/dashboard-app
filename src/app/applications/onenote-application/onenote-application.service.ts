@@ -36,7 +36,6 @@ export class OneNoteApplicationService implements OnInit {
     const expiresAt =  new Date().getTime() + (1000 * data['expires_in']);
     localStorage.setItem('onenote_access_token', data['access_token']);
     localStorage.setItem('onenote_refresh_token', data['refresh_token']);
-    console.log(data['refresh_token']);
     localStorage.setItem('onenote_expires_at', expiresAt.toString());
   }
 
@@ -135,12 +134,9 @@ export class OneNoteApplicationService implements OnInit {
     return +localStorage.getItem('onenote_expires_at') > new Date().getTime();
   }
 
-  login() {
+  login(callback) {
     this.refreshToken().subscribe(
-      data => {
-        console.log(data);
-        this.saveToken(data);
-      },
+      callback,
       err => console.log(err)
     );
   }

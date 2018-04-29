@@ -1,3 +1,6 @@
+/* Following styles are applied to LoginFormComponent and RegistrationFormComponent for the purpose to
+  hide Google Chrome autofill yellow background in the input forms */
+
 input, textarea, select {
   background: white;
 }
@@ -14,4 +17,9 @@ input:focus, textarea:focus, input:-webkit-autofill:focus, textarea:-webkit-auto
 input:hover, textarea:hover, input:-webkit-autofill:hover, textarea:-webkit-autofill:hover {
   -webkit-box-shadow: inset 0 0 0px 9999px white,
   0 0 0px rgba(102, 175, 233, 0.6);
+}
+
+/* Padding for forms */
+.login-content, .registration-content {
+  padding-top: 50px;
 }

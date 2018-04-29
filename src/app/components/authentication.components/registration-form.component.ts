@@ -4,6 +4,9 @@ import {UserService, UserInterface} from '../../services/user.service';
 import {AlertInterface, EMPTY_PASSWORD_ALERT, EMPTY_USERNAME_ALERT, USER_REGISTERED_ALERT} from '../../authentication-alerts';
 import {HttpErrorHandler} from '../../services/http-error-handler.service';
 
+/**
+ * Manages user registration and data validation
+ */
 @Component({
   selector: 'registration-form',
   styleUrls: ['./styles/form-style.css'],
@@ -13,11 +16,20 @@ import {HttpErrorHandler} from '../../services/http-error-handler.service';
 
 
 export class RegistrationFormComponent {
+  /**
+   * Object for storing user registration data
+   */
   public user: UserInterface = { id: null, username: '', password: '', email: '' };
+  /**
+   * Array of alerts passed to AlertComponent for error handling
+   */
   public alerts: Array<AlertInterface> = [];
 
   constructor(private userService: UserService) {}
 
+  /**
+   * Handles registration form validations and passes data to userService for registration
+   */
   register() {
     this.alerts = [];
     if (this.user.username === '') {

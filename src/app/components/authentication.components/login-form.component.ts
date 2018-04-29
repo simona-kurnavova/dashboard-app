@@ -3,6 +3,9 @@ import {AuthService} from '../../services/auth.service';
 import {AlertInterface, EMPTY_PASSWORD_ALERT, EMPTY_USERNAME_ALERT} from '../../authentication-alerts';
 import {HttpErrorHandler} from '../../services/http-error-handler.service';
 
+/**
+ * Manages user login, provides forms, error handling and validations
+ */
 @Component({
   selector: 'login-form',
   styleUrls: ['./styles/form-style.css'],
@@ -11,11 +14,20 @@ import {HttpErrorHandler} from '../../services/http-error-handler.service';
 })
 
 export class LoginFormComponent {
+  /**
+   * Object for storing login data: username and password from the user input
+   */
   public loginData = {username: '', password: ''};
+  /**
+   * Array of alerts passed to AlertComponent for error handling
+   */
   public alerts: Array<AlertInterface> = [];
 
   constructor(private authService: AuthService) {}
 
+  /**
+   * Action after user inserts login data, validates them and calls AuthService for authentication handling
+   */
   login() {
     this.alerts = [];
     if (this.loginData.username === '') {
