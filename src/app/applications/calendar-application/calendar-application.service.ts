@@ -86,11 +86,7 @@ export class CalendarApplicationService {
       name: CalendarApplicationService.account_name,
       token: token,
     };
-    this.accountService.create(account).subscribe(
-      callback, err => {
-        // TODO: handle error
-      }
-    );
+    this.accountService.create(account).subscribe(callback);
   }
 
   parseEvents(googleEvents: GoogleEvent[]) {

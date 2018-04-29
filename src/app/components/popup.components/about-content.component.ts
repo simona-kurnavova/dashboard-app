@@ -8,7 +8,6 @@ import {Component} from '@angular/core';
 @Component({
   selector: 'about-content',
   templateUrl: './templates/about-content.html',
-  providers: [NgbActiveModal]
 })
 export class AboutContent {
   constructor(public activeModal: NgbActiveModal) {}

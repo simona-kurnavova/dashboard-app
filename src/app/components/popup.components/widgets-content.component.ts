@@ -49,7 +49,6 @@ export class WidgetsContent implements OnInit {
    * Loads widget list and application list from database
    */
   loadResources() {
-    // TODO: handle error and add alerts
     this.appService.retrieveAll().subscribe(
       data => {
         this.applicationList = <ApplicationInterface[]>data['results'];

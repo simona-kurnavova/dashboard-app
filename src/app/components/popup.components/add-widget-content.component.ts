@@ -12,7 +12,7 @@ import {ADD_WIDGET_ERROR_ALERT, AlertInterface, SERVER_ERROR_ALERT} from '../../
 @Component({
   selector: 'add-widget-content',
   templateUrl: './templates/add-widget-content.html',
-  providers: [NgbActiveModal, ApplicationService, WidgetService]
+  providers: [ApplicationService, WidgetService]
 })
 
 export class AddWidgetContent implements OnInit {
