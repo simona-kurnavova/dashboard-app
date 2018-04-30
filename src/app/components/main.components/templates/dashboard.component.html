@@ -35,30 +35,21 @@
   <alert [alerts]="alerts"></alert>
 
   <div class="container" *ngIf="isState('normal')">
-
-      <div *ngFor="let row of widgetList; let i = index;">
         <div class="row justify-content-{{ widgetJustify }}">
-          <div *ngFor="let col of widgetList[i]; let j = index;" class="col-lg-{{widgetList[i][j].size_x}} widget-column">
-              <widget [state]="state" [widget]="widgetList[i][j]"></widget>
+          <div *ngFor="let widget of widgetList; let i = index;" class="col-lg-{{widget.size_x}} widget-column">
+              <widget [state]="state" [widget]="widget"></widget>
           </div>
         </div>
-      </div>
-
-      <div align="center" *ngIf="widgetList.length == 0 && alerts.length == 0">
-        <i>No widgets on the dashboard</i>
-      </div>
     </div>
 
   <div class="container" *ngIf="isState('edit')">
-    <div *ngFor="let row of widgetListEdit; let i = index;">
-      <div class="row justify-content-{{ widgetJustify }}" dnd-sortable-container [sortableData]="widgetListEdit[i]">
-        <div *ngFor="let col of widgetListEdit[i]; let j = index;" class="col-lg-{{widgetListEdit[i][j].size_x}} widget-column">
-          <div *ngIf="!widgetListEdit[i][j].deleted" class="card" dnd-sortable [sortableIndex]="j">
-            <widget [state]="state" [widget]="widgetListEdit[i][j]"></widget>
+      <div class="row justify-content-{{ widgetJustify }}" dnd-sortable-container [sortableData]="widgetListEdit">
+        <div *ngFor="let widget of widgetListEdit; let i = index;" class="col-lg-{{getWidgetSize(widget)}} widget-column">
+          <div *ngIf="!widget.deleted" class="card" dnd-sortable [sortableIndex]="i">
+            <widget [state]="state" [widget]="widget"></widget>
           </div>
         </div>
       </div>
-    </div>
   </div>
 
   <div class="container" *ngIf="noWidgets && isState('normal')">
