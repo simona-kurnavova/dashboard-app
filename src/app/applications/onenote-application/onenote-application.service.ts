@@ -1,44 +1,31 @@
-import {Injectable, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BACKEND} from '../../settings';
 import {Observable} from 'rxjs/Observable';
-import {Notebook, Page} from './onenote-application.component';
+import {Router} from '@angular/router';
 
 @Injectable()
-export class OneNoteApplicationService implements OnInit {
+export class OneNoteApplicationService {
   static URL = 'https://login.microsoftonline.com/common/oauth2/v2.0/';
   static URL_RESOURCES = 'https://graph.microsoft.com/v1.0/me/onenote/';
   static CLIENT_ID = '78b9d80b-aab3-4615-8a23-5864573f967a';
   static REDIRECT_URI = 'http://localhost:4200/home/';
-  static SCOPE = [ 'https://graph.microsoft.com/Notes.ReadWrite.All'];
-
   private code: String;
 
-  constructor(private http: HttpClient) {
-    this.code = null;
-    this.parseCode();
-  }
-
-  ngOnInit() {}
-
-  parseCode() {
-    // TODO: stupid way to do it!
-    if (location.href === 'http://localhost:4200/home') {
-      return;
+  /**
+   * Checks if it is possible to parse code from URL. In case of redirect from Microsoft login page
+   */
+  constructor(private http: HttpClient,
+              private router: Router) {
+    this.code = '';
+    if (!this.isLoggedIn() && !this.tokenExists()) {
+      this.parseCode();
     }
-    const cutUrl = (location.href.split('#'))[1];
-    const code_string = (cutUrl.split('&'))[0];
-    this.code = (code_string.split('='))[1];
   }
 
-  saveToken(data) {
-    // TODO: save token to DB and pull from it
-    const expiresAt =  new Date().getTime() + (1000 * data['expires_in']);
-    localStorage.setItem('onenote_access_token', data['access_token']);
-    localStorage.setItem('onenote_refresh_token', data['refresh_token']);
-    localStorage.setItem('onenote_expires_at', expiresAt.toString());
-  }
-
+  /**
+   * Redirects user to Microsoft login URL with necessary parameters
+   */
   getCode() {
     window.location.href = OneNoteApplicationService.URL + 'authorize?'
       + 'client_id=' + OneNoteApplicationService.CLIENT_ID
@@ -48,39 +35,91 @@ export class OneNoteApplicationService implements OnInit {
       + '&response_mode=fragment';
   }
 
+  /**
+   * Returns true if code exists and app can request access token
+   */
+  codeExists(): Boolean {
+    return this.code !== '';
+  }
+
+  /**
+   * Parses code from the URL after redirection from Microsoft login page
+   */
+  parseCode() {
+    const cutUrl = (location.href.split('#'));
+    if (cutUrl.length >= 2) {
+      const code_string = (cutUrl[1].split('&'))[0];
+      const temp_code = (code_string.split('='));
+      if (temp_code.length >= 2) {
+        this.code = temp_code[1];
+        this.router.navigate(['/home']);
+      }
+    }
+  }
+
+  /**
+   * Sends request for access token to server
+   */
   getAccessToken(): Observable<any> {
     return this.http.post(BACKEND + 'onenote/token', {
       'code': this.code
     });
   }
 
+  /**
+   * Sends request for access token with refresh token to server
+   */
   refreshToken(): Observable<any> {
     return this.http.post(BACKEND + 'onenote/refresh_token', {
       'refresh_token': localStorage.getItem('onenote_refresh_token'),
     });
   }
 
+  /**
+   * Saves obtained access token
+   */
+  saveToken(data) {
+    // TODO: refresh token to DB
+    const expiresAt =  new Date().getTime() + (1000 * data['expires_in']);
+    localStorage.setItem('onenote_access_token', data['access_token']);
+    localStorage.setItem('onenote_refresh_token', data['refresh_token']);
+    localStorage.setItem('onenote_expires_at', expiresAt.toString());
+  }
+
+  /**
+   * Sends request for notebooks to Microsoft Graph API
+   */
   getNotebooks(): Observable<any> {
     return this.http.get(OneNoteApplicationService.URL_RESOURCES + 'notebooks',
       {headers: this.getHeaders() });
   }
 
-  getSections(id: number): Observable<any> {
-    // notebooks/{id}/sections
-    return this.http.get(OneNoteApplicationService.URL_RESOURCES + 'notebooks/' + id.toString() + '/sections',
+  /**
+   * Sends request for sections of given notebook to Microsoft Graph API
+   */
+  getSections(notebookId: number): Observable<any> {
+    return this.http.get(OneNoteApplicationService.URL_RESOURCES + 'notebooks/' + notebookId.toString() + '/sections',
       {headers: this.getHeaders()});
   }
 
+  /**
+   * Send request for all pages owned by the user to Microsoft Graph API
+   */
   getAllPages(): Observable<any> {
     return this.http.get(OneNoteApplicationService.URL_RESOURCES + 'pages',
       {headers: this.getHeaders()});
   }
 
+  /**
+   * Send request for specific page to Microsoft Graph API
+   */
   getPage(url: string): Observable<any> {
-    // 'Accept':'text/html' headers
     return this.http.get(url, {headers: this.getHeaders()});
   }
 
+  /**
+   * Creates new notebook via Microsoft Graph API
+   */
   createNotebook(notebook: Notebook): Observable<any> {
     return this.http.post(OneNoteApplicationService.URL_RESOURCES + 'notebooks', {
         'displayName': notebook.displayName
@@ -88,6 +127,9 @@ export class OneNoteApplicationService implements OnInit {
     );
   }
 
+  /**
+   * Creates new section via Microsoft Graph API
+   */
   createSection(notebookId: number, section): Observable<any> {
     return this.http.post(OneNoteApplicationService.URL_RESOURCES + 'notebooks/' + notebookId.toString() + '/sections',
       {
@@ -95,6 +137,9 @@ export class OneNoteApplicationService implements OnInit {
       }, {headers: this.getHeaders()});
   }
 
+  /**
+   * Creates new page via Microsoft Graph API
+   */
   createPage(sectionId: string, text): Observable<any> {
     const headers = {
       'Content-type': 'text/html',
@@ -104,6 +149,10 @@ export class OneNoteApplicationService implements OnInit {
       text, {headers: headers});
   }
 
+  /**
+   * Creates new page and deletes the old one with the given id via Microsoft Graph API
+   * Solved this way for the overcomplications with patch provided by Microsoft
+   */
   editPage(id: string, sectionId: string, text){
     this.deletePage(id).subscribe(
       data => {
@@ -115,18 +164,27 @@ export class OneNoteApplicationService implements OnInit {
     );
   }
 
+  /**
+   * Deletes page via Microsoft Graph API
+   */
   deletePage(id: string): Observable<any> {
     return this.http.delete(OneNoteApplicationService.URL_RESOURCES + 'pages/' + id,
       {headers: this.getHeaders()});
   }
 
-    getHeaders(): HttpHeaders {
+  /**
+   * Returns headers with access token
+   */
+  getHeaders(): HttpHeaders {
     return new HttpHeaders({
       'Content-type': 'application/json; ' + 'charset=utf-8',
       'Authorization': 'Bearer ' + localStorage.getItem('onenote_access_token'),
     });
   }
 
+  /**
+   * Returns true if user is logged in and have valid access token
+   */
   isLoggedIn(): Boolean {
     if (!localStorage.getItem('onenote_access_token')) {
       return false;
@@ -134,6 +192,9 @@ export class OneNoteApplicationService implements OnInit {
     return +localStorage.getItem('onenote_expires_at') > new Date().getTime();
   }
 
+  /**
+   * Refreshes token
+   */
   login(callback) {
     this.refreshToken().subscribe(
       callback,
@@ -141,10 +202,16 @@ export class OneNoteApplicationService implements OnInit {
     );
   }
 
+  /**
+   * Returns true if any token exists
+   */
   tokenExists(): Boolean {
      return !!localStorage.getItem('onenote_refresh_token');
   }
 
+  /**
+   * Parses HTML of an page for editation
+   */
   parsePage(page: Page) {
     const editor = {id: page.id, title: '', text: ''};
     const el = document.createElement( 'html' );
@@ -159,4 +226,34 @@ export class OneNoteApplicationService implements OnInit {
     }
     return editor;
   }
+}
+
+/**
+ * Type for Microsoft OneNote Page
+ */
+export interface Page {
+  id?;
+  title?;
+  contentUrl?;
+  content?: any;
+  parentSection?: {
+    id?;
+  };
+}
+
+/**
+ * Type for Microsoft OneNote Section
+ */
+export interface Section {
+  id?;
+  displayName;
+}
+
+/**
+ * Type for Microsoft OneNote Notebook
+ */
+export interface Notebook {
+  id?;
+  displayName;
+  sections?: Section[];
 }

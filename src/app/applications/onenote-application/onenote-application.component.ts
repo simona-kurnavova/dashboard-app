@@ -1,28 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
 import {ApplicationBaseComponent} from '../application-base.component';
-import {OneNoteApplicationService} from './onenote-application.service';
-import {AlertInterface} from '../../authentication-alerts';
-
-export interface Page {
-  id?;
-  title?;
-  contentUrl?;
-  content?: any;
-  parentSection?: {
-    id?;
-  };
-}
-export interface Section {
-  id?;
-  displayName;
-}
-
-export interface Notebook {
-  id?;
-  displayName;
-  sections?: Section[];
-}
+import {OneNoteApplicationService, Section, Notebook, Page} from './onenote-application.service';
+import {AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
+import {
+  SUCCESS_CREATING_NOTEBOOK_ALERT,
+  SUCCESS_CREATING_PAGE_ALERT, SUCCESS_CREATING_SECTION_ALERT, SUCCESS_DELETING_PAGE_ALERT,
+  SUCCESS_EDITING_PAGE_ALERT
+} from './alerts';
 
 @Component({
   selector: 'onenote-application',
@@ -32,9 +17,9 @@ export interface Notebook {
 
 export class OneNoteApplicationComponent extends ApplicationBaseComponent implements OnInit {
   public notebookList: Notebook[] = [];
-  public activeNotebook: Notebook;
-  public activeSection: Section;
-  public activePage: Page;
+  public activeNotebook: Notebook = null;
+  public activeSection: Section = null;
+  public activePage: Page = null;
   public pageList: Page[] = [];
   public editor = {id: null, text: '', title: ''};
   public newNotebook: Notebook = {displayName: ''};
@@ -46,73 +31,86 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
     super();
   }
 
+  /**
+   * Calls getInitState()
+   */
   ngOnInit() {
-    this.activeNotebook = null;
-    this.activeSection = null;
-    this.activePage = null;
+    this.getInitState();
+  }
+
+  /**
+   * Initialises state of the app
+   */
+  getInitState() {
     if (this.appService.isLoggedIn()) {
-      this.setView('notebooks');
       this.getResources();
     } else {
       if (this.appService.tokenExists()) {
         const callback = (data) => {
           this.appService.saveToken(data);
-          this.setView('notebooks');
           this.getResources();
         };
         this.appService.login(callback);
       } else {
-        this.setView('no account');
+        if (this.appService.codeExists()) {
+          this.getAccessToken();
+        } else {
+          this.setView('no account');
+        }
       }
     }
   }
 
+  /**
+   * Redirects user to Microsoft login page for allowing app to use resources and obtain code
+   */
   getCode() {
     this.appService.getCode();
   }
 
+  /**
+   * Retrieve access token
+   */
   getAccessToken() {
-    // TODO: alerts
     this.appService.getAccessToken().subscribe(
       data => {
-        console.log(data);
         this.appService.saveToken(data);
         this.getResources();
       },
-      err => console.log(err)
+      () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
+  /**
+   * Retrieves notebooks, sections and pages. Sets view as 'notebook'
+   */
   getResources() {
     this.getNotebooks();
     this.getPages();
+    this.setView('notebooks');
   }
 
   getNotebooks() {
-    // TODO: alerts
     this.appService.getNotebooks().subscribe(
       data => {
         this.notebookList = <Notebook[]>data['value'];
         for (let i = 0; i < this.notebookList.length; i++) {
           this.appService.getSections(this.notebookList[i].id).subscribe(
-            data => {
-                this.notebookList[i].sections = <Section[]>data['value'];
-                console.log(data['value']);
-            },
-            err => console.log(err)
+            data => this.notebookList[i].sections = <Section[]>data['value'],
+            () => {
+              this.alerts.push(SERVER_ERROR_ALERT);
+              return;
+            }
           );
         }
-        console.log(this.notebookList.length);
-      },
-      err => console.log(err)
+      }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
   getPages() {
-    // TODO: alerts
+    // TODO: fix
     this.appService.getAllPages().subscribe(
       data => {
-        console.log(data);
         this.pageList = <Page[]>data['value'];
         for (let i = 0; i < this.pageList.length; i++) {
           this.appService.getPage(this.pageList[i].contentUrl).subscribe(
@@ -124,10 +122,10 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
             }
           );
         }
-      },
-      err => console.log(err)
+      }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
+
   openNotebook(notebook: Notebook) {
     this.view = 'sections';
     this.activeSection = null;
@@ -144,6 +142,9 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
     this.activePage = page;
   }
 
+  /**
+   * Sets view as a given string
+   */
   setView(view: String) {
     if (view === 'all pages' || view === 'notebooks') {
       this.activeNotebook = null;
@@ -167,52 +168,60 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
     this.openEditor(this.activeSection);
   }
 
+  /**
+   * Creates or edits existing page
+   */
   createPage() {
-    // TODO: error and success handling
     const html = `<!DOCTYPE html><html><head><title>` + this.editor.title + `</title></head>`
     + `<body>` + this.editor.text + `</body></html>`;
 
     if (this.editor.id) {
       this.appService.editPage(this.editor.id, this.activeSection.id, html);
-      // TODO callback
+      this.alerts.push(SUCCESS_EDITING_PAGE_ALERT);
+      this.getResources();
       return;
     }
     this.appService.createPage(this.activeSection.id, html).subscribe(
-      data => {
-        console.log(data);
-       this.getResources();
-      },
-          err => console.log(err)
+      () => {
+        this.alerts.push(SUCCESS_CREATING_PAGE_ALERT);
+        this.getResources();
+      }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
+  /**
+   * Deletes page
+   */
   deletePage(page: Page) {
     this.appService.deletePage(page.id).subscribe(
-      data => {
-        console.log(data);
+      () => {
+        this.alerts.push(SUCCESS_DELETING_PAGE_ALERT);
         this.getResources();
-      },
-          err => console.log(err)
+      }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
+  /**
+   * Creates new notebook
+   */
   createNotebook() {
     this.appService.createNotebook(this.newNotebook).subscribe(
-      data => {
-        console.log(data);
+      () => {
+        this.alerts.push(SUCCESS_CREATING_NOTEBOOK_ALERT);
         this.getResources();
-      },
-          err => console.log(err)
+      }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
+  /**
+   * Creates new section
+   */
   createSection() {
     this.appService.createSection(this.activeNotebook.id, this.newSection).subscribe(
-      data => {
-        console.log(data);
+      () => {
+        this.alerts.push(SUCCESS_CREATING_SECTION_ALERT);
         this.getResources();
-      },
-      err => console.log(err)
+      }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 }

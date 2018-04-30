@@ -1,4 +1,4 @@
-<div *ngIf="state == 'normal'">
+<div *ngIf="state == 'normal' && view !== 'no account'">
   <div class="menu container" style="padding-bottom: 15px">
     <div class="row">
       <div class="col">
@@ -106,9 +106,9 @@
   </form>
 </div>
 
-<div *ngIf="view === 'no account'" class="container">
+<div *ngIf="view === 'no account'" class="container" align="center">
+  <h5>No account assigned to OneNote application</h5>
   <button (click)="getCode()" type="button" class="btn btn-secondary">Add Microsoft Account</button>
-  <button (click)="getAccessToken()" type="button" class="btn btn-primary">Get token</button>
 </div>
 
 <div *ngIf="state === 'edit'" class="container" align="center">
