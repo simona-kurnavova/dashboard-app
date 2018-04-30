@@ -3,8 +3,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AddWidgetContent} from '../popup.components/add-widget-content.component';
 import {DashboardInterface, DashboardService} from '../../services/dashboard.service';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
-import {WidgetMatrixService} from '../../services/widget-matrix.service';
 import {AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
+import {WidgetMatrixService} from '../../services/widget-matrix.service';
 
 /**
  * Represents dashboard and its logic
@@ -32,11 +32,11 @@ export class DashboardComponent implements OnInit {
   /**
    * List of widgets for active dashboard in normal mode
    */
-  public widgetList: WidgetInterface[][] = [];
+  public widgetList: WidgetInterface[] = [];
   /**
    * List of widgets on active dashboard in edit mode
    */
-  public widgetListEdit: WidgetInterface[][] = [];
+  public widgetListEdit: WidgetInterface[] = [];
   /**
    * Array of alerts passed to Alert component
    */
@@ -72,11 +72,7 @@ export class DashboardComponent implements OnInit {
         this.dashboardList = <DashboardInterface[]>dashboards['results'];
         this.widgetService.retrieveAll().subscribe(
           widgets => {
-            if (widgets['results'].length <= 0) {
-              this.noWidgets = true;
-            } else {
-              this.noWidgets = false;
-            }
+            this.noWidgets = widgets['results'].length <= 0;
             this.widgetList = WidgetMatrixService.parseWidgets(<WidgetInterface[]>widgets['results']);
             this.widgetListEdit  = JSON.parse(JSON.stringify(this.widgetList));
             this.setState('normal');
@@ -120,22 +116,27 @@ export class DashboardComponent implements OnInit {
    * Saves new state of widgets after editing to database and loads new normal state with changes applied
    */
   saveEdit() {
-    for (let row = 0; row < this.widgetListEdit.length; row++) {
-      for (let col = 0; col < this.widgetListEdit[row].length; col++) {
-        this.widgetListEdit[row][col].position_x = col;
-        this.widgetListEdit[row][col].position_y = row;
-        if (!this.widgetListEdit[row][col].deleted) {
-          this.widgetService.edit(this.widgetListEdit[row][col].id, this.widgetListEdit[row][col]).subscribe(
+    for (let i = 0; i < this.widgetListEdit.length; i++) {
+        this.widgetListEdit[i].position_x = i;
+        if (!this.widgetListEdit[i].deleted) {
+          this.widgetService.edit(this.widgetListEdit[i].id, this.widgetListEdit[i]).subscribe(
             () => this.loadWidgets(),
             () => this.alerts.push(SERVER_ERROR_ALERT)
           );
         } else {
-          this.widgetService.delete(this.widgetListEdit[row][col].id).subscribe(
+          this.widgetService.delete(this.widgetListEdit[i].id).subscribe(
             () => this.loadWidgets(),
             () => this.alerts.push(SERVER_ERROR_ALERT)
           );
         }
       }
+    }
+
+  getWidgetSize(widget: WidgetInterface) {
+    if (widget.deleted) {
+      return 0;
+    } else {
+      return widget.size_x;
     }
   }
 }

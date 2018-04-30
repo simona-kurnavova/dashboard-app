@@ -19,7 +19,7 @@ export class AddWidgetContent implements OnInit {
   /**
    * Widget list of current dashboard passed from dashboard
    */
-  @Input() widgetListEdit = [[]];
+  @Input() widgetListEdit: WidgetInterface[] = [];
   /**
    * ID of current dashboard
    */
@@ -66,8 +66,7 @@ export class AddWidgetContent implements OnInit {
         this.widgetService.create(widget).subscribe(
           data => {
             widget = <WidgetInterface>data;
-            const widgetRow: WidgetInterface[] = [widget];
-            this.widgetListEdit.push(widgetRow);
+            this.widgetListEdit.push(widget);
             this.activeModal.dismiss();
           }, () => this.alerts.push(ADD_WIDGET_ERROR_ALERT)
         );
