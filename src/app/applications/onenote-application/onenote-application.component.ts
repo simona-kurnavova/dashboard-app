@@ -8,6 +8,12 @@ import {
   SUCCESS_CREATING_PAGE_ALERT, SUCCESS_CREATING_SECTION_ALERT, SUCCESS_DELETING_PAGE_ALERT,
   SUCCESS_EDITING_PAGE_ALERT
 } from './alerts';
+import {AccountInterface, AccountService} from '../../services/account.service';
+import {WidgetService} from '../../services/widget.service';
+
+/**
+ * OneNote application component
+ */
 
 @Component({
   selector: 'onenote-application',
@@ -26,8 +32,11 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
   public newSection: Section = {displayName: ''};
   public view;
   public alerts: AlertInterface[] = [];
+  private account: AccountInterface;
 
-  constructor(private appService: OneNoteApplicationService) {
+  constructor(private appService: OneNoteApplicationService,
+              private accountService: AccountService,
+              private widgetService: WidgetService) {
     super();
   }
 
@@ -35,6 +44,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
    * Calls getInitState()
    */
   ngOnInit() {
+    this.view = 'notebook';
     this.getInitState();
   }
 
@@ -42,25 +52,36 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
    * Initialises state of the app
    */
   getInitState() {
-    if (this.appService.isLoggedIn()) {
-      this.getResources();
-    } else {
-      if (this.appService.tokenExists()) {
-        const callback = (data) => {
-          this.appService.saveToken(data);
-          this.getResources();
-        };
-        this.appService.login(callback);
-      } else {
-        if (this.appService.codeExists()) {
-          this.getAccessToken();
-        } else {
-          this.setView('no account');
+    if (this.widget.account) {
+      this.accountService.retrieve(this.widget.account).subscribe(
+        data => {
+          this.account = <AccountInterface>data;
+
+          /* if user is already logged in with valid token */
+          if (this.appService.isLoggedIn()) {
+            this.getResources();
+            return;
+          }
+          /* if user has expired token */
+          this.appService.refreshToken(this.account).subscribe(
+            data => {
+              this.saveToken(data);
+              return;
+            }, () => this.getAccessFromUser()
+          );
         }
-      }
+      );
     }
+    this.getAccessFromUser();
   }
 
+  getAccessFromUser() {
+    if (this.appService.codeExists()) {
+      this.getAccessToken();
+    } else {
+      this.setView('no account');
+    }
+  }
   /**
    * Redirects user to Microsoft login page for allowing app to use resources and obtain code
    */
@@ -74,11 +95,23 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
   getAccessToken() {
     this.appService.getAccessToken().subscribe(
       data => {
-        this.appService.saveToken(data);
-        this.getResources();
-      },
-      () => this.alerts.push(SERVER_ERROR_ALERT)
+          this.saveToken(data);
+      }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
+  }
+
+  /**
+   * Saves token to database and local storage
+   */
+  saveToken(data) {
+    this.appService.saveToken(data).subscribe(
+      result => {
+        this.widget.account = <AccountInterface>result.id;
+        this.account = <AccountInterface>result;
+        this.widgetService.edit(this.widget.id, this.widget).subscribe();
+      }
+    );
+    this.getResources();
   }
 
   /**

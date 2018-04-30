@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BACKEND} from '../../settings';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
+import {AccountInterface, AccountService} from '../../services/account.service';
 
 @Injectable()
 export class OneNoteApplicationService {
@@ -16,11 +17,10 @@ export class OneNoteApplicationService {
    * Checks if it is possible to parse code from URL. In case of redirect from Microsoft login page
    */
   constructor(private http: HttpClient,
-              private router: Router) {
+              private router: Router,
+              private accountService: AccountService) {
     this.code = '';
-    if (!this.isLoggedIn() && !this.tokenExists()) {
-      this.parseCode();
-    }
+    this.parseCode();
   }
 
   /**
@@ -69,21 +69,24 @@ export class OneNoteApplicationService {
   /**
    * Sends request for access token with refresh token to server
    */
-  refreshToken(): Observable<any> {
+  refreshToken(account: AccountInterface): Observable<any> {
     return this.http.post(BACKEND + 'onenote/refresh_token', {
-      'refresh_token': localStorage.getItem('onenote_refresh_token'),
+      'refresh_token': account.token,
     });
   }
 
   /**
-   * Saves obtained access token
+   * Saves obtained access token to local storage and database
    */
-  saveToken(data) {
-    // TODO: refresh token to DB
+  saveToken(data): Observable<any> {
     const expiresAt =  new Date().getTime() + (1000 * data['expires_in']);
     localStorage.setItem('onenote_access_token', data['access_token']);
     localStorage.setItem('onenote_refresh_token', data['refresh_token']);
     localStorage.setItem('onenote_expires_at', expiresAt.toString());
+    const account: AccountInterface = {
+      id: null, token: data['refresh_token'], name: 'OneNote', type: 'onenote', info: 'Microsoft account'
+    };
+    return this.accountService.create(account);
   }
 
   /**
@@ -190,23 +193,6 @@ export class OneNoteApplicationService {
       return false;
     }
     return +localStorage.getItem('onenote_expires_at') > new Date().getTime();
-  }
-
-  /**
-   * Refreshes token
-   */
-  login(callback) {
-    this.refreshToken().subscribe(
-      callback,
-      err => console.log(err)
-    );
-  }
-
-  /**
-   * Returns true if any token exists
-   */
-  tokenExists(): Boolean {
-     return !!localStorage.getItem('onenote_refresh_token');
   }
 
   /**
