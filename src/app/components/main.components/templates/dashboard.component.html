@@ -34,7 +34,7 @@
 
   <alert [alerts]="alerts"></alert>
 
-  <div class="container" *ngIf="isState('normal')">
+  <div *ngIf="isState('normal')">
         <div class="row justify-content-{{ widgetJustify }}">
           <div *ngFor="let widget of widgetList; let i = index;" class="col-lg-{{widget.size_x}} widget-column">
               <widget [state]="state" [widget]="widget"></widget>
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-  <div class="container" *ngIf="isState('edit')">
+  <div *ngIf="isState('edit')">
       <div class="row justify-content-{{ widgetJustify }}" dnd-sortable-container [sortableData]="widgetListEdit">
         <div *ngFor="let widget of widgetListEdit; let i = index;" class="col-lg-{{getWidgetSize(widget)}} widget-column">
           <div *ngIf="!widget.deleted" class="card" dnd-sortable [sortableIndex]="i">
