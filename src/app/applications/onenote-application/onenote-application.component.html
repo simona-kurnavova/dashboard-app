@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col">
         <h5><b style="color: #0184bb">ONE NOTE</b>
-          <a class="location-link" *ngIf="activeNotebook" (click)="openNotebook(activeNotebook)">{{ activeNotebook.displayName }}</a>
+          <a class="location-link" *ngIf="activeNotebook" (click)="openNotebook(activeNotebook)">{{
+            activeNotebook.displayName }}</a>
           <a class="location-link" *ngIf="activeSection" (click)="openSection(activeSection)">/{{activeSection.displayName}}</a>
         </h5>
       </div>
@@ -31,7 +32,8 @@
   </div>
 
   <div *ngIf="view == 'sections'" class="container list-containers">
-    <h5>{{ activeNotebook.displayName }} <a (click)="openSectionEditor(activeNotebook)" style="color: grey; font-size: x-small">Create section</a></h5>
+    <h5>{{ activeNotebook.displayName }} <a (click)="openSectionEditor(activeNotebook)"
+                                            style="color: grey; font-size: x-small">Create section</a></h5>
     <hr>
     <div *ngFor="let section of activeNotebook.sections">
       <p><a (click)="openSection(section)">{{ section.displayName }}</a>
@@ -49,10 +51,11 @@
   </div>
 
   <div *ngIf="view == 'pages'" class="container pre-scrollable list-containers">
-    <h5>Pages <a (click)="openEditor(activeSection)" style="color: grey; font-size: x-small">Create another page</a></h5>
+    <h5>Pages <a (click)="openEditor(activeSection)" style="color: grey; font-size: x-small">Create another page</a>
+    </h5>
     <hr>
     <div *ngFor="let page of pageList">
-      <p *ngIf="page.parentSection.id == activeSection.id"><a (click)="openPage(page)">{{ page.title }}</a></p>
+      <p *ngIf="page.parentSection && page.parentSection.id == activeSection.id"><a (click)="openPage(page)">{{ page.title }}</a></p>
     </div>
   </div>
 
@@ -70,8 +73,8 @@
                  [ngModelOptions]="{standalone: true}" mdbActive>
 
         </div>
-            <textarea mdbInputDirective placeholder="Text" [(ngModel)]="editor.text" type="text" id="text"
-                      class="md-textarea form-control" rows="10" [ngModelOptions]="{standalone: true}">
+        <textarea mdbInputDirective placeholder="Text" [(ngModel)]="editor.text" type="text" id="text"
+                  class="md-textarea form-control" rows="10" [ngModelOptions]="{standalone: true}">
 
             </textarea>
       </div>
@@ -84,7 +87,8 @@
   <form id="section-form">
     <div class="md-form">
       <div class="md-form" style="width: 200px">
-        <input type="text" placeholder="title" id="section-name" [(ngModel)]="newSection.displayName" class="form-control"
+        <input type="text" placeholder="title" id="section-name" [(ngModel)]="newSection.displayName"
+               class="form-control"
                [ngModelOptions]="{standalone: true}" mdbActive>
 
       </div>
@@ -97,7 +101,8 @@
   <form id="notebook-form">
     <div class="md-form">
       <div class="md-form" style="width: 200px">
-        <input type="text" placeholder="title" id="notebook-name" [(ngModel)]="newNotebook.displayName" class="form-control"
+        <input type="text" placeholder="title" id="notebook-name" [(ngModel)]="newNotebook.displayName"
+               class="form-control"
                [ngModelOptions]="{standalone: true}" mdbActive>
 
       </div>
@@ -114,7 +119,8 @@
 <div *ngIf="state === 'edit'" class="container" align="center">
   <div class="row justify-content-center"><h4 style="color: purple">OneNote</h4></div>
   <div class="row justify-content-center" style="padding-top: 20px;">
-    <img width="60px" height="60px" src="http://icons.iconarchive.com/icons/carlosjj/microsoft-office-2013/256/OneNote-icon.png">
+    <img width="60px" height="60px"
+         src="http://icons.iconarchive.com/icons/carlosjj/microsoft-office-2013/256/OneNote-icon.png">
   </div>
 </div>
 

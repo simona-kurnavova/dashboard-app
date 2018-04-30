@@ -156,7 +156,7 @@ export class OneNoteApplicationService {
    * Creates new page and deletes the old one with the given id via Microsoft Graph API
    * Solved this way for the overcomplications with patch provided by Microsoft
    */
-  editPage(id: string, sectionId: string, text){
+  editPage(id: string, sectionId: string, text) {
     this.deletePage(id).subscribe(
       data => {
         this.createPage(sectionId, text).subscribe(

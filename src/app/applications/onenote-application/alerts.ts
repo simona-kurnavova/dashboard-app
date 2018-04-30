@@ -29,3 +29,9 @@ export const SUCCESS_CREATING_NOTEBOOK_ALERT = <AlertInterface>{
   type: 'success',
   message: 'Successfully created notebook'
 };
+
+export const ALREADY_DELETED_ERROR = <AlertInterface> {
+  id: 105,
+  type: 'warning',
+  message: 'This page is probably already deleted'
+};

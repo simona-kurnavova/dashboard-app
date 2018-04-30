@@ -4,6 +4,7 @@ import {ApplicationBaseComponent} from '../application-base.component';
 import {OneNoteApplicationService, Section, Notebook, Page} from './onenote-application.service';
 import {AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
 import {
+  ALREADY_DELETED_ERROR,
   SUCCESS_CREATING_NOTEBOOK_ALERT,
   SUCCESS_CREATING_PAGE_ALERT, SUCCESS_CREATING_SECTION_ALERT, SUCCESS_DELETING_PAGE_ALERT,
   SUCCESS_EDITING_PAGE_ALERT
@@ -44,7 +45,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
    * Calls getInitState()
    */
   ngOnInit() {
-    this.view = 'notebook';
+    this.setView('notebook');
     this.getInitState();
   }
 
@@ -109,9 +110,9 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
         this.widget.account = <AccountInterface>result.id;
         this.account = <AccountInterface>result;
         this.widgetService.edit(this.widget.id, this.widget).subscribe();
+        this.getResources();
       }
     );
-    this.getResources();
   }
 
   /**
@@ -141,13 +142,12 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
   }
 
   getPages() {
-    // TODO: fix
     this.appService.getAllPages().subscribe(
       data => {
         this.pageList = <Page[]>data['value'];
         for (let i = 0; i < this.pageList.length; i++) {
           this.appService.getPage(this.pageList[i].contentUrl).subscribe(
-            data => {},
+            () => {},
             err => {
               if (err.status === 200) {
                 this.pageList[i].content = err.error.text;
@@ -179,6 +179,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
    * Sets view as a given string
    */
   setView(view: String) {
+    this.alerts = [];
     if (view === 'all pages' || view === 'notebooks') {
       this.activeNotebook = null;
       this.activeSection = null;
@@ -210,14 +211,15 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
 
     if (this.editor.id) {
       this.appService.editPage(this.editor.id, this.activeSection.id, html);
-      this.alerts.push(SUCCESS_EDITING_PAGE_ALERT);
       this.getResources();
+      this.alerts.push(SUCCESS_EDITING_PAGE_ALERT);
       return;
     }
     this.appService.createPage(this.activeSection.id, html).subscribe(
-      () => {
-        this.alerts.push(SUCCESS_CREATING_PAGE_ALERT);
+      (data) => {
         this.getResources();
+        console.log(data);
+        this.alerts.push(SUCCESS_CREATING_PAGE_ALERT);
       }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
@@ -228,9 +230,22 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
   deletePage(page: Page) {
     this.appService.deletePage(page.id).subscribe(
       () => {
+        for (let i = 0; i < this.pageList.length; i++) {
+          if (this.pageList[i].id === page.id) {
+            this.pageList.splice(i, 1);
+            break;
+          }
+        }
+        this.setView('all pages');
         this.alerts.push(SUCCESS_DELETING_PAGE_ALERT);
-        this.getResources();
-      }, () => this.alerts.push(SERVER_ERROR_ALERT)
+      }, (err) => {
+        console.log(err);
+        if (err.status === 404) {
+          this.alerts.push(ALREADY_DELETED_ERROR);
+        } else {
+          this.alerts.push(SERVER_ERROR_ALERT);
+        }
+      }
     );
   }
 
@@ -239,9 +254,10 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
    */
   createNotebook() {
     this.appService.createNotebook(this.newNotebook).subscribe(
-      () => {
-        this.alerts.push(SUCCESS_CREATING_NOTEBOOK_ALERT);
+      (data) => {
         this.getResources();
+        console.log(data);
+        this.alerts.push(SUCCESS_CREATING_NOTEBOOK_ALERT);
       }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
@@ -251,9 +267,10 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
    */
   createSection() {
     this.appService.createSection(this.activeNotebook.id, this.newSection).subscribe(
-      () => {
-        this.alerts.push(SUCCESS_CREATING_SECTION_ALERT);
+      (data) => {
         this.getResources();
+        console.log(data);
+        this.alerts.push(SUCCESS_CREATING_SECTION_ALERT);
       }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
