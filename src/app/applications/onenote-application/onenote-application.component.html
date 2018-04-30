@@ -106,7 +106,7 @@
   </form>
 </div>
 
-<div *ngIf="view === 'no account'" class="container" align="center">
+<div *ngIf="(view === 'no account') && (state !== 'edit')" class="container" align="center">
   <h5>No account assigned to OneNote application</h5>
   <button (click)="getCode()" type="button" class="btn btn-secondary">Add Microsoft Account</button>
 </div>
