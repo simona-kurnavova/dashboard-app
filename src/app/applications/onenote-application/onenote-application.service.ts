@@ -4,7 +4,7 @@ import {BACKEND} from '../../settings';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 import {AccountInterface} from '../../services/account.service';
-import {ApplicationManagerService} from '../application-manager.service';
+import {ApplicationManagerService} from '../../services/application-manager.service';
 
 @Injectable()
 export class OneNoteApplicationService {

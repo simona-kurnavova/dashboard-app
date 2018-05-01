@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
-import {AlertInterface, EMPTY_PASSWORD_ALERT, EMPTY_USERNAME_ALERT} from '../../authentication-alerts';
+import {AlertInterface, EMPTY_PASSWORD_ALERT, EMPTY_USERNAME_ALERT} from '../../alert-definitions';
 import {HttpErrorHandler} from '../../services/http-error-handler.service';
 
 /**

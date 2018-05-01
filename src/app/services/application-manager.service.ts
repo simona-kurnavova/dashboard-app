@@ -1,8 +1,12 @@
 import {Injectable} from '@angular/core';
-import {WidgetInterface, WidgetService} from '../services/widget.service';
-import {AccountInterface, AccountService} from '../services/account.service';
+import {WidgetInterface, WidgetService} from './widget.service';
+import {AccountInterface, AccountService} from './account.service';
 import {Observable} from 'rxjs/Observable';
 
+/**
+ * Service for application to restrict access to database,
+ * allows only basic necessary operation for applications to have access to
+ */
 @Injectable()
 export class ApplicationManagerService {
   constructor(private accountService: AccountService,

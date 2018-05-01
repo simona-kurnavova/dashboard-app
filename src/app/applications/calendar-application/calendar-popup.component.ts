@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {PopupBaseComponent} from '../popup-base.component';
+import {PopupBaseComponent} from '../../components/main.components/popup-base.component';
 
 @Component({
   selector: 'calendar-popup',

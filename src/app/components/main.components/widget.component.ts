@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {WidgetInterface, WidgetService} from '../../services/widget.service';
+import {WidgetInterface} from '../../services/widget.service';
 
 /**
  * Overlay classes for the edit mode of dashboard

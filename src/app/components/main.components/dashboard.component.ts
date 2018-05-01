@@ -3,7 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AddWidgetContent} from '../popup.components/add-widget-content.component';
 import {DashboardInterface, DashboardService} from '../../services/dashboard.service';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
-import {AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
+import {AlertInterface, SERVER_ERROR_ALERT} from '../../alert-definitions';
 import {WidgetMatrixService} from '../../services/widget-matrix.service';
 
 /**

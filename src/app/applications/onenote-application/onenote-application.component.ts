@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
-import {ApplicationBaseComponent} from '../application-base.component';
+import {ApplicationBaseComponent} from '../../components/main.components/application-base.component';
 import {OneNoteApplicationService, Section, Notebook, Page} from './onenote-application.service';
-import {AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
+import {AlertInterface, SERVER_ERROR_ALERT} from '../../alert-definitions';
 import {
   ALREADY_DELETED_ERROR,
   SUCCESS_CREATING_NOTEBOOK_ALERT,
@@ -10,7 +10,7 @@ import {
   SUCCESS_EDITING_PAGE_ALERT
 } from './alerts';
 import {AccountInterface} from '../../services/account.service';
-import {ApplicationManagerService} from '../application-manager.service';
+import {ApplicationManagerService} from '../../services/application-manager.service';
 
 /**
  * OneNote application component

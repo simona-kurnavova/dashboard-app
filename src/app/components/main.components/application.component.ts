@@ -2,7 +2,7 @@ import {Component, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnI
 import {WidgetInterface} from '../../services/widget.service';
 import {ApplicationInterface, ApplicationService} from '../../services/application.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ApplicationBaseComponent} from '../../applications/application-base.component';
+import {ApplicationBaseComponent} from './application-base.component';
 
 /**
  * Mappings of the components and their names for dynamic loading of applications

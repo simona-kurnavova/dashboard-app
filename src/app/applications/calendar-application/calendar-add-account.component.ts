@@ -2,8 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {CalendarApplicationService} from './calendar-application.service';
-import {ACCOUNT_ADDED_ALERT, AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
-import {WidgetInterface, WidgetService} from '../../services/widget.service';
+import {ACCOUNT_ADDED_ALERT, AlertInterface} from '../../alert-definitions';
+import {WidgetInterface} from '../../services/widget.service';
 
 @Component({
   selector: 'calendar-add-account',

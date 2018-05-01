@@ -1,4 +1,4 @@
-import {AlertInterface} from '../../authentication-alerts';
+import {AlertInterface} from '../../alert-definitions';
 
 export const SUCCESS_CREATING_PAGE_ALERT = <AlertInterface>{
   id: 100,

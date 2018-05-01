@@ -29,7 +29,7 @@ import {WidgetComponent} from './components/main.components/widget.component';
 import {SettingsContent} from './components/popup.components/settings-content.component';
 import {ApplicationComponent} from './components/main.components/application.component';
 import {WidgetsContent} from './components/popup.components/widgets-content.component';
-import {ApplicationBaseComponent} from './applications/application-base.component';
+import {ApplicationBaseComponent} from './components/main.components/application-base.component';
 import {AccountsContent} from './components/popup.components/accounts-content.component';
 import {ProfileContent} from './components/popup.components/profile-content.component';
 import {AddWidgetContent} from './components/popup.components/add-widget-content.component';
@@ -43,9 +43,9 @@ import {TranslateApplicationComponent} from './applications/translate-applicatio
 import {TranslatePopupComponent} from './applications/translate-application/translate-popup.component';
 import {OneNotePopupComponent} from './applications/onenote-application/onenote-popup.component';
 import {ErrorPopupComponent} from './applications/error-application/error-popup.component';
-import {AlertComponent} from './components/alert.component';
-import {PopupBaseComponent} from './applications/popup-base.component';
-import {ApplicationManagerService} from './applications/application-manager.service';
+import {AlertComponent} from './components/alert.component/alert.component';
+import {PopupBaseComponent} from './components/main.components/popup-base.component';
+import {ApplicationManagerService} from './services/application-manager.service';
 
 
 @NgModule({

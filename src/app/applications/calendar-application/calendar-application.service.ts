@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CalendarEvent} from 'angular-calendar';
 import {AccountInterface} from '../../services/account.service';
-import {ApplicationManagerService} from '../application-manager.service';
+import {ApplicationManagerService} from '../../services/application-manager.service';
 
 /* Color definition for Angular Calendar */
 export const colors: any = {

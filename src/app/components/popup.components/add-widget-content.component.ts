@@ -3,7 +3,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ApplicationInterface, ApplicationService} from '../../services/application.service';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
 import {WidgetMatrixService} from '../../services/widget-matrix.service';
-import {ADD_WIDGET_ERROR_ALERT, AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
+import {ADD_WIDGET_ERROR_ALERT, AlertInterface, SERVER_ERROR_ALERT} from '../../alert-definitions';
 
 /**
  * Content component for Bootstrap modal window

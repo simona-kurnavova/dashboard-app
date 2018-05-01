@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {AlertInterface} from '../authentication-alerts';
+import {AlertInterface} from '../../alert-definitions';
 
 /**
  * Component using Bootstrap Alerts
@@ -7,7 +7,7 @@ import {AlertInterface} from '../authentication-alerts';
 
 @Component({
   selector: 'alert',
-  templateUrl: './alert.component.html',
+  templateUrl: './templates/alert.component.html',
 })
 
 export class AlertComponent {
