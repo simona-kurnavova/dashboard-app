@@ -45,6 +45,7 @@ import {OneNotePopupComponent} from './applications/onenote-application/onenote-
 import {ErrorPopupComponent} from './applications/error-application/error-popup.component';
 import {AlertComponent} from './components/alert.component';
 import {PopupBaseComponent} from './applications/popup-base.component';
+import {ApplicationManagerService} from './applications/application-manager.service';
 
 
 @NgModule({
@@ -73,7 +74,7 @@ import {PopupBaseComponent} from './applications/popup-base.component';
   ],
   providers: [
     AuthService, AccountService, ApplicationService, WidgetService, DashboardService, UserService,
-    WidgetMatrixService
+    WidgetMatrixService, ApplicationManagerService
   ],
   bootstrap: [ AppComponent ],
   entryComponents: [
