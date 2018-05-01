@@ -26,8 +26,6 @@ export class TranslateApplicationService {
       + 'key=' + TranslateApplicationService.KEY
       + '&text=' + text
       + '&lang=' + lang;
-    this.http.get(url).subscribe(callback,
-        err => console.log(err)
-    );
+    this.http.get(url).subscribe(callback);
    }
 }

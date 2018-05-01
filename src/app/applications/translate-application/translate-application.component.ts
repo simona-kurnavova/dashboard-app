@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
 import {ApplicationBaseComponent} from '../../components/main.components/application-base.component';
 import {TranslateApplicationService} from './translate-application.service';
@@ -31,6 +31,11 @@ export class TranslateApplicationComponent extends ApplicationBaseComponent {
     preTranslation: '',
     postTranslation: ''
   };
+
+  /**
+   * Provides information if app is situated in modal window
+   */
+  @Input() modal: Boolean = false;
 
   constructor(private translateService: TranslateApplicationService) {
     super();
