@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {AlertInterface, EMPTY_PASSWORD_ALERT, EMPTY_USERNAME_ALERT} from '../../alert-definitions';
 import {HttpErrorHandler} from '../../services/http-error-handler.service';
+import {Router} from '@angular/router';
 
 /**
  * Manages user login, provides forms, error handling and validations
@@ -23,7 +24,12 @@ export class LoginFormComponent {
    */
   public alerts: AlertInterface[] = [];
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+              public router: Router) {
+    if (authService.isLoggedIn()) {
+      this.router.navigate(['/home']);
+    }
+  }
 
   /**
    * Action after user inserts login data, validates them and calls AuthService for authentication handling

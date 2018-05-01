@@ -16,7 +16,7 @@ export class AuthComponent {
    * Checks if user is logged in, if it is, redirects to homepage
    */
   constructor(private authService: AuthService,
-              private router: Router) {
+              public router: Router) {
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/home']);
     }

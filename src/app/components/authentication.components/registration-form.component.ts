@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {AuthService} from '../../services/auth.service';
 import {UserService, UserInterface} from '../../services/user.service';
 import {AlertInterface, EMPTY_PASSWORD_ALERT, EMPTY_USERNAME_ALERT, USER_REGISTERED_ALERT} from '../../alert-definitions';
 import {HttpErrorHandler} from '../../services/http-error-handler.service';
@@ -11,7 +10,7 @@ import {HttpErrorHandler} from '../../services/http-error-handler.service';
   selector: 'registration-form',
   styleUrls: ['./styles/form-style.css'],
   templateUrl: './templates/registration-form.component.html',
-  providers: [AuthService]
+  providers: [UserService]
 })
 
 
