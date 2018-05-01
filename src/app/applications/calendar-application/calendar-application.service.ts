@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CalendarEvent} from 'angular-calendar';
-import {AccountInterface, AccountService} from '../../services/account.service';
-import {WidgetInterface, WidgetService} from '../../services/widget.service';
+import {AccountInterface} from '../../services/account.service';
+import {ApplicationManagerService} from '../application-manager.service';
 
 /* Color definition for Angular Calendar */
 export const colors: any = {
@@ -30,8 +30,7 @@ export class CalendarApplicationService {
   static account_type = 'google';
   static account_name = 'Google';
 
-  constructor(private widgetService: WidgetService,
-              private accountService: AccountService) {}
+  constructor(private appManagerService: ApplicationManagerService) {}
 
   login(immediate: Boolean = true, callback: (response: any) => void) {
     gapi.load('client', () => {
@@ -86,7 +85,7 @@ export class CalendarApplicationService {
       name: CalendarApplicationService.account_name,
       token: token,
     };
-    this.accountService.create(account).subscribe(callback);
+    this.appManagerService.saveAccount(account).subscribe(callback);
   }
 
   parseEvents(googleEvents: GoogleEvent[]) {

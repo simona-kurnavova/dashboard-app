@@ -16,8 +16,7 @@ export class CalendarAddAccountComponent {
   public alerts: Array<AlertInterface> = [];
 
   constructor(public activeModal: NgbActiveModal,
-              public calendarService: CalendarApplicationService,
-              private widgetService: WidgetService) {}
+              public calendarService: CalendarApplicationService) {}
 
   addAccount() {
     const callback = () => {
@@ -25,11 +24,6 @@ export class CalendarAddAccountComponent {
     };
     this.calendarService.addAccount(this.addAccountCallback, callback);
   }
-
-  /*public closeAlert(alert: AlertInterface) {
-    const index: number = this.alerts.indexOf(alert);
-    this.alerts.splice(index, 1);
-  }*/
 }
 
 MAPPINGS['calendar-add-account'] = CalendarAddAccountComponent;

@@ -3,7 +3,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BACKEND} from '../../settings';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
-import {AccountInterface, AccountService} from '../../services/account.service';
+import {AccountInterface} from '../../services/account.service';
+import {ApplicationManagerService} from '../application-manager.service';
 
 @Injectable()
 export class OneNoteApplicationService {
@@ -18,7 +19,7 @@ export class OneNoteApplicationService {
    */
   constructor(private http: HttpClient,
               private router: Router,
-              private accountService: AccountService) {
+              private appManagerService: ApplicationManagerService) {
     this.code = '';
     this.parseCode();
   }
@@ -86,7 +87,7 @@ export class OneNoteApplicationService {
     const account: AccountInterface = {
       id: null, token: data['refresh_token'], name: 'OneNote', type: 'onenote', info: 'Microsoft account'
     };
-    return this.accountService.create(account);
+    return this.appManagerService.saveAccount(account);
   }
 
   /**

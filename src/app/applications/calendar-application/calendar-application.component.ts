@@ -8,7 +8,7 @@ import {CalendarAddAccountComponent} from './calendar-add-account.component';
 import {ApplicationBaseComponent} from '../application-base.component';
 import { AlertInterface, EVENT_ADD_ERROR_ALERT, EVENT_ADDED_ALERT, EVENT_EDIT_ERROR_ALERT,
   EVENT_EDITED_ALERT} from '../../authentication-alerts';
-import {WidgetService} from '../../services/widget.service';
+import {ApplicationManagerService} from '../application-manager.service';
 
 @Component({
   selector: 'calendar-application',
@@ -43,9 +43,9 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
     new Date(), new Date()
   ];
 
-  constructor(private calendarService: CalendarApplicationService,
-              public  popupService: NgbModal,
-              private widgetService: WidgetService) {
+  constructor(private appManagerService: ApplicationManagerService,
+              private calendarService: CalendarApplicationService,
+              public  popupService: NgbModal) {
     super();
   }
 
@@ -91,7 +91,7 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
     popup.componentInstance.addAccountCallback = (data) => {
       _that.noAccount = false;
       _that.widget.account = data['id'];
-      this.widgetService.edit(_that.widget.id, _that.widget).subscribe(
+      this.appManagerService.updateWidget(_that.widget).subscribe(
         data => console.log(data),
         err => console.log(err)
       );
