@@ -36,7 +36,6 @@ import {AddWidgetContent} from './components/popup.components/add-widget-content
 import {MenuComponent} from './components/main.components/menu.component';
 import {ErrorApplicationComponent} from './applications/error-application/error-application.component';
 import {CalendarApplicationComponent} from './applications/calendar-application/calendar-application.component';
-import {TimeApplicationComponent} from './applications/time-application/time-application.component';
 import {CalendarAddAccountComponent} from './applications/calendar-application/calendar-add-account.component';
 import {OneNoteApplicationComponent} from './applications/onenote-application/onenote-application.component';
 import {CalendarPopupComponent} from './applications/calendar-application/calendar-popup.component';
@@ -45,6 +44,7 @@ import {TranslatePopupComponent} from './applications/translate-application/tran
 import {OneNotePopupComponent} from './applications/onenote-application/onenote-popup.component';
 import {ErrorPopupComponent} from './applications/error-application/error-popup.component';
 import {AlertComponent} from './components/alert.component';
+import {PopupBaseComponent} from './applications/popup-base.component';
 
 
 @NgModule({
@@ -54,8 +54,8 @@ import {AlertComponent} from './components/alert.component';
     AccountsContent, AddWidgetContent, ApplicationComponent,
     ApplicationBaseComponent, ErrorApplicationComponent,
     CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent,
-    TimeApplicationComponent, OneNoteApplicationComponent, TranslateApplicationComponent, TranslatePopupComponent,
-    OneNotePopupComponent, ErrorPopupComponent, AlertComponent
+    OneNoteApplicationComponent, TranslateApplicationComponent, TranslatePopupComponent,
+    OneNotePopupComponent, ErrorPopupComponent, AlertComponent, PopupBaseComponent
   ],
 
   imports: [
@@ -80,8 +80,8 @@ import {AlertComponent} from './components/alert.component';
     SettingsContent, AboutContent, AddWidgetContent, ApplicationBaseComponent,
     ErrorApplicationComponent,
     CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent, OneNotePopupComponent,
-    TimeApplicationComponent, OneNoteApplicationComponent, TranslateApplicationComponent, TranslatePopupComponent,
-    ErrorPopupComponent
+    OneNoteApplicationComponent, TranslateApplicationComponent, TranslatePopupComponent,
+    ErrorPopupComponent, PopupBaseComponent
   ],
 })
 export class AppModule {}

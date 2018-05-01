@@ -1,13 +1,16 @@
 import {Component} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {PopupBaseComponent} from '../popup-base.component';
 
 @Component({
   selector: 'translate-popup',
   templateUrl: './translate-popup.component.html',
 })
-export class TranslatePopupComponent {
-  constructor(public activeModal: NgbActiveModal) {}
+export class TranslatePopupComponent extends PopupBaseComponent {
+  constructor(public activeModal: NgbActiveModal) {
+    super();
+  }
 }
 
 MAPPINGS['translate-popup'] = TranslatePopupComponent;
