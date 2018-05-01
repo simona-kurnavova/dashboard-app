@@ -10,6 +10,7 @@ import {Observable} from 'rxjs/Observable';
 export interface DashboardInterface {
   id?: Number;
   owner: Number;
+  justification: String;
 }
 
 /**
@@ -46,7 +47,9 @@ export class DashboardService {
    * Saves the new Dashboard object to database with current user as owner
    */
   create(dashboard: DashboardInterface): Observable<DashboardInterface> {
-    return this.http.post<DashboardInterface>(this.url, {},
+    return this.http.post<DashboardInterface>(this.url, {
+        'justification': dashboard.justification
+      },
       {headers: this.authService.getHeaders()});
   }
 
@@ -54,7 +57,9 @@ export class DashboardService {
    * Partially updates existing Dashboard object
    */
   edit(id: Number, dashboard: DashboardInterface): Observable<DashboardInterface> {
-    return this.http.put<DashboardInterface>(this.url + id + '/', {},
+    return this.http.put<DashboardInterface>(this.url + id + '/', {
+      'justification': dashboard.justification
+      },
       {headers: this.authService.getHeaders()});
   }
 

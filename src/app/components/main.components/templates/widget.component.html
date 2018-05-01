@@ -1,4 +1,4 @@
-  <div class="card card-body {{ setOverlay() }}">
+  <div class="card card-body {{ setOverlay() }}" [ngStyle]="{'height.px': widget.size_y}">
     <div class="mask" *ngIf="isState('edit')">
       <div class="container">
         <div class="row justify-content-end">
@@ -10,12 +10,15 @@
                         class="btn btn-blue-grey btn-sm dropdown-toggle waves-light" mdbRippleRadius>
                   Size
                 </button>
-
+                <!--[class.disabled]="!application.allows_small_sizes"-->
                 <div class="dropdown-menu dropdown-primary">
-                  <a (click)="changeSize(5,4)" class="dropdown-item">Small</a>
-                  <a (click)="changeSize(6,4)" class="dropdown-item">Medium</a>
-                  <a (click)="changeSize(8,4)" class="dropdown-item">Big</a>
-                  <a (click)="changeSize(12,4)" class="dropdown-item">Very big</a>
+                  <a (click)="changeSize(4,300)"
+                     [class.disabled]="!allowsSmallSizes()" class="dropdown-item">Very small</a>
+                  <a (click)="changeSize(5,350)"
+                     [class.disabled]="!allowsSmallSizes()" class="dropdown-item">Small</a>
+                  <a (click)="changeSize(6,450)" class="dropdown-item">Medium</a>
+                  <a (click)="changeSize(8,450)" class="dropdown-item">Big</a>
+                  <a (click)="changeSize(12,450)" class="dropdown-item">Very big</a>
                 </div>
               </div>
 
@@ -35,9 +38,6 @@
   </div>
 
 <style>
-  .card {
-    height: 450px;
-  }
 
   .widget-control {
     padding-top: 20px;
