@@ -4,16 +4,29 @@ import {ApplicationBaseComponent} from '../../components/main.components/applica
 import {TranslateApplicationService} from './translate-application.service';
 import {AVAILABLE_LANGUAGES, Language} from './languages';
 
+/**
+ * Implementation of Translate application
+ */
+
 @Component({
   selector: 'translate-application',
   templateUrl: './translate-application.component.html',
   providers: [TranslateApplicationService]
 })
 export class TranslateApplicationComponent extends ApplicationBaseComponent {
+  /**
+   * Available languages for translation
+   */
   public availableLanguages: Language[] = AVAILABLE_LANGUAGES;
+  /**
+   * Default languages defined for selectbox
+   */
   public language = {
     from: 'en', to: 'en'
   };
+  /**
+   * Text for translation and translated
+   */
   public text = {
     preTranslation: '',
     postTranslation: ''
@@ -23,6 +36,9 @@ export class TranslateApplicationComponent extends ApplicationBaseComponent {
     super();
   }
 
+  /**
+   * Translates text
+   */
   translate() {
     const _that = this;
     const callback = (data) => {
