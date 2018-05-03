@@ -14,6 +14,8 @@ export class AuthService {
 
   /**
    * Retrieves token according to login data provided
+   * Does not work in Edge and IE because of them not support URLSearchParams()
+   * Report of the bug: https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8993198/
    */
   getToken(loginData): Observable<any> {
     const headers = new HttpHeaders({

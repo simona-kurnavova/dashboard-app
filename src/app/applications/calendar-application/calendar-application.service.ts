@@ -3,7 +3,9 @@ import {CalendarEvent} from 'angular-calendar';
 import {AccountInterface} from '../../services/account.service';
 import {ApplicationManagerService} from '../../services/application-manager.service';
 
-/* Color definition for Angular Calendar */
+/**
+ * Color definition for Angular Calendar
+ */
 export const colors: any = {
   blue: {
     primary: '#1e90ff',
@@ -11,27 +13,49 @@ export const colors: any = {
   },
 };
 
-/* gapi type definition for suppressing syntax highlight error in WebStorm */
+/**
+ * Gapi type definition for suppressing syntax highlight error in WebStorm
+ */
 declare var gapi: any;
 
-/* Google calendar event type definition for parsing from Google API */
+/**
+ * Google calendar event type definition for parsing from Google API
+ */
 export interface GoogleEvent {
   id; summary; start; end; htmlLink; status;
 }
 
 @Injectable()
 export class CalendarApplicationService {
+  /**
+   * App client ID registered at Google develop console
+   */
   static clientID = '37169070793-3eec0n9hc1b6s8tca1njrc64v6jpejvs.apps.googleusercontent.com';
+  /**
+   * Scopes for Google events
+   */
   static scope = [
     'https://www.googleapis.com/auth/calendar',
     'https://www.googleapis.com/auth/calendar.readonly',
   ];
+  /**
+   * ID of calendar accessed by app
+   */
   static calendar_id = 'primary';
+  /**
+   * Account type - also app name in database
+   */
   static account_type = 'google';
+  /**
+   * Account name
+   */
   static account_name = 'Google';
 
   constructor(private appManagerService: ApplicationManagerService) {}
 
+  /**
+   * Login into Google account and retrieve events
+   */
   login(immediate: Boolean = true, callback: (response: any) => void) {
     gapi.load('client', () => {
       gapi.auth.authorize({
@@ -46,15 +70,13 @@ export class CalendarApplicationService {
         gapi.client.load('calendar', 'v3', () => {
           this.loadEvents(callback);
         });
-        if (authResult && !authResult.error) {
-          // Successfully authenticated via Google API
-        } else {
-          // TODO: Handle error
-        }
       });
     });
   }
 
+  /**
+   * Adds Google account - asks user to authenticate via Google form and saves token to database
+   */
   addAccount(addAccountCallback, loadGapiCallback) {
     gapi.load('client', () => {
       gapi.auth.authorize({
@@ -66,19 +88,14 @@ export class CalendarApplicationService {
           localStorage.setItem('calendar_token', authResult['access_token']);
           this.saveToken(authResult['access_token'], addAccountCallback); // adds ID of account to DB
         }
-        gapi.client.load('calendar', 'v3',
-          loadGapiCallback, // defines success of connecting and triggers notification
-          err => console.log(err)
-        );
-        if (authResult && !authResult.error) {
-          // Successfully authenticated via Google API
-        } else {
-          // TODO: handle error
-        }
+        gapi.client.load('calendar', 'v3', loadGapiCallback);
       });
     });
   }
 
+  /**
+   * Saves token to database
+   */
   saveToken(token, callback) {
     const account: AccountInterface = {
       type: CalendarApplicationService.account_type,
@@ -88,6 +105,9 @@ export class CalendarApplicationService {
     this.appManagerService.saveAccount(account).subscribe(callback);
   }
 
+  /**
+   * Parse events from Google Calendar event objects to Angular calendar event object
+   */
   parseEvents(googleEvents: GoogleEvent[]) {
     const events: CalendarEvent[] = [];
     for (let i = 0; i < googleEvents.length; i++) {
@@ -103,7 +123,6 @@ export class CalendarApplicationService {
           event.end = new Date(googleEvents[i].end.dateTime);
         } else {
           event.start = new Date(googleEvents[i].start.date);
-          event.end = new Date(googleEvents[i].end.date);
           event.allDay = true;
         }
         events.push(event);
@@ -112,7 +131,9 @@ export class CalendarApplicationService {
     return events;
   }
 
-  /* Loads events from primary calendar via Google Calendar API */
+  /**
+   * Loads events from primary calendar via Google Calendar API
+   */
   loadEvents(callback) {
     const minDate = new Date();
     minDate.setMonth(minDate.getMonth() - 3);
@@ -123,7 +144,9 @@ export class CalendarApplicationService {
     }).then(callback);
   }
 
-  /* Removes event via Google Calendar API */
+  /**
+   * Removes event via Google Calendar API
+   */
   removeEvent(event: CalendarEvent, callback: (response: any) => void) {
     gapi.client.calendar.events.delete({
       'calendarId': CalendarApplicationService.calendar_id,
@@ -131,7 +154,9 @@ export class CalendarApplicationService {
     }).then(callback);
   }
 
-  /* Edits event via Google Calendar API */
+  /**
+   * Edits event via Google Calendar API
+   */
   editEvent(event: CalendarEvent, callback: (response: any) => void) {
     gapi.client.calendar.events.patch({
       'calendarId': CalendarApplicationService.calendar_id,
@@ -142,7 +167,9 @@ export class CalendarApplicationService {
     }).then(callback);
   }
 
-  /* Creates new event in primary Google Calendar */
+  /**
+   * Creates new event in primary Google Calendar
+   */
   createEvent(event: CalendarEvent, callback: (response: any) => void) {
     gapi.client.calendar.events.insert({
       'calendarId': CalendarApplicationService.calendar_id,
