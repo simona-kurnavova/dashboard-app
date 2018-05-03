@@ -4,7 +4,7 @@ import {AccountInterface} from '../../services/account.service';
 import {ApplicationManagerService} from '../../services/application-manager.service';
 
 /**
- * Color definition for Angular Calendar
+ * Color definition for Angular Calendar - necessary for proper function
  */
 export const colors: any = {
   blue: {

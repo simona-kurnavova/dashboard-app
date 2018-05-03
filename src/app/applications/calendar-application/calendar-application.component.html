@@ -4,7 +4,7 @@
     <button (click)="view='month'" class="btn btn-sm">Month</button>
     <button (click)="view='week'" class="btn btn-sm">Week</button>
     <button (click)="view='day'" class="btn btn-sm">Day</button>
-    <button (click)="getEvents()" class="btn btn-blue-grey btn-sm">Sync</button>
+    <button *ngIf="modal" (click)="loadEvents()" class="btn btn-blue-grey btn-sm">Sync</button>
   </div>
 
   <div class="btn-group" style="padding-bottom: 10px;">
@@ -12,7 +12,7 @@
     <p><b>{{ viewDate.toDateString() }} </b></p>
     &nbsp;&nbsp;
 
-    <div mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+    <div mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
       <a><i>previous</i></a>
     </div>
     &nbsp;&nbsp;
@@ -20,13 +20,13 @@
       <a><i>today</i></a>
     </div>
     &nbsp;&nbsp;
-    <div mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+    <div mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
       <a><i>next</i></a>
     </div> &nbsp;&nbsp;
     <a (click)="view='create'" style="color: purple"><b>new event</b></a>
   </div>
 
-  <div class="{{ scrollable() }}">
+  <div [ngClass]="{'pre-scrollable': !modal, 'calendar-scroll': !modal}">
     <div *ngIf="view == 'month'" class="alert alert-info">
       <strong> {{ viewDate.toDateString() }}</strong>
       <ul *ngFor="let event of currentEvents; let i = index">
@@ -59,8 +59,7 @@
           <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
                                    (dayClicked)="dayClicked($event.day);">
           </mwl-calendar-month-view>
-          <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events"
-                                  (dayHeaderClicked)="clickedDate = $event.day.date">
+          <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events">
           </mwl-calendar-week-view>
           <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [hourSegmentHeight]="25"
                                  [hourSegments]="1" [dayStartHour]="8" [dayEndHour]="20">
@@ -161,7 +160,7 @@
   }
 
   .calendar-scroll {
-    max-height: 300px;
+    max-height: 290px;
     overflow-x: hidden;
   }
 </style>

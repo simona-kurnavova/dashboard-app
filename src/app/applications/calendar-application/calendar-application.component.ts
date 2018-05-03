@@ -10,6 +10,9 @@ import { AlertInterface, EVENT_ADD_ERROR_ALERT, EVENT_ADDED_ALERT, EVENT_EDIT_ER
   EVENT_EDITED_ALERT} from '../../alert-definitions';
 import {ApplicationManagerService} from '../../services/application-manager.service';
 
+/**
+ * Google Calendar application main component
+ */
 @Component({
   selector: 'calendar-application',
   templateUrl: './calendar-application.component.html',
@@ -17,28 +20,56 @@ import {ApplicationManagerService} from '../../services/application-manager.serv
 })
 
 export class CalendarApplicationComponent extends ApplicationBaseComponent implements OnInit {
+  /**
+   * Defines if application should be in popup or widget mode
+   */
   @Input() modal: Boolean;
+  /**
+   * Defines if it is in no account state or has account assigned
+   */
   public noAccount: Boolean = false;
+  /**
+   * Defines view of the application
+   */
   public view: String = 'month';
-  public clickedDate: Date;
+  /**
+   * Active date, dafaultly current
+   */
   public viewDate: Date = new Date();
+  /**
+   * Events on the clicked date
+   */
   public currentEvents: CalendarEvent[] = [];
+  /**
+   * Calendar events
+   */
   public events: CalendarEvent[] = [];
-  public activeDayIsOpen: Boolean = true;
+  /**
+   * Array of alerts for AlertComponent
+   */
   public alerts: Array<AlertInterface> = [];
 
+  /**
+   * Object for newly created event
+   */
   public new_event: CalendarEvent = {
     title: null, start: null, end: null
   };
-
+  /**
+   * Object for currently edited event
+   */
   public edit_event: CalendarEvent = {
     title: null, start: null, end: null
   };
-
+  /**
+   * Selected dates for new event
+   */
   public selectedMoments = [
     new Date(), new Date()
   ];
-
+  /**
+   * Selected dated for edited event
+   */
   public selectedEditedMoments = [
     new Date(), new Date()
   ];
@@ -49,6 +80,9 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
     super();
   }
 
+  /**
+   * Loads events and initialises state
+   */
   ngOnInit() {
     this.loadEvents();
     if (!this.widget.account) {
@@ -56,34 +90,43 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
     }
   }
 
+  /**
+   * Returns true if string corresponds current state
+   */
   isState(state: String) {
     return state === this.state && !this.noAccount;
   }
 
+  /**
+   * Sets current state
+   */
   setState(state: String) {
     this.state = state;
   }
 
+  /**
+   * Loads events of the user
+   */
   loadEvents() {
     const _that = this;
     const callback = (response: any): void => {
-      console.log(response);
       const googleEvents = <GoogleEvent[]> response.result.items;
       _that.events = _that.calendarService.parseEvents(googleEvents);
-      console.log(_that.events);
     };
     this.calendarService.login(true, callback);
   }
 
-  getEvents() {
-    this.loadEvents();
-  }
-
+  /**
+   * Action after day is clicked - sets variables viewData and currentEvents
+   */
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     this.viewDate = date;
     this.currentEvents = events;
   }
 
+  /**
+   * Adds account gathered from user
+   */
   addAccount() {
     const _that = this;
     const popup = this.popupService.open(CalendarAddAccountComponent, {size: 'lg'});
@@ -91,19 +134,13 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
     popup.componentInstance.addAccountCallback = (data) => {
       _that.noAccount = false;
       _that.widget.account = data['id'];
-      this.appManagerService.updateWidget(_that.widget).subscribe(
-        data => console.log(data),
-        err => console.log(err)
-      );
+      this.appManagerService.updateWidget(_that.widget).subscribe();
     };
   }
 
-  scrollable() {
-    if (!this.modal) {
-      return 'pre-scrollable calendar-scroll';
-    }
-  }
-
+  /**
+   * Saves nedited event
+   */
   saveEditEvent() {
     const _that = this;
     const callback = (response: any): void => {
@@ -117,10 +154,12 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
 
     this.edit_event.start = this.selectedEditedMoments[0];
     this.edit_event.end = this.selectedEditedMoments[1];
-    console.log(this.edit_event);
     this.calendarService.editEvent(this.edit_event, callback);
   }
 
+  /**
+   * Sets variables for event editing and skips to editing mode
+   */
   editEvent(index) {
     this.edit_event = this.currentEvents[index];
     this.selectedEditedMoments[0] = this.edit_event.start;
@@ -128,21 +167,26 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
     this.view = 'edit';
   }
 
+  /**
+   * Removes event
+   */
   removeEvent(index) {
     const _that = this;
-    const callback = (response: any): void => {
+    const callback = (): void => {
       _that.currentEvents.splice(index, 1);
       _that.loadEvents();
     };
     this.calendarService.removeEvent(this.currentEvents[index], callback);
   }
 
+  /**
+   * Creates new event
+   */
   createEvent() {
     this.alerts = [];
     const _that = this;
 
     const callback = (response: any): void => {
-      console.log(response);
       if (response.status === 200) {
         _that.alerts.push(EVENT_ADDED_ALERT);
       } else {
