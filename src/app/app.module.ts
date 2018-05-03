@@ -29,14 +29,13 @@ import {WidgetComponent} from './components/main.components/widget.component';
 import {SettingsContent} from './components/popup.components/settings-content.component';
 import {ApplicationComponent} from './components/main.components/application.component';
 import {WidgetsContent} from './components/popup.components/widgets-content.component';
-import {ApplicationBaseComponent} from './applications/application-base.component';
+import {ApplicationBaseComponent} from './components/main.components/application-base.component';
 import {AccountsContent} from './components/popup.components/accounts-content.component';
 import {ProfileContent} from './components/popup.components/profile-content.component';
 import {AddWidgetContent} from './components/popup.components/add-widget-content.component';
 import {MenuComponent} from './components/main.components/menu.component';
 import {ErrorApplicationComponent} from './applications/error-application/error-application.component';
 import {CalendarApplicationComponent} from './applications/calendar-application/calendar-application.component';
-import {TimeApplicationComponent} from './applications/time-application/time-application.component';
 import {CalendarAddAccountComponent} from './applications/calendar-application/calendar-add-account.component';
 import {OneNoteApplicationComponent} from './applications/onenote-application/onenote-application.component';
 import {CalendarPopupComponent} from './applications/calendar-application/calendar-popup.component';
@@ -44,7 +43,9 @@ import {TranslateApplicationComponent} from './applications/translate-applicatio
 import {TranslatePopupComponent} from './applications/translate-application/translate-popup.component';
 import {OneNotePopupComponent} from './applications/onenote-application/onenote-popup.component';
 import {ErrorPopupComponent} from './applications/error-application/error-popup.component';
-import {AlertComponent} from './components/alert.component';
+import {AlertComponent} from './components/alert.component/alert.component';
+import {PopupBaseComponent} from './components/main.components/popup-base.component';
+import {ApplicationManagerService} from './services/application-manager.service';
 
 
 @NgModule({
@@ -54,8 +55,8 @@ import {AlertComponent} from './components/alert.component';
     AccountsContent, AddWidgetContent, ApplicationComponent,
     ApplicationBaseComponent, ErrorApplicationComponent,
     CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent,
-    TimeApplicationComponent, OneNoteApplicationComponent, TranslateApplicationComponent, TranslatePopupComponent,
-    OneNotePopupComponent, ErrorPopupComponent, AlertComponent
+    OneNoteApplicationComponent, TranslateApplicationComponent, TranslatePopupComponent,
+    OneNotePopupComponent, ErrorPopupComponent, AlertComponent, PopupBaseComponent
   ],
 
   imports: [
@@ -73,15 +74,15 @@ import {AlertComponent} from './components/alert.component';
   ],
   providers: [
     AuthService, AccountService, ApplicationService, WidgetService, DashboardService, UserService,
-    WidgetMatrixService
+    WidgetMatrixService, ApplicationManagerService
   ],
   bootstrap: [ AppComponent ],
   entryComponents: [
     SettingsContent, AboutContent, AddWidgetContent, ApplicationBaseComponent,
     ErrorApplicationComponent,
     CalendarApplicationComponent, CalendarAddAccountComponent, CalendarPopupComponent, OneNotePopupComponent,
-    TimeApplicationComponent, OneNoteApplicationComponent, TranslateApplicationComponent, TranslatePopupComponent,
-    ErrorPopupComponent
+    OneNoteApplicationComponent, TranslateApplicationComponent, TranslatePopupComponent,
+    ErrorPopupComponent, PopupBaseComponent
   ],
 })
 export class AppModule {}

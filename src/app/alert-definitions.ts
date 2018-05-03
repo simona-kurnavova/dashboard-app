@@ -1,9 +1,15 @@
+/**
+ * Definition of AlertInterface providing object for error messages implemented with ng-bootstrap alert
+ */
 export interface AlertInterface {
   id: number;
   type: string;
   message: string;
 }
 
+/**
+ * Following are definitions of specific errors for ng-bootrap alerts
+ */
 export const EMPTY_USERNAME_ALERT: AlertInterface = {
   id: 1,
   type: 'warning',

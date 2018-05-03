@@ -1,4 +1,4 @@
-<div *ngIf="this.state != 'edit'" class="container pre-scrollable" style="overflow-y: auto">
+<div *ngIf="this.state != 'edit'" class="container">
   <div class="container">
     <form class="translate-form">
       <div class="row">
@@ -28,7 +28,6 @@
                      [(ngModel)]="language.to">
           </ng-select>
         </div>
-
       </div>
 
       <div class="text-center">
@@ -36,18 +35,15 @@
       </div>
     </form>
     <br>
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div *ngIf="text.postTranslation != ''" class="card mdb-color lighten-5 text-center z-depth-2">
-            <div class="card-body">
-              <h5>{{text.postTranslation}}</h5>
-            </div>
-          </div>
-        </div>
+
+    <div *ngIf="text.postTranslation != ''" class="card #fafafa grey lighten-5 text-center z-depth-2">
+      <div *ngIf="!modal" class="card-body on-dashboard">
+        <h5>{{text.postTranslation}}</h5>
+      </div>
+      <div *ngIf="modal" class="card-body">
+        <h5>{{text.postTranslation}}</h5>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -57,3 +53,10 @@
     <i class="fa fa-language fa-4x" style="padding-top: 20px; color: darkslateblue" aria-hidden="true"></i>
   </div>
 </div>
+
+<style>
+  .on-dashboard {
+    max-height: 110px;
+    overflow-y: auto;
+  }
+</style>

@@ -35,7 +35,7 @@
   <alert [alerts]="alerts"></alert>
 
   <div *ngIf="isState('normal')">
-        <div class="row justify-content-{{ widgetJustify }}">
+        <div class="row justify-content-{{ justification }}">
           <div *ngFor="let widget of widgetList; let i = index;" class="col-lg-{{widget.size_x}} widget-column">
               <widget [state]="state" [widget]="widget"></widget>
           </div>
@@ -43,7 +43,7 @@
     </div>
 
   <div *ngIf="isState('edit')">
-      <div class="row justify-content-{{ widgetJustify }}" dnd-sortable-container [sortableData]="widgetListEdit">
+      <div class="row justify-content-{{ justification }}" dnd-sortable-container [sortableData]="widgetListEdit">
         <div *ngFor="let widget of widgetListEdit; let i = index;" class="col-lg-{{getWidgetSize(widget)}} widget-column">
           <div *ngIf="!widget.deleted" class="card" dnd-sortable [sortableIndex]="i">
             <widget [state]="state" [widget]="widget"></widget>
@@ -73,15 +73,15 @@
     </div>
       <fieldset class="form-group">
         <div class="col">
-          <input  style="padding-right: 100px" class="form-check-input" [(ngModel)]="widgetJustify" type="radio" name="gridRadios" id="gridRadios1"
+          <input  style="padding-right: 100px" class="form-check-input" [(ngModel)]="justification" type="radio" name="gridRadios" id="gridRadios1"
                  value="center" checked> Center
         </div>
         <div class="col">
-          <input style="padding-right: 10px;" class="form-check-input" [(ngModel)]="widgetJustify" type="radio" name="gridRadios" id="gridRadios2"
-                 value=""> Left
+          <input style="padding-right: 10px;" class="form-check-input" [(ngModel)]="justification" type="radio" name="gridRadios" id="gridRadios2"
+                 value="left"> Left
         </div>
         <div class="col">
-         <input class="form-check-input" [(ngModel)]="widgetJustify" type="radio" name="gridRadios" id="gridRadios3"
+         <input class="form-check-input" [(ngModel)]="justification" type="radio" name="gridRadios" id="gridRadios3"
                  value="end"> Right
         </div>
       </fieldset>

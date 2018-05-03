@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
 import {ApplicationInterface, ApplicationService} from '../../services/application.service';
-import {AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
+import {AlertInterface, SERVER_ERROR_ALERT} from '../../alert-definitions';
 
 /**
  * Represents Widget settings

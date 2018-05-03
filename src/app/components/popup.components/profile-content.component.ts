@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {UserService, UserInterface} from '../../services/user.service';
-import {AlertInterface, SERVER_ERROR_ALERT, USER_EDITED_ALERT} from '../../authentication-alerts';
+import {AlertInterface, SERVER_ERROR_ALERT, USER_EDITED_ALERT} from '../../alert-definitions';
 
 /**
  * Represents profile settings, allowing user to change their user data

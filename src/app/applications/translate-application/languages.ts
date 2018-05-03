@@ -1,8 +1,15 @@
+/**
+ * Definition of Language object for storing available languages for translation
+ * Hard coded for the reasons of unreasonable API response
+ */
 export interface Language {
   name: string;
   id: String;
 }
 
+/**
+ * Definitions of available languages for translation
+ */
 export const AVAILABLE_LANGUAGES = <Language[]> [
   {name: 'English', id: 'en'},
   {name: 'Azerbaijani', id: 'az'},

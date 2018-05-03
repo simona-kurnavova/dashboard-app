@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
-import {ApplicationBaseComponent} from '../application-base.component';
+import {ApplicationBaseComponent} from '../../components/main.components/application-base.component';
 import {OneNoteApplicationService, Section, Notebook, Page} from './onenote-application.service';
-import {AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
+import {AlertInterface, SERVER_ERROR_ALERT} from '../../alert-definitions';
 import {
   ALREADY_DELETED_ERROR,
   SUCCESS_CREATING_NOTEBOOK_ALERT,
   SUCCESS_CREATING_PAGE_ALERT, SUCCESS_CREATING_SECTION_ALERT, SUCCESS_DELETING_PAGE_ALERT,
   SUCCESS_EDITING_PAGE_ALERT
 } from './alerts';
-import {AccountInterface, AccountService} from '../../services/account.service';
-import {WidgetService} from '../../services/widget.service';
+import {AccountInterface} from '../../services/account.service';
+import {ApplicationManagerService} from '../../services/application-manager.service';
 
 /**
  * OneNote application component
@@ -19,7 +19,7 @@ import {WidgetService} from '../../services/widget.service';
 @Component({
   selector: 'onenote-application',
   templateUrl: './onenote-application.component.html',
-  providers: [OneNoteApplicationService]
+  providers: [OneNoteApplicationService, ApplicationManagerService]
 })
 
 export class OneNoteApplicationComponent extends ApplicationBaseComponent implements OnInit {
@@ -36,8 +36,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
   private account: AccountInterface;
 
   constructor(private appService: OneNoteApplicationService,
-              private accountService: AccountService,
-              private widgetService: WidgetService) {
+              private appManagerService: ApplicationManagerService) {
     super();
   }
 
@@ -54,7 +53,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
    */
   getInitState() {
     if (this.widget.account) {
-      this.accountService.retrieve(this.widget.account).subscribe(
+      this.appManagerService.getAccount(this.widget).subscribe(
         data => {
           this.account = <AccountInterface>data;
 
@@ -109,7 +108,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
       result => {
         this.widget.account = <AccountInterface>result.id;
         this.account = <AccountInterface>result;
-        this.widgetService.edit(this.widget.id, this.widget).subscribe();
+        this.appManagerService.updateWidget(this.widget).subscribe();
         this.getResources();
       }
     );

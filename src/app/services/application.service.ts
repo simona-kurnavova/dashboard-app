@@ -12,6 +12,7 @@ export interface ApplicationInterface {
   name: String;
   description?: String;
   required_account?: String;
+  allows_small_sizes?: Boolean;
 }
 
 /**
@@ -49,16 +50,18 @@ export class ApplicationService {
    */
   create(app: ApplicationInterface): Observable<ApplicationInterface> {
     return this.http.post<ApplicationInterface>(this.url, {
-      'name': app.name, 'description': app.description, 'required_account': app.required_account
+      'name': app.name, 'description': app.description, 'required_account': app.required_account,
+      'allows_small_sizes': app.allows_small_sizes
     }, {headers: this.authService.getHeaders()});
   }
 
   /**
    * Partially updates existing App object
    */
-  edit(id: Number, account: ApplicationInterface): Observable<ApplicationInterface>  {
+  edit(id: Number, app: ApplicationInterface): Observable<ApplicationInterface>  {
     return this.http.put<ApplicationInterface>(this.url + id + '/', {
-      'name': account.name, 'description': account.description, 'required_account': account.required_account,
+      'name': app.name, 'description': app.description, 'required_account': app.required_account,
+      'allows_small_sizes': app.allows_small_sizes
     }, {headers: this.authService.getHeaders()});
   }
 

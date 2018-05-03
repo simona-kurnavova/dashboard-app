@@ -1,8 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
-import {ApplicationBaseComponent} from '../application-base.component';
+import {ApplicationBaseComponent} from '../../components/main.components/application-base.component';
 import {TranslateApplicationService} from './translate-application.service';
 import {AVAILABLE_LANGUAGES, Language} from './languages';
+
+/**
+ * Implementation of Translate application
+ */
 
 @Component({
   selector: 'translate-application',
@@ -10,19 +14,36 @@ import {AVAILABLE_LANGUAGES, Language} from './languages';
   providers: [TranslateApplicationService]
 })
 export class TranslateApplicationComponent extends ApplicationBaseComponent {
+  /**
+   * Available languages for translation
+   */
   public availableLanguages: Language[] = AVAILABLE_LANGUAGES;
+  /**
+   * Default languages defined for selectbox
+   */
   public language = {
     from: 'en', to: 'en'
   };
+  /**
+   * Text for translation and translated
+   */
   public text = {
     preTranslation: '',
     postTranslation: ''
   };
 
+  /**
+   * Provides information if app is situated in modal window
+   */
+  @Input() modal: Boolean = false;
+
   constructor(private translateService: TranslateApplicationService) {
     super();
   }
 
+  /**
+   * Translates text
+   */
   translate() {
     const _that = this;
     const callback = (data) => {

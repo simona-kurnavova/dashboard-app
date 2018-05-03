@@ -3,7 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AddWidgetContent} from '../popup.components/add-widget-content.component';
 import {DashboardInterface, DashboardService} from '../../services/dashboard.service';
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
-import {AlertInterface, SERVER_ERROR_ALERT} from '../../authentication-alerts';
+import {AlertInterface, SERVER_ERROR_ALERT} from '../../alert-definitions';
 import {WidgetMatrixService} from '../../services/widget-matrix.service';
 
 /**
@@ -21,10 +21,6 @@ export class DashboardComponent implements OnInit {
    * State of the dashboard, normal or edit
    */
   public state: String = 'normal';
-  /**
-   * Justification of the dashboard widgets: left, right, center (by default)
-   */
-  public widgetJustify: String = 'center';
   /**
    * List of dashboards owned by user
    */
@@ -50,6 +46,11 @@ export class DashboardComponent implements OnInit {
    */
   public noWidgets: Boolean;
 
+  /**
+   * Defines justification of the widgets
+   */
+  public justification: String = 'left';
+
   constructor(private popupService: NgbModal,
               private dashboardService: DashboardService,
               private widgetService: WidgetService) {}
@@ -70,6 +71,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.retrieveAll().subscribe(
       dashboards => {
         this.dashboardList = <DashboardInterface[]>dashboards['results'];
+        this.justification = this.dashboardList[this.activeDashboard].justification;
         this.widgetService.retrieveAll().subscribe(
           widgets => {
             this.noWidgets = widgets['results'].length <= 0;
@@ -116,21 +118,34 @@ export class DashboardComponent implements OnInit {
    * Saves new state of widgets after editing to database and loads new normal state with changes applied
    */
   saveEdit() {
+    if (this.justification !== this.dashboardList[this.activeDashboard].justification) {
+      this.dashboardList[this.activeDashboard].justification = this.justification;
+      this.dashboardService.edit(this.dashboardList[this.activeDashboard].id,
+        this.dashboardList[this.activeDashboard]).subscribe(
+        () => this.saveWidgets()
+      );
+    } else {
+      this.saveWidgets();
+    }
+  }
+
+  saveWidgets() {
     for (let i = 0; i < this.widgetListEdit.length; i++) {
-        this.widgetListEdit[i].position_x = i;
-        if (!this.widgetListEdit[i].deleted) {
-          this.widgetService.edit(this.widgetListEdit[i].id, this.widgetListEdit[i]).subscribe(
-            () => this.loadWidgets(),
-            () => this.alerts.push(SERVER_ERROR_ALERT)
-          );
-        } else {
-          this.widgetService.delete(this.widgetListEdit[i].id).subscribe(
-            () => this.loadWidgets(),
-            () => this.alerts.push(SERVER_ERROR_ALERT)
-          );
-        }
+      this.widgetListEdit[i].position_x = i;
+      if (!this.widgetListEdit[i].deleted) {
+        this.widgetService.edit(this.widgetListEdit[i].id, this.widgetListEdit[i]).subscribe(
+          () => this.loadWidgets(),
+          () => this.alerts.push(SERVER_ERROR_ALERT)
+        );
+      } else {
+        this.widgetService.delete(this.widgetListEdit[i].id).subscribe(
+          () => this.loadWidgets(),
+          () => this.alerts.push(SERVER_ERROR_ALERT)
+        );
       }
     }
+  }
+
 
   getWidgetSize(widget: WidgetInterface) {
     if (widget.deleted) {

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {AccountInterface, AccountService} from '../../services/account.service';
-import {ACCOUNT_DELETED_ALERT, AlertInterface, ERROR_DELETING_ACCOUNT_ALERT, SERVER_ERROR_ALERT} from '../../authentication-alerts';
+import {ACCOUNT_DELETED_ALERT, AlertInterface, ERROR_DELETING_ACCOUNT_ALERT, SERVER_ERROR_ALERT} from '../../alert-definitions';
 
 /**
  * Contents of settings section

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
-import {ApplicationBaseComponent} from '../application-base.component';
+import {ApplicationBaseComponent} from '../../components/main.components/application-base.component';
 
 @Component({
   selector: 'error-application',
