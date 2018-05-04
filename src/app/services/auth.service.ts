@@ -14,20 +14,17 @@ export class AuthService {
 
   /**
    * Retrieves token according to login data provided
-   * Does not work in Edge and IE because of them not support URLSearchParams()
-   * Report of the bug: https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8993198/
    */
   getToken(loginData): Observable<any> {
     const headers = new HttpHeaders({
       'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
       'Authorization': 'Basic ' + btoa(CLIENT_ID + ':' + CLIENT_SECRET)
     });
-    const params = new URLSearchParams();
-    params.append('username', loginData.username);
-    params.append('password', loginData.password);
-    params.append('grant_type', 'password');
+    const body = 'grant_type=password'
+      + '&username=' + loginData.username
+      + '&password=' + loginData.password;
 
-    return this.http.post(BACKEND + 'o/token/', params.toString(), {headers: headers});
+    return this.http.post(BACKEND + 'o/token/', body, {headers: headers});
   }
 
   /**
@@ -38,11 +35,10 @@ export class AuthService {
       'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
       'Authorization': 'Basic ' + btoa(CLIENT_ID + ':' + CLIENT_SECRET)
     });
-    const params = new URLSearchParams();
-    params.append('refresh_token', localStorage.getItem('refresh_token'));
-    params.append('grant_type', 'refresh_token');
+    const body = 'grant_type=refresh_token'
+    + '&refresh_token=' + localStorage.getItem('refresh_token');
 
-    return this.http.post(BACKEND + 'o/token/', params.toString(), {headers: headers});
+    return this.http.post(BACKEND + 'o/token/', body, {headers: headers});
   }
 
   /**
