@@ -55,6 +55,21 @@ export class TranslateApplicationComponent extends ApplicationBaseComponent {
     this.translateService.translate(
       this.text.preTranslation, this.language.from + '-' + this.language.to, callback);
   }
+
+  showForm() {
+    if (this.modal || this.widget.size_y >= 450) {
+      return true;
+    }
+    return this.text.postTranslation === '';
+  }
+
+  showReturnButton() {
+    return this.widget.size_y < 450 && this.text.postTranslation !== '';
+  }
+
+  returnFromTranslation() {
+    this.text.postTranslation = '';
+  }
 }
 
 MAPPINGS['translate-application'] = TranslateApplicationComponent;
