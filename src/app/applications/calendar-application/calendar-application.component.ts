@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MAPPINGS} from '../../components/main.components/application.component';
-import {CalendarEvent} from 'angular-calendar';
+import {CalendarDateFormatter, CalendarEvent} from 'angular-calendar';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';
 import {CalendarApplicationService, GoogleEvent} from './calendar-application.service';
@@ -9,6 +9,7 @@ import {ApplicationBaseComponent} from '../../components/main.components/applica
 import { AlertInterface, EVENT_ADD_ERROR_ALERT, EVENT_ADDED_ALERT, EVENT_EDIT_ERROR_ALERT,
   EVENT_EDITED_ALERT} from '../../alert-definitions';
 import {ApplicationManagerService} from '../../services/application-manager.service';
+import {CustomDateFormatter} from './custom-date-formatter.provider';
 
 /**
  * Google Calendar application main component
@@ -16,7 +17,11 @@ import {ApplicationManagerService} from '../../services/application-manager.serv
 @Component({
   selector: 'calendar-application',
   templateUrl: './calendar-application.component.html',
-  providers: [CalendarApplicationService]
+  providers: [CalendarApplicationService,
+    {
+      provide: CalendarDateFormatter,
+      useClass: CustomDateFormatter
+    }]
 })
 
 export class CalendarApplicationComponent extends ApplicationBaseComponent implements OnInit {
