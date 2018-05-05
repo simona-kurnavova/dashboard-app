@@ -17,11 +17,11 @@
     </div>
   </div>
 
-  <div *ngIf="state != 'edit'">
-    <alert [alerts]="alerts"></alert>
-  </div>
-
   <div *ngIf="view == 'notebooks'" class="container list-containers">
+    <div *ngIf="state != 'edit'">
+      <alert [alerts]="alerts"></alert>
+    </div>
+
     <h5>Notebooks
       <a (click)="setView('editor-notebook')" style="color: grey; font-size: x-small">Create notebook</a></h5>
     <hr>
@@ -43,6 +43,9 @@
   </div>
 
   <div *ngIf="view == 'all pages'" class="container pre-scrollable list-containers">
+    <div *ngIf="state != 'edit'">
+      <alert [alerts]="alerts"></alert>
+    </div>
     <h5>Pages</h5>
     <hr>
     <div *ngFor="let page of pageList">
