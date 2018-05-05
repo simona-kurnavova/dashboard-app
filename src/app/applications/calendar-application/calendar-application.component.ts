@@ -139,7 +139,10 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
     popup.componentInstance.addAccountCallback = (data) => {
       _that.noAccount = false;
       _that.widget.account = data['id'];
-      this.appManagerService.updateWidget(_that.widget).subscribe();
+      console.log(data['id']);
+      this.appManagerService.updateWidget(_that.widget).subscribe(
+        (data) => console.log(data)
+      );
     };
   }
 
