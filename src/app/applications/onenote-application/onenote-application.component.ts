@@ -11,6 +11,7 @@ import {
 } from './alerts';
 import {AccountInterface} from '../../services/account.service';
 import {ApplicationManagerService} from '../../services/application-manager.service';
+import {retry} from 'rxjs/operator/retry';
 
 /**
  * OneNote application component
@@ -88,6 +89,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
     if (this.widget.account) {
       this.appManagerService.getAccount(this.widget).subscribe(
         data => {
+          console.log(data);
           this.account = <AccountInterface>data;
 
           /* if user is already logged in with valid token */

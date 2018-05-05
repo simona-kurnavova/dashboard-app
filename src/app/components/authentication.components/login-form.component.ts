@@ -3,6 +3,7 @@ import {AuthService} from '../../services/auth.service';
 import {AlertInterface, EMPTY_PASSWORD_ALERT, EMPTY_USERNAME_ALERT} from '../../alert-definitions';
 import {HttpErrorHandler} from '../../services/http-error-handler.service';
 import {Router} from '@angular/router';
+import {DashboardInterface, DashboardService} from '../../services/dashboard.service';
 
 /**
  * Manages user login, provides forms, error handling and validations
