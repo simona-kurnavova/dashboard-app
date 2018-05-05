@@ -1,3 +1,5 @@
 <div *ngFor="let alert of alerts" class="notification">
-  <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+  <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">
+    <span [innerHTML]="alert.message"></span>
+  </ngb-alert>
 </div>

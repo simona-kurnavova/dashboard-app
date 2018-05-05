@@ -6,6 +6,10 @@ import {Router} from '@angular/router';
 import {AccountInterface} from '../../services/account.service';
 import {ApplicationManagerService} from '../../services/application-manager.service';
 
+/**
+ * Service for handling of Microsoft OneNote app
+ */
+
 @Injectable()
 export class OneNoteApplicationService {
   static URL = 'https://login.microsoftonline.com/common/oauth2/v2.0/';

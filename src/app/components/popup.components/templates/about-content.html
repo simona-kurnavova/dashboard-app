@@ -1,15 +1,16 @@
 <div class="modal-header">
-  <h4 class="modal-title">About</h4>
+  <h4 class="modal-title" i18n>About</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 
 <div class="modal-body">
-  <p>Dashboard is a web application, which allows you to manage and use applications of your choice. </p>
-  <p>You can simply add them to your dashboard and arrange to your liking.</p>
+  <p i18n>Dashboard is a web application, which allows you to manage and use applications of your choice.</p>
+  <p i18n>You can simply add them to your dashboard and arrange to your liking.</p>
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">
+    <ng-container i18n>Close</ng-container></button>
 </div>

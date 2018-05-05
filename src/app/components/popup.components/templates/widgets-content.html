@@ -1,5 +1,5 @@
 <div *ngIf="isState('list')" class="container" align="center">
-  <h3>Your active widgets:</h3>
+  <h3 i18n>Your active widgets:</h3>
   <alert [alerts]="alerts"></alert>
   <div *ngFor="let widget of widgetList; let i = index;">
     <a (click)="setCurrentWidget(i)"><b>{{ findApp(widget.app).name }}</b></a>
@@ -14,17 +14,18 @@
     <i>{{ findApp(widgetList[currentWidget].app).description }}</i>
   </p>
   <p align="center">
-    <b>Has account:</b> {{ hasAccount(widgetList[currentWidget]) }}
+    <b><ng-container i18n>Has account:</ng-container></b> {{ hasAccount(widgetList[currentWidget]) }}
   </p>
 
   <ng-template #nodescription>
     <p align="center">
-      <i>No description provided</i>
+      <i><ng-container i18n>No description provided</ng-container></i>
     </p>
   </ng-template>
 
   <hr>
-  <a (click)="setState('list')"><i class="fa fa-arrow-left return-icon" aria-hidden="true"></i> return</a>
+  <a (click)="setState('list')"><i class="fa fa-arrow-left return-icon" aria-hidden="true"></i>
+    <ng-container i18n>return</ng-container></a>
 
 </div>
 

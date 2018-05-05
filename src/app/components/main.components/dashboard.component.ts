@@ -5,6 +5,7 @@ import {DashboardInterface, DashboardService} from '../../services/dashboard.ser
 import {WidgetInterface, WidgetService} from '../../services/widget.service';
 import {AlertInterface, SERVER_ERROR_ALERT} from '../../alert-definitions';
 import {WidgetMatrixService} from '../../services/widget-matrix.service';
+import {AccountService} from '../../services/account.service';
 
 /**
  * Represents dashboard and its logic
@@ -53,7 +54,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(private popupService: NgbModal,
               private dashboardService: DashboardService,
-              private widgetService: WidgetService) {}
+              private widgetService: WidgetService,
+              private accountService: AccountService) {}
 
   /**
    * Sets default values of attributes, calls loadResources()
@@ -138,9 +140,16 @@ export class DashboardComponent implements OnInit {
           () => this.alerts.push(SERVER_ERROR_ALERT)
         );
       } else {
-        this.widgetService.delete(this.widgetListEdit[i].id).subscribe(
-          () => this.loadWidgets(),
-          () => this.alerts.push(SERVER_ERROR_ALERT)
+        const appAccount = this.widgetListEdit[i].account;
+        this.widgetService.delete(this.widgetListEdit[i].id).subscribe((data) => {
+          if (appAccount) {
+            this.accountService.delete(appAccount).subscribe(
+              () => this.loadWidgets(),
+            );
+          } else {
+            this.loadWidgets();
+          }
+        }, () => this.alerts.push(SERVER_ERROR_ALERT)
         );
       }
     }

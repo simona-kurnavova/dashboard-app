@@ -73,7 +73,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         componentType = ApplicationComponent.getComponentType('error-application');
       }
       const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
-
       this.componentRef = this.container.createComponent(factory);
       (<ApplicationBaseComponent>this.componentRef.instance).state = this.dashboardState;
       (<ApplicationBaseComponent>this.componentRef.instance).widget = this.widget;
@@ -94,10 +93,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
    * Retrieves application data from server
    */
   loadApplication() {
-
-    /* NOTE: should be handled by retrieve(), but due to Firefox redirecting bug of http sites,
-    for the testing purposes changed to retrieveAll() */
-
     this.appService.retrieveAll().subscribe(
       data => {
         const applications = <ApplicationInterface[]>data['results'];

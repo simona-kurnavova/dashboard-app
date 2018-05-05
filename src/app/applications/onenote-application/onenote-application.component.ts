@@ -11,6 +11,7 @@ import {
 } from './alerts';
 import {AccountInterface} from '../../services/account.service';
 import {ApplicationManagerService} from '../../services/application-manager.service';
+import {retry} from 'rxjs/operator/retry';
 
 /**
  * OneNote application component
@@ -23,16 +24,49 @@ import {ApplicationManagerService} from '../../services/application-manager.serv
 })
 
 export class OneNoteApplicationComponent extends ApplicationBaseComponent implements OnInit {
+  /**
+   * List of notebooks
+   */
   public notebookList: Notebook[] = [];
+  /**
+   * active notebook
+   */
   public activeNotebook: Notebook = null;
+  /**
+   * Active section
+   */
   public activeSection: Section = null;
+  /**
+   * Active page
+   */
   public activePage: Page = null;
+  /**
+   * List of pages
+   */
   public pageList: Page[] = [];
+  /**
+   * Text and title of page being edited
+   */
   public editor = {id: null, text: '', title: ''};
+  /**
+   * New notebook being created
+   */
   public newNotebook: Notebook = {displayName: ''};
+  /**
+   * New section being created
+   */
   public newSection: Section = {displayName: ''};
+  /**
+   * Current view
+   */
   public view;
+  /**
+   * Array of alerts for AlertComponent
+   */
   public alerts: AlertInterface[] = [];
+  /**
+   * Microsoft account
+   */
   private account: AccountInterface;
 
   constructor(private appService: OneNoteApplicationService,
@@ -55,6 +89,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
     if (this.widget.account) {
       this.appManagerService.getAccount(this.widget).subscribe(
         data => {
+          console.log(data);
           this.account = <AccountInterface>data;
 
           /* if user is already logged in with valid token */
@@ -75,6 +110,9 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
     this.getAccessFromUser();
   }
 
+  /**
+   * Gets access on the behalf of user
+   */
   getAccessFromUser() {
     if (this.appService.codeExists()) {
       this.getAccessToken();
@@ -119,37 +157,47 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
    */
   getResources() {
     this.getNotebooks();
-    this.getPages();
     this.setView('notebooks');
   }
 
+  /**
+   * Retrieves notebooks, sections and pages
+   */
   getNotebooks() {
     this.appService.getNotebooks().subscribe(
       data => {
         this.notebookList = <Notebook[]>data['value'];
         for (let i = 0; i < this.notebookList.length; i++) {
           this.appService.getSections(this.notebookList[i].id).subscribe(
-            data => this.notebookList[i].sections = <Section[]>data['value'],
+            data => {
+              this.notebookList[i].sections = <Section[]>data['value']
+            },
             () => {
               this.alerts.push(SERVER_ERROR_ALERT);
               return;
             }
           );
         }
+        this.getPages();
       }, () => this.alerts.push(SERVER_ERROR_ALERT)
     );
   }
 
+  /**
+   * Retrieves pages
+   */
   getPages() {
     this.appService.getAllPages().subscribe(
       data => {
-        this.pageList = <Page[]>data['value'];
-        for (let i = 0; i < this.pageList.length; i++) {
-          this.appService.getPage(this.pageList[i].contentUrl).subscribe(
+        this.pageList = [];
+        const list = <Page[]>data['value'];
+        for (let i = 0; i < list.length; i++) {
+          this.appService.getPage(list[i].contentUrl).subscribe(
             () => {},
             err => {
-              if (err.status === 200) {
-                this.pageList[i].content = err.error.text;
+              if (err.status !== 404) {
+                list[i].content = err.error.text;
+                this.pageList.push(list[i]);
               }
             }
           );
@@ -158,17 +206,26 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
     );
   }
 
+  /**
+   * Opens notebook
+   */
   openNotebook(notebook: Notebook) {
     this.view = 'sections';
     this.activeSection = null;
     this.activeNotebook = notebook;
   }
 
+  /**
+   * Opens section
+   */
   openSection(section: Section) {
     this.view = 'pages';
     this.activeSection = section;
   }
 
+  /**
+   * @param {Page} page
+   */
   openPage(page: Page) {
     this.setView('page');
     this.activePage = page;
@@ -186,16 +243,25 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
     this.view = view;
   }
 
+  /**
+   * Opens editor of page
+   */
   openEditor(section: Section) {
     this.setView('editor');
     this.activeSection = section;
   }
 
+  /**
+   * Opens section editor
+   */
   openSectionEditor(notebook: Notebook) {
     this.setView('editor-section');
     this.activeNotebook = notebook;
   }
 
+  /**
+   * Opens editor for page edit
+   */
   editPage() {
     this.editor = this.appService.parsePage(this.activePage);
     this.openEditor(this.activeSection);
