@@ -1,48 +1,50 @@
 <div class="container">
   <div class="row justify-content-center title-container">
-    <h1>Welcome to Dashboard!</h1>
+    <h1 i18n>Welcome to Dashboard!</h1>
   </div>
   <div class="row justify-content-center">
-    <p>Interactive workspace for your applications</p>
+    <p i18n>Interactive workspace for your applications</p>
   </div>
 </div>
 
 <hr>
 
 <div class="container">
-  <p align="center">Before starting, please <a routerLink="login">login</a>, or <a routerLink="register">register</a> if
-    you're new here!</p>
+  <p align="center">
+    <ng-container i18n>Before starting, please</ng-container>
+    <a routerLink="login">
+      <ng-container i18n>login</ng-container>
+    </a>
+    <ng-container i18n>, or</ng-container>
+    <a routerLink="register">
+      <ng-container i18n>register</ng-container>
+    </a>
+    <ng-container i18n>if you're new here!</ng-container>
+  </p>
   <router-outlet></router-outlet>
 </div>
 
 
 <div class="container">
   <div class="row">
-
     <div class="col">
       <div class="card card-body info-card">
-        <h4>Tutorial</h4>
-        <p>
-          <!-- Redirect to user manual -->
+        <h4 i18n>About</h4>
+        <p i18n>
+          Dashboard is a web application, which allows you to manage and use applications of your choice.
         </p>
+        <p i18n>You can simply add them to your dashboard and arrange to your liking.</p>
       </div>
     </div>
 
     <div class="col">
       <div class="card card-body info-card">
-        <h4>About</h4>
-          <!-- Something about the app -->
-
-        <p>Dashboard is a web application, which allows you to manage and use applications of your choice. </p>
-        <p>You can simply add them to your dashboard and arrange to your liking.</p>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card card-body info-card">
-        <h4>Create your own widget</h4>
-        <p>
-          <!-- Redirect to dev docs -->
+        <h4 i18n>Create your own application</h4>
+        <p i18n>If you are a developer, you can create your own custom application for the dashboard!</p>
+        <p><ng-container i18n>Download developer manual here:</ng-container>
+          <a href='assets/dev_manual.pdf' download>
+            <ng-container i18n>download</ng-container>
+          </a>
         </p>
       </div>
     </div>

@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Add Widget</h4>
+  <h4 class="modal-title" i18n>Add Widget</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-1" align="right">
                   <a (click)="addWidget(appList[i].id)">
-                    <i style="color: dodgerblue; font-size: small">add</i>
+                    <i style="color: dodgerblue; font-size: small"><ng-container i18n>add</ng-container></i>
                   </a>
                 </div>
               </div>
@@ -36,5 +36,6 @@
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">
+    <ng-container i18n>Close</ng-container></button>
 </div>

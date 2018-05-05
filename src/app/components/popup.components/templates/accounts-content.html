@@ -1,7 +1,7 @@
 <alert [alerts]="alerts"></alert>
 <div *ngIf="isState('list')" class="container" align="center">
 
-  <h3>Your accounts:</h3>
+  <h3 i18n>Your accounts:</h3>
 
   <div *ngFor="let account of accountList; let i = index;">
     <a (click)="setCurrentAccount(i)"><b>{{ account.name }}</b></a>
@@ -23,7 +23,7 @@
     <p align="center" *ngIf="accountList[currentAccount].info; else noInfo"> {{ accountList[currentAccount].info }}</p>
     <ng-template #noInfo>
       <p align="center">
-        <i>No info provided</i>
+        <i><ng-container i18n>No info provided</ng-container></i>
       </p>
     </ng-template>
 
@@ -33,11 +33,14 @@
 
   <div class="row">
     <div class="col">
-      <a (click)="setState('list')"><i class="fa fa-arrow-left return-icon" aria-hidden="true"></i> return</a>
+      <a (click)="setState('list')"><i class="fa fa-arrow-left return-icon" aria-hidden="true"></i>
+        <ng-container i18n>return</ng-container></a>
     </div>
 
     <div class="col" align="right">
-      <button class="btn btn-sm btn-red" (click)="deleteAccount()">Delete</button>
+      <button class="btn btn-sm btn-red" (click)="deleteAccount()">
+        <ng-container i18n>Delete</ng-container>
+      </button>
     </div>
   </div>
 </div>

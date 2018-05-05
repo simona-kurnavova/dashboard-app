@@ -8,17 +8,21 @@
               <div class="btn-group-sm widget-control" dropdown>
                 <button dropdownToggle type="button"
                         class="btn btn-blue-grey btn-sm dropdown-toggle waves-light" mdbRippleRadius>
-                  Size
+                  <ng-container i18n>Size</ng-container>
                 </button>
-                <!--[class.disabled]="!application.allows_small_sizes"-->
                 <div class="dropdown-menu dropdown-primary">
                   <a (click)="changeSize(4,300)"
-                     [class.disabled]="!allowsSmallSizes()" class="dropdown-item">Very small</a>
+                     [class.disabled]="!allowsSmallSizes()" class="dropdown-item">
+                    <ng-container i18n>Very small</ng-container></a>
                   <a (click)="changeSize(5,350)"
-                     [class.disabled]="!allowsSmallSizes()" class="dropdown-item">Small</a>
-                  <a (click)="changeSize(6,450)" class="dropdown-item">Medium</a>
-                  <a (click)="changeSize(8,450)" class="dropdown-item">Big</a>
-                  <a (click)="changeSize(12,450)" class="dropdown-item">Very big</a>
+                     [class.disabled]="!allowsSmallSizes()" class="dropdown-item">
+                    <ng-container i18n>Small</ng-container></a>
+                  <a (click)="changeSize(6,450)" class="dropdown-item">
+                    <ng-container i18n>Medium</ng-container></a>
+                  <a (click)="changeSize(8,450)" class="dropdown-item">
+                    <ng-container i18n>Big</ng-container></a>
+                  <a (click)="changeSize(12,450)" class="dropdown-item">
+                    <ng-container i18n>Very big</ng-container></a>
                 </div>
               </div>
 

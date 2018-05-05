@@ -4,29 +4,31 @@
       <div class="card card-body">
 
         <form class="login-form">
-          <p class="h5 text-center mb-4">Sign in</p>
+          <p class="h5 text-center mb-4" i18n>Sign in</p>
 
           <div class="md-form">
             <input autocomplete="username" type="text" id="l-username" [(ngModel)]="loginData.username" name="username" class="form-control"
                    mdbActive>
-            <label for="l-username">Username</label>
+            <label for="l-username"><ng-container i18n>Username</ng-container></label>
           </div>
 
           <div class="md-form">
             <input autocomplete="password" type="password" id="l-password" [(ngModel)]="loginData.password" name="password" class="form-control"
                    mdbActive>
-            <label for="l-password">Your password</label>
+            <label for="l-password"><ng-container i18n>Your password</ng-container></label>
           </div>
 
           <div class="text-center">
-            <button class="btn btn-default waves-light" (click)="login()" mdbRippleRadius>Sign in</button>
+            <button class="btn btn-default waves-light" (click)="login()" mdbRippleRadius>
+              <ng-container i18n>Sign in</ng-container>
+            </button>
           </div>
 
         </form>
 
       </div>
       <br>
-      or <a routerLink="/register">register</a>
+      <ng-container i18n>or</ng-container> <a routerLink="/register"><ng-container i18n>register</ng-container></a>
 
       <alert [alerts]="alerts"></alert>
 

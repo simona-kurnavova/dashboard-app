@@ -8,19 +8,27 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item">
-        <a class="nav-link waves-light" (click)="openAbout()" mdbRippleRadius>About</a>
+        <a class="nav-link waves-light" (click)="openAbout()" mdbRippleRadius>
+          <ng-container i18n>About</ng-container>
+        </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link waves-light" (click)="openSettings()" mdbRippleRadius>Settings</a>
+        <a class="nav-link waves-light" (click)="openSettings()" mdbRippleRadius>
+          <ng-container i18n>Settings</ng-container>
+        </a>
       </li>
 
       <li class="nav-item dropdown" dropdown>
         <a dropdownToggle mdbRippleRadius type="button" class="nav-link dropdown-toggle waves-light" mdbRippleRadius>
-          Profile<span class="caret"></span></a>
+          <ng-container i18n>Profile</ng-container><span class="caret"></span></a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" (click)="openProfile()" mdbRippleRadius>Edit profile</a>
-          <a class="dropdown-item waves-light" (click)="logout()" mdbRippleRadius>Logout</a>
+          <a class="dropdown-item waves-light" (click)="openProfile()" mdbRippleRadius>
+            <ng-container i18n>Edit profile</ng-container>
+          </a>
+          <a class="dropdown-item waves-light" (click)="logout()" mdbRippleRadius>
+            <ng-container i18n>Logout</ng-container>
+          </a>
         </div>
       </li>
 
@@ -28,7 +36,7 @@
 
     <span class="navbar-nav purple-text">
       <li class="nav-item">
-        <b>Welcome, {{username}} !</b>
+        <b><ng-container i18n>Welcome,</ng-container> {{username}} !</b>
       </li>
     </span>
 

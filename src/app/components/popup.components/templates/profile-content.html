@@ -2,12 +2,16 @@
   <div class="row justify-content-end">
     <div class="col">
       <div class="md-form">
-        <b>Username:</b> <input type="text" class="form-control" [(ngModel)]="user.username"/>
+        <b>
+          <ng-container i18n>Username:</ng-container>
+        </b> <input type="text" class="form-control" [(ngModel)]="user.username"/>
       </div>
     </div>
     <div class="col">
       <div class="md-form">
-        <b>Email:</b> <input type="text" class="form-control" [(ngModel)]="user.email"/>
+        <b>
+          <ng-container i18n>Email:</ng-container>
+        </b> <input type="text" class="form-control" [(ngModel)]="user.email"/>
       </div>
     </div>
   </div>
@@ -16,11 +20,13 @@
 
   <div class="row">
     <div class="col">
-      <a (click)="setState('normal')"><i class="fa fa-arrow-left return-icon" aria-hidden="true"></i> return</a>
+      <a (click)="setState('normal')"><i class="fa fa-arrow-left return-icon" aria-hidden="true"></i>
+        <ng-container i18n>return</ng-container></a>
     </div>
 
     <div class="col" align="right">
-      <button class="btn btn-sm btn-blue-grey" (click)="saveUser()">Save</button>
+      <button class="btn btn-sm btn-blue-grey" (click)="saveUser()">
+        <ng-container i18n>Save</ng-container></button>
     </div>
 
   </div>
@@ -31,10 +37,10 @@
   <alert [alerts]="alerts"></alert>
 
   <div class="row justify-content-center">
-    Username: {{user.username}} <br>
+    <ng-container i18n>Username:</ng-container> {{user.username}} <br>
   </div>
   <div class="row justify-content-center">
-    Email: {{user.email}} <br>
+    <ng-container i18n>Email:</ng-container> {{user.email}} <br>
   </div>
   <hr>
   <div class="row justify-content-center">

@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Settings</h4>
+  <h4 class="modal-title" i18n>Settings</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -11,9 +11,12 @@
     <div class="row">
       <div class="col-lg-4">
         <div class="list-group" style="padding-bottom: 15px">
-          <a class="list-group-item list-group-item-action" (click)="setActive('profile')">Profile</a>
-          <a class="list-group-item list-group-item-action" (click)="setActive('accounts')">Accounts</a>
-          <a class="list-group-item list-group-item-action" (click)="setActive('widgets')">Widgets</a>
+          <a class="list-group-item list-group-item-action" (click)="setActive('profile')">
+            <ng-container i18n>Profile</ng-container></a>
+          <a class="list-group-item list-group-item-action" (click)="setActive('accounts')">
+            <ng-container i18n>Accounts</ng-container></a>
+          <a class="list-group-item list-group-item-action" (click)="setActive('widgets')">
+            <ng-container i18n>Widgets</ng-container></a>
         </div>
       </div>
 
@@ -30,7 +33,8 @@
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">
+    <ng-container i18n>Close</ng-container></button>
 </div>
 
 
