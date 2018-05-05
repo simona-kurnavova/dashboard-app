@@ -1,5 +1,9 @@
 import {AlertInterface} from '../../alert-definitions';
 
+/**
+ * Definitions of Alert for OneNote app
+ */
+
 export const SUCCESS_CREATING_PAGE_ALERT = <AlertInterface>{
   id: 100,
   type: 'success',

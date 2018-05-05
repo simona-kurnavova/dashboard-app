@@ -4,6 +4,9 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {OneNoteApplicationService} from './onenote-application.service';
 import {PopupBaseComponent} from '../../components/main.components/popup-base.component';
 
+/**
+ * Component for popup of Microsoft OneNote
+ */
 @Component({
   selector: 'onenote-popup',
   templateUrl: './onenote-popup.component.html',
