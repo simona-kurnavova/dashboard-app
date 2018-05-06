@@ -153,6 +153,9 @@ export class DashboardComponent implements OnInit {
         );
       }
     }
+    if (this.widgetListEdit.length <= 0) {
+      this.setState('normal');
+    }
   }
 
 

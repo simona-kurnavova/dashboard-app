@@ -64,7 +64,7 @@ export class TranslateApplicationComponent extends ApplicationBaseComponent {
   }
 
   showReturnButton() {
-    return this.widget.size_y < 450 && this.text.postTranslation !== '';
+    return this.widget.size_y < 450 && this.text.postTranslation !== '' && !this.modal;
   }
 
   returnFromTranslation() {

@@ -15,8 +15,17 @@ export class ApplicationManagerService {
   /**
    * Retrieves account of the widget
    */
-  getAccount(widget: WidgetInterface): Observable<AccountInterface> {
-    return this.accountService.retrieve(widget.account);
+  getAccount(widget: WidgetInterface, callback) {
+    this.accountService.retrieveAll().subscribe(
+      data => {
+        const accounts = <AccountInterface[]>data['results'];
+        for (let i = 0; i < accounts.length; i++) {
+          if (accounts[i].id === widget.account) {
+            callback(accounts[i]);
+          }
+        }
+      }
+    );
   }
 
   /**

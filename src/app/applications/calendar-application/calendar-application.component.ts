@@ -139,10 +139,7 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
     popup.componentInstance.addAccountCallback = (data) => {
       _that.noAccount = false;
       _that.widget.account = data['id'];
-      console.log(data['id']);
-      this.appManagerService.updateWidget(_that.widget).subscribe(
-        (data) => console.log(data)
-      );
+      this.appManagerService.updateWidget(_that.widget).subscribe();
     };
   }
 
@@ -150,6 +147,7 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
    * Saves nedited event
    */
   saveEditEvent() {
+    this.alerts = [];
     const _that = this;
     const callback = (response: any): void => {
       if (response.status === 200) {
@@ -169,6 +167,7 @@ export class CalendarApplicationComponent extends ApplicationBaseComponent imple
    * Sets variables for event editing and skips to editing mode
    */
   editEvent(index) {
+    this.alerts = [];
     this.edit_event = this.currentEvents[index];
     this.selectedEditedMoments[0] = this.edit_event.start;
     this.selectedEditedMoments[1] = this.edit_event.end;

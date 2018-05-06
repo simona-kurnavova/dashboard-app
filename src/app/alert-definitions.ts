@@ -43,7 +43,7 @@ export const USER_REGISTERED_ALERT: AlertInterface = {
 export const USER_ALREADY_EXISTS_ALERT: AlertInterface = {
   id: 6,
   type: 'warning',
-  message: `<ng-container i18n>Username already registered</ng-container>`
+  message: `<ng-container i18n>Wrong data, or user already registered</ng-container>`
 };
 
 export const USER_EDITED_ALERT: AlertInterface = {

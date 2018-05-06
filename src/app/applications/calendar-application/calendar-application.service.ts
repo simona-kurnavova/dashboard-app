@@ -63,7 +63,6 @@ export class CalendarApplicationService {
         scope: CalendarApplicationService.scope,
         immediate: immediate
       }, authResult => {
-        console.log(authResult);
         if (authResult['access_token']) {
           localStorage.setItem('calendar_token', authResult['access_token']);
         }

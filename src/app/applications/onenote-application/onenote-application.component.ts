@@ -87,9 +87,7 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
    */
   getInitState() {
     if (this.widget.account) {
-      this.appManagerService.getAccount(this.widget).subscribe(
-        data => {
-          console.log(data);
+      const callback = (data) => {
           this.account = <AccountInterface>data;
 
           /* if user is already logged in with valid token */
@@ -104,10 +102,11 @@ export class OneNoteApplicationComponent extends ApplicationBaseComponent implem
               return;
             }, () => this.getAccessFromUser()
           );
-        }
-      );
+      };
+      this.appManagerService.getAccount(this.widget, callback);
+    } else {
+      this.getAccessFromUser();
     }
-    this.getAccessFromUser();
   }
 
   /**
