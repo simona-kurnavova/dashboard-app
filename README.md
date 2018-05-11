@@ -9,7 +9,7 @@ Must be registered on its Django administration to obtaint client ID and secret
 
 Run locally:
 -----------
-1) Install dependencies from package.json file
+1) Install Angular 5 and Angular CLI (https://angular.io/guide/quickstart) and install dependencies from package.json file
 2) Add obtained client ID and secret to app/settings.ts file
 3) Run in Angular CLI with command: `ng serve`
 
